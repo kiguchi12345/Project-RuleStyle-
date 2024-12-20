@@ -5,7 +5,7 @@ using UnityEngine;
 /// <summary>
 /// カード一つ目
 /// </summary>
-public interface ICard_One 
+public interface ICard
 {
     /// <summary>
     /// カードの文章
