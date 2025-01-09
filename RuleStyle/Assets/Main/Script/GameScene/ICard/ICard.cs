@@ -7,6 +7,8 @@ using UnityEngine;
 /// </summary>
 public interface ICard
 {
+    public Card_Pattern card_pattern { get; }
+
     /// <summary>
     /// カードの文章
     /// </summary>
@@ -16,4 +18,15 @@ public interface ICard
     /// カード効果
     /// </summary>
     void CardNum();
+}
+
+/// <summary>
+/// パターン
+/// </summary>
+public enum Card_Pattern
+{
+    Blue,
+    Orange,
+    Green,
+    Red
 }
