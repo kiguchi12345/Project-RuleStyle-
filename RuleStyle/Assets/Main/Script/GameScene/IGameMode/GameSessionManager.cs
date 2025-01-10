@@ -53,7 +53,6 @@ public class GameSessionManager : MonoBehaviour
         gameManager.PlayerNum = 4;
         sceneContext.Mode_Change(new GameMode_Init(this));
 
-
         //新しく人数を参照して新しくデータを作成する
         switch (gameManager.PlayerNum)
         {
@@ -66,7 +65,7 @@ public class GameSessionManager : MonoBehaviour
                 TurnList = new List<int> {
                     1,2
                 };
-                return;
+                break;
             case 3:
                 Session_Data = new Dictionary<int, PlayerSessionData>
                 {
@@ -77,7 +76,7 @@ public class GameSessionManager : MonoBehaviour
                 TurnList = new List<int> {
                     1,2,3
                 };
-                return;
+                break;
             case 4:
                 Session_Data = new Dictionary<int, PlayerSessionData>
                 {
@@ -89,10 +88,12 @@ public class GameSessionManager : MonoBehaviour
                 TurnList = new List<int> {
                     1,2,3,4
                 };
-                return;
-        }
+                break;
+                }
+        Debug.Log("test");
+        TurnList = Shuffle(TurnList);
 
-        Shuffle(TurnList);
+        Destroy(this);
     }
 
     public void OnLoadSessionData()
@@ -107,7 +108,7 @@ public class GameSessionManager : MonoBehaviour
     /// <summary>
     /// 順番シャッフル
     /// </summary>
-    public void Shuffle(List<int> array)
+    public List<int> Shuffle(List<int> array)
     {
         for (var i = array.Count - 1; i > 0; --i)
         {
@@ -120,5 +121,8 @@ public class GameSessionManager : MonoBehaviour
             array[i] = array[j];
             array[j] = tmp;
         }
+
+        Debug.Log("しゃっふる");
+        return array;
     }
 }

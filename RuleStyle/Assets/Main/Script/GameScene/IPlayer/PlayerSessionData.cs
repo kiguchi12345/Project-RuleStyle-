@@ -5,29 +5,21 @@ using UnityEngine;
 using UniRx;
 using UniRx.Triggers;
 
-
 /// <summary>
 /// セッションプレイヤーデータ
 /// MonoBrhaviorは使わず、Playerの駒にアタッチするスクリプトは別枠で作成する
 /// </summary>
 [Serializable]
-public class PlayerSessionData 
+public class PlayerSessionData:IDisposable
 {
     public PlayerSessionData() {
-        Blue.Subscribe(_ => { }).AddTo(_disposed);
+        Debug.Log("rikai1");
+        //Blue.Subscribe(_ => { });
     }
-
-    /// <summary>
-    /// C
-    /// </summary>
-    private readonly CompositeDisposable _disposed = new CompositeDisposable();
-
-    /// <summary>
-    /// 削除時
-    /// </summary>
-    ~PlayerSessionData()
+    
+    public void Dispose()
     {
-        _disposed.Dispose();
+        Debug.Log("rikai2");
     }
 
     /// <summary>
@@ -59,11 +51,11 @@ public class PlayerSessionData
     /// <summary>
     /// 効果対象のカード
     /// </summary>
-    public ICard card_Blue;
+    public ReactiveProperty<ICard> card_Blue;
     /// <summary>
     /// 得点の条件
     /// </summary>
-    public ICard card_Orenge;
+    public ReactiveProperty<ICard> card_Orenge;
     /// <summary>
     /// 得点で何を得るのかどうか（カードか得点か）
     /// </summary>
@@ -82,15 +74,11 @@ public class PlayerSessionData
     /// </summary>
     public GameObject Player_GamePiece;
 
-    public void ChangeCard()
-    {
-
-    }
 
     public void ShotPoint()
     {
         //判定作成
-        card_Orenge.CardNum();
+        card_Orenge.Value.CardNum();
 
         //終了時判定を行う
         Player_GamePiece.transform.ObserveEveryValueChanged(x => x.position)
@@ -107,4 +95,6 @@ public class PlayerSessionData
     {
 
     }
+
+    
 }
