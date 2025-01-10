@@ -12,14 +12,17 @@ using UniRx.Triggers;
 [Serializable]
 public class PlayerSessionData:IDisposable
 {
-    public PlayerSessionData() {
-        Debug.Log("rikai1");
+    public PlayerSessionData() 
+    {
         //Blue.Subscribe(_ => { });
     }
     
     public void Dispose()
     {
-        Debug.Log("rikai2");
+        ShotEvent?.Dispose();
+        PointEvent?.Dispose();
+
+        
     }
 
     /// <summary>
@@ -46,28 +49,31 @@ public class PlayerSessionData:IDisposable
     /// プレイヤー番号で管理する
     /// </summary>
     public List<int> EffectPlayer_Id=new List<int>();
-
-    ReactiveProperty<ICard> Blue;
+    
     /// <summary>
     /// 効果対象のカード
     /// </summary>
-    public ReactiveProperty<ICard> card_Blue;
+    public ReactiveProperty<ICard> Card_Blue;
+
     /// <summary>
     /// 得点の条件
     /// </summary>
-    public ReactiveProperty<ICard> card_Orenge;
+    public ReactiveProperty<ICard> Card_Orange;
+
     /// <summary>
     /// 得点で何を得るのかどうか（カードか得点か）
     /// </summary>
-    public ICard card_Yellow;
+    public ReactiveProperty<ICard> Card_Yellow;
+
     /// <summary>
     /// 得点の計算方法
     /// </summary>
-    public ICard card_Green;
+    public ReactiveProperty<ICard> Card_Green;
+
     /// <summary>
     ///　カードの参照する数を変更する
     /// </summary>
-    public ICard card_Red;
+    public ReactiveProperty<ICard> Card_Red;
 
     /// <summary>
     /// プレイヤーの駒(駒を作成時にアタッチする）
@@ -78,7 +84,7 @@ public class PlayerSessionData:IDisposable
     public void ShotPoint()
     {
         //判定作成
-        card_Orenge.Value.CardNum();
+        Card_Orange.Value.CardNum();
 
         //終了時判定を行う
         Player_GamePiece.transform.ObserveEveryValueChanged(x => x.position)

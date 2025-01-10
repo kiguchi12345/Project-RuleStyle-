@@ -90,7 +90,6 @@ public class GameSessionManager : MonoBehaviour
                 };
                 break;
                 }
-        Debug.Log("test");
         TurnList = Shuffle(TurnList);
 
         Destroy(this);
@@ -122,7 +121,15 @@ public class GameSessionManager : MonoBehaviour
             array[j] = tmp;
         }
 
-        Debug.Log("‚µ‚á‚Á‚Ó‚é");
         return array;
+    }
+
+    private void OnDestroy()
+    {
+        Debug.Log("”j‰ó");
+        foreach (var t in Session_Data)
+        {
+            t.Value.Dispose();
+        }
     }
 }
