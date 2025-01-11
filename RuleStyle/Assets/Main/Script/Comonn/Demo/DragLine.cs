@@ -52,12 +52,12 @@ public class DragLine : MonoBehaviour
             //ベクトル作成
             dragOffset = new Vector3(x,0,z);
 
-            //長さが200以降だった場合
+            //長さが10以降だった場合
             if (direction.magnitude > 10)
             {
                 Debug.DrawLine(dragObject.transform.position, new Vector3(dragOffset.x*10,1,dragOffset.z*10), Color.black);
             }
-            //長さが200以前だった場合
+            //長さが10以前だった場合
             else
             {
                 Debug.DrawLine(dragObject.transform.position, new Vector3(dragOffset.x * direction.magnitude, 1, dragOffset.z * direction.magnitude), Color.black);
