@@ -23,7 +23,7 @@ public class Card_Blue_Other_than : ICard
     /// <summary>
     /// カード名
     /// </summary>
-    string ICard.CardName => "Other_than";
+    string ICard.CardName => "自分以外の";
 
     /// <summary>
     /// 青は全て返り値で効果を行う
@@ -31,5 +31,13 @@ public class Card_Blue_Other_than : ICard
     void ICard.CardNum()
     {
         Debug.Log("カード自分以外");
+        GameSessionManager gameManager = GameSessionManager.Instance();
+        foreach (var i in gameManager.Session_Data)
+        {
+            if (i.Key!=PlayerData.PlayerId)
+            {
+                PlayerData.EffectPlayer_Id.Add(i.Key);
+            }
+        }
     }
 }

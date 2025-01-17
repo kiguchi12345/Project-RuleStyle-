@@ -4,16 +4,20 @@ using UnityEngine;
 
 public class test : MonoBehaviour
 {
-    public PlayerSessionData playerSessionData=new PlayerSessionData();
+    //public PlayerSessionData playerSessionData=new PlayerSessionData();
     // Start is called before the first frame update
+
+    public ICard card ;
+
     void Start()
     {
-       
+       card=new Card_Blue_EffectFour(null);
     }
 
     // Update is called once per frame
     void Update()
     {
+        /*
         if(Input.GetKeyDown(KeyCode.Escape))
         {
             playerSessionData.Card_Blue.Value = new Card_Blue_MySelf(playerSessionData);
@@ -22,11 +26,12 @@ public class test : MonoBehaviour
         {
             playerSessionData.Card_Blue.Value = new Card_Blue_Other_than(playerSessionData);
         } ;
+        */
     }
 
     private void OnDestroy()
     {
         Debug.Log("test");
-        playerSessionData.Dispose();
+        //playerSessionData.Dispose();
     }
 }

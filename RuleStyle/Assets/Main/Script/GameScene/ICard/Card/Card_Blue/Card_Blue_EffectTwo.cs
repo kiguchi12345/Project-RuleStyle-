@@ -2,16 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-/// <summary>
-/// 青カード。対象者はカードプレイヤー
-/// </summary>
-public class Card_Blue_MySelf : ICard
+public class Card_Blue_EffectTwo : ICard
 {
     /// <summary>
     /// コンストラクタ
     /// </summary>
     /// <param name="_playerSettingData"></param>
-    public Card_Blue_MySelf(PlayerSessionData _playerSettingData)
+    public Card_Blue_EffectTwo(PlayerSessionData _playerSettingData)
     {
         PlayerData = _playerSettingData;
     }
@@ -23,15 +20,13 @@ public class Card_Blue_MySelf : ICard
     /// <summary>
     /// カード名
     /// </summary>
-    string ICard.CardName => "自分自身の";
+    string ICard.CardName => "P2の";
 
-    
     /// <summary>
-    /// 青は全て返り値で効果を行う
+    /// 
     /// </summary>
     void ICard.CardNum()
     {
-        //カードプレイヤー自身にデータを帰属させる（要検討
-        PlayerData.EffectPlayer_Id.Add(PlayerData.PlayerId);
+        PlayerData.EffectPlayer_Id.Add(2);
     }
 }

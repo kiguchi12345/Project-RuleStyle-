@@ -20,13 +20,13 @@ public class Card_Blue_EffectOne : ICard
     /// <summary>
     /// カード名
     /// </summary>
-    string ICard.CardName => "Other_than";
+    string ICard.CardName => "P1の";
 
     /// <summary>
-    /// 青は全て返り値で効果を行う
+    /// 
     /// </summary>
     void ICard.CardNum()
     {
-        Debug.Log("カード自分以外");
+        PlayerData.EffectPlayer_Id.Add(1);
     }
 }

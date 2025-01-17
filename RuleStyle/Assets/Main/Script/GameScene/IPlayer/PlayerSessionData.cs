@@ -43,6 +43,7 @@ public class PlayerSessionData:IDisposable
         //ëŒè€Ç»ÇÃÇ≈çsÇ§ÅB
         Card_Blue
             .Subscribe(_ => {
+                EffectPlayer_Id.Clear();
                 _.CardNum();
                 Debug.Log("ïœçXÇ≥ÇÍÇ‹ÇµÇΩ");
             });
