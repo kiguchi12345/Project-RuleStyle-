@@ -32,6 +32,14 @@ public class GameManager : SingletonMonoBehaviourBase<GameManager>
     }
 
     /// <summary>
+    /// プレイヤー人数の変更
+    /// </summary>
+    /// <param name="playernum"></param>
+    public void PlayerNumChange(int playernum)
+    {
+        PlayerNum = playernum;
+    }
+    /// <summary>
     /// プレイヤーのデータを初期化
     /// </summary>
     public void VariableDataInit()

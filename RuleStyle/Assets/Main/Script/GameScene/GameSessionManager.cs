@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+
+
 /// <summary>
 /// ゲームシーン時、アタッチされている事を想定しています。
 /// </summary>
@@ -34,7 +36,18 @@ public class GameSessionManager : MonoBehaviour
 
     public GameSceneContext sceneContext = new GameSceneContext();
 
-    
+    [SerializeField]
+    private GameObject PlayerGameObject_One;
+
+    [SerializeField]
+    private GameObject PlayerGameObject_Two;
+
+    [SerializeField] 
+    private GameObject PlayerGameObject_Three;
+
+    [SerializeField] 
+    private GameObject PlayerGameObject_Four;
+
     /// <summary>
     /// 順番
     /// </summary>
@@ -48,9 +61,7 @@ public class GameSessionManager : MonoBehaviour
         instance = this;
 
         gameManager = GameManager.Instance();
-
-
-        gameManager.PlayerNum = 4;
+        
         sceneContext.Mode_Change(new GameMode_Init(this));
 
         //新しく人数を参照して新しくデータを作成する
@@ -95,10 +106,16 @@ public class GameSessionManager : MonoBehaviour
         Destroy(this);
     }
 
+    /// <summary>
+    /// GameManagerからGameSessionManagerにデータを代入させていく。
+    /// </summary>
     public void OnLoadSessionData()
     {
-        //gameManager.
-        Debug.Log(GameManager.Variable_Data);
+        //プレイヤー名とプレイヤーIDの代入
+        foreach (var i in Session_Data) {
+            i.Value.PlayerId=GameManager.Variable_Data[i.Key].Id;
+            i.Value.PlayerName = GameManager.Variable_Data[i.Key].PlayerName;
+        }
     }
     private void Update() => sceneContext._currentgameMode?.Update();
 

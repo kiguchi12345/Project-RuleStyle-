@@ -20,6 +20,4 @@ public class variable_playerdata
     }
     public int Id;
     public string PlayerName;
-
-    
 }
