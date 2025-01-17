@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// 駒がステージ外に出たときに発動する
+/// 改変カードを参照する
 /// </summary>
-public class Card_Orange_OverField : ICard
+public class Card_Yellow_CardDraw : ICard
 {
     /// <summary>
     /// コンストラクタ
     /// </summary>
     /// <param name="_playerSettingData"></param>
-    public Card_Orange_OverField(PlayerSessionData _playerSettingData)
+    public Card_Yellow_CardDraw(PlayerSessionData _playerSettingData)
     {
         PlayerData = _playerSettingData;
     }
@@ -23,7 +23,7 @@ public class Card_Orange_OverField : ICard
     /// <summary>
     /// カード名
     /// </summary>
-    string ICard.CardName => "場外で";
+    string ICard.CardName => "ゴールで";
 
     /// <summary>
     /// 

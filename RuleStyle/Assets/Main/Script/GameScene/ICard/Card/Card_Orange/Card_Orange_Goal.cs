@@ -2,16 +2,33 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Card_Orange_Goal : MonoBehaviour
+/// <summary>
+/// ゴール行ったときの判定カード
+/// </summary>
+public class Card_Orange_Goal : ICard
 {
-    // Start is called before the first frame update
-    void Start()
+    /// <summary>
+    /// コンストラクタ
+    /// </summary>
+    /// <param name="_playerSettingData"></param>
+    public Card_Orange_Goal(PlayerSessionData _playerSettingData)
     {
-        
+        PlayerData = _playerSettingData;
     }
 
-    // Update is called once per frame
-    void Update()
+    PlayerSessionData PlayerData;
+
+    Card_Pattern ICard.card_pattern => Card_Pattern.Orange;
+
+    /// <summary>
+    /// カード名
+    /// </summary>
+    string ICard.CardName => "ゴールで";
+
+    /// <summary>
+    /// 
+    /// </summary>
+    void ICard.CardNum()
     {
         
     }
