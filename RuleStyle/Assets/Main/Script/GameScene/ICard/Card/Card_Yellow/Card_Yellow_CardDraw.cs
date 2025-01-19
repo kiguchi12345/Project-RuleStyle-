@@ -7,16 +7,7 @@ using UnityEngine;
 /// </summary>
 public class Card_Yellow_CardDraw : ICard
 {
-    /// <summary>
-    /// コンストラクタ
-    /// </summary>
-    /// <param name="_playerSettingData"></param>
-    public Card_Yellow_CardDraw(PlayerSessionData _playerSettingData)
-    {
-        PlayerData = _playerSettingData;
-    }
-
-    PlayerSessionData PlayerData;
+    public PlayerSessionData PlayerData { get; set; } = null;
 
     Card_Pattern ICard.card_pattern => Card_Pattern.Orange;
 
@@ -24,6 +15,8 @@ public class Card_Yellow_CardDraw : ICard
     /// カード名
     /// </summary>
     string ICard.CardName => "ゴールで";
+
+    
 
     /// <summary>
     /// 

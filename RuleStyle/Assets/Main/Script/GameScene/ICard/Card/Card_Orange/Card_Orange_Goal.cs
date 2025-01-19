@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UniRx;
 using UnityEngine;
 
 /// <summary>
@@ -7,16 +8,7 @@ using UnityEngine;
 /// </summary>
 public class Card_Orange_Goal : ICard
 {
-    /// <summary>
-    /// コンストラクタ
-    /// </summary>
-    /// <param name="_playerSettingData"></param>
-    public Card_Orange_Goal(PlayerSessionData _playerSettingData)
-    {
-        PlayerData = _playerSettingData;
-    }
-
-    PlayerSessionData PlayerData;
+    public PlayerSessionData PlayerData { get; set; } = null;
 
     Card_Pattern ICard.card_pattern => Card_Pattern.Orange;
 
@@ -30,6 +22,10 @@ public class Card_Orange_Goal : ICard
     /// </summary>
     void ICard.CardNum()
     {
-        
+        if(PlayerData != null)
+        {
+            //PlayerData.
+        }
     }
+
 }

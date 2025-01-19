@@ -4,16 +4,7 @@ using UnityEngine;
 
 public class Card_Blue_EffectOne : ICard
 {
-    /// <summary>
-    /// コンストラクタ
-    /// </summary>
-    /// <param name="_playerSettingData"></param>
-    public Card_Blue_EffectOne(PlayerSessionData _playerSettingData)
-    {
-        PlayerData = _playerSettingData;
-    }
-
-    PlayerSessionData PlayerData;
+    public PlayerSessionData PlayerData { get; set; } = null;
 
     Card_Pattern ICard.card_pattern => Card_Pattern.Blue;
 

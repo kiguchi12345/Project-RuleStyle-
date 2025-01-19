@@ -7,16 +7,8 @@ using UnityEngine;
 /// </summary>
 public class Card_Orange_OverField : ICard
 {
-    /// <summary>
-    /// コンストラクタ
-    /// </summary>
-    /// <param name="_playerSettingData"></param>
-    public Card_Orange_OverField(PlayerSessionData _playerSettingData)
-    {
-        PlayerData = _playerSettingData;
-    }
 
-    PlayerSessionData PlayerData;
+    public PlayerSessionData PlayerData { get; set; } = null;
 
     Card_Pattern ICard.card_pattern => Card_Pattern.Orange;
 

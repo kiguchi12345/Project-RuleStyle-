@@ -9,6 +9,10 @@ public interface ICard
 {
     public Card_Pattern card_pattern { get; }
 
+    public PlayerSessionData PlayerData { get; set; }
+
+    
+
     /// <summary>
     /// カードの文章
     /// </summary>
@@ -18,6 +22,14 @@ public interface ICard
     /// カード効果
     /// </summary>
     void CardNum();
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public void Card_PlayerChange(PlayerSessionData player)
+    {
+        PlayerData = player;
+    }
 }
 
 /// <summary>

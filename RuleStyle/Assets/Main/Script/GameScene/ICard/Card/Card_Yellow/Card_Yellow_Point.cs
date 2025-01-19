@@ -2,17 +2,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Card_Yellow_Point : MonoBehaviour
+/// <summary>
+/// 得点を取得する。
+/// </summary>
+public class Card_Yellow_Point : ICard
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public PlayerSessionData PlayerData { get; set; } = null;
 
-    // Update is called once per frame
-    void Update()
+    Card_Pattern ICard.card_pattern => Card_Pattern.Orange;
+
+    string ICard.CardName => "得点カード";
+
+    /// <summary>
+    /// PlayerData
+    /// </summary>
+    void ICard.CardNum()
     {
-        
+        if (PlayerData!=null)
+        {
+
+        }
     }
 }

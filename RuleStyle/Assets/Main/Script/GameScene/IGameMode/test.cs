@@ -11,7 +11,7 @@ public class test : MonoBehaviour
 
     void Start()
     {
-       card=new Card_Blue_EffectFour(null);
+       card=new Card_Blue_EffectFour();
     }
 
     // Update is called once per frame

@@ -14,18 +14,25 @@ public class PlayerSessionData:IDisposable
 {
     public PlayerSessionData() 
     {
+        
+    }
+    /// <summary>
+    /// カード全て初期化
+    /// </summary>
+    public void Init()
+    {
         gameSessionManager = GameSessionManager.Instance();
-
-        Card_Blue = new ReactiveProperty<ICard>(new Card_Blue_MySelf(this));
-
         SubScribe();
 
-
+        Card_Blue.Value = new Card_Blue_MySelf();
+        Card_Orange.Value = new Card_Orange_Goal();
+        Card_Yellow.Value = new Card_Yellow_Point();
     }
-    
+
     public void Dispose()
     {   
-        //判定を作った後の受け皿。//これらのDisposeはオブジェクトが破壊されたとしても発生させないようにする。
+        //判定を作った後の受け皿。
+        //これらのDisposeはオブジェクトが破壊されたとしても発生させないようにする。
         ShotEvent?.Dispose();
         PointEvent?.Dispose();
 
@@ -45,27 +52,34 @@ public class PlayerSessionData:IDisposable
             .Subscribe(_ => {
                 EffectPlayer_Id.Clear();
                 _.CardNum();
-                Debug.Log("変更されました");
+                Debug.Log("青(対象)カード変更");
             });
-
+        //判定カード変更なのでCardNumは行わない。UI変更のみ
         Card_Orange.Subscribe(_ => 
-        { 
-        
+        {
+            Debug.Log("オレンジ(ルール・判定)カード変更");
         });
-        //計算方法なのでCardNumは行わない。
+        //計算方法なのでCardNumは行わない。UI変更のみ
         Card_Green.Subscribe(_ =>
         {
-            
+            Debug.Log("緑(計算方法の変更)カード変更");
         });
+        //CardNumは行わない。UI変更のみ
+        Card_Yellow.Subscribe(_ => 
+        {
+            Debug.Log("黄（得点）カード変更");
+        });
+
 
     }
 
-
+    
 
     /// <summary>
     /// マネージャー（UI変更等の時の処理
     /// </summary>
     private GameSessionManager gameSessionManager=null;
+
 
     /// <summary>
     /// ルール全文
@@ -105,7 +119,8 @@ public class PlayerSessionData:IDisposable
     public ReactiveProperty<ICard> Card_Blue = new ReactiveProperty<ICard>();
 
     /// <summary>
-    /// 得点の条件(発生は変更時ではないので効果をReactiveで発生するものでは無い。
+    /// 得点の条件(発生は変更時ではないので効果を
+    /// Reactiveで発生するものでは無い。
     /// </summary>
     public ReactiveProperty<ICard> Card_Orange=new ReactiveProperty<ICard>();
 
@@ -128,6 +143,8 @@ public class PlayerSessionData:IDisposable
     /// プレイヤーの駒(駒を作成時にアタッチする）
     /// </summary>
     private GameObject Player_GamePiece;
+    //場外判定
+    public bool Death=false; 
 
     public void ShotPoint()
     {
