@@ -2,10 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-/// <summary>
-/// “¾“_‚ğæ“¾‚·‚éB
-/// </summary>
-public class Card_Yellow_Point : ICard
+public class Card_Green_Plus : ICard
 {
     public PlayerSessionData PlayerData { get; set; } = null;
 
@@ -18,9 +15,9 @@ public class Card_Yellow_Point : ICard
     /// </summary>
     void ICard.CardNum()
     {
-        if (PlayerData!=null)
+        if (PlayerData != null)
         {
-            
+
         }
     }
 }

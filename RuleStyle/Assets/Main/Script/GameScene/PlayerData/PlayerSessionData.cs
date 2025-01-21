@@ -7,27 +7,53 @@ using UniRx.Triggers;
 
 /// <summary>
 /// セッションプレイヤーデータ
-/// MonoBrhaviorは使わず、Playerの駒にアタッチするスクリプトは別枠で作成する
+/// MonoBehaviorは使わず、Playerの駒にアタッチするスクリプトは別枠で作成する
 /// </summary>
 [Serializable]
 public class PlayerSessionData:IDisposable
 {
-    public PlayerSessionData() 
-    {
-        
-    }
     /// <summary>
     /// カード全て初期化
     /// </summary>
     public void Init()
     {
         gameSessionManager = GameSessionManager.Instance();
-        SubScribe();
 
+        SubScribe();
+        Reset_All();
+    }
+
+    public void Reset_All()
+    {
+        Remove_Blue();
+        Remove_Orange();
+        Remove_Yellow();
+        Remove_Green();
+        Remove_Red();
+    }
+    //Remove-色ーー特定色カードを基準カードに初期化
+    #region Remove関数
+    public void Remove_Blue()
+    {
         Card_Blue.Value = new Card_Blue_MySelf();
-        Card_Orange.Value = new Card_Orange_Goal();
+    }
+    public void Remove_Orange()
+    {
+        Card_Blue.Value= new Card_Orange_Goal();
+    }
+    public void Remove_Yellow()
+    {
         Card_Yellow.Value = new Card_Yellow_Point();
     }
+    public void Remove_Green()
+    {
+        Card_Green.Value = new Card_Green_Plus();  
+    }
+    public void Remove_Red()
+    {
+        Card_Red.Value = new Card_Red_One();
+    }
+    #endregion
 
     public void Dispose()
     {   
@@ -44,36 +70,68 @@ public class PlayerSessionData:IDisposable
         Card_Red?.Dispose();
     }
 
+    /// <summary>
+    /// 主にカード変更時の処理について
+    /// </summary>
     public void SubScribe()
     {
-        Debug.Log("サブスクライブ");
         //対象なので行う。
         Card_Blue
             .Subscribe(_ => {
                 EffectPlayer_Id.Clear();
+                _.Card_PlayerChange(this);
                 _.CardNum();
                 Debug.Log("青(対象)カード変更");
             });
         //判定カード変更なのでCardNumは行わない。UI変更のみ
         Card_Orange.Subscribe(_ => 
         {
+            _.Card_PlayerChange(this);
             Debug.Log("オレンジ(ルール・判定)カード変更");
         });
         //計算方法なのでCardNumは行わない。UI変更のみ
         Card_Green.Subscribe(_ =>
         {
+            _.Card_PlayerChange(this);
             Debug.Log("緑(計算方法の変更)カード変更");
         });
         //CardNumは行わない。UI変更のみ
         Card_Yellow.Subscribe(_ => 
         {
+            _.Card_PlayerChange(this);
             Debug.Log("黄（得点）カード変更");
         });
-
-
+        Card_Red.Subscribe(_ =>
+        {
+            _.Card_PlayerChange(this);
+            Debug.Log("赤（数値）カード変更");
+        });
     }
 
-    
+    /// <summary>
+    /// カードを誰かに変更する時の処理。
+    /// </summary>
+    void GiveCard(ICard card,PlayerSessionData player)
+    {
+        switch (card.card_pattern)
+        {
+            case Card_Pattern.Blue:
+                player.Card_Blue.Value = card;
+                break;
+            case Card_Pattern.Orange: 
+                player.Card_Orange.Value = card;
+                break;
+            case Card_Pattern.Yellow: 
+                 player.Card_Yellow.Value = card;
+                break;
+            case Card_Pattern.Green:
+                player.Card_Green.Value = card;
+                break;
+            case Card_Pattern.Red:
+                player.Card_Red.Value = card;
+                break;
+        }
+    }
 
     /// <summary>
     /// マネージャー（UI変更等の時の処理
@@ -111,7 +169,10 @@ public class PlayerSessionData:IDisposable
     /// </summary>
     public List<int> EffectPlayer_Id=new List<int>();
 
-
+    /// <summary>
+    /// 手札のカードリスト
+    /// </summary>
+    public List<ICard> HandCards = new List<ICard>();
 
     /// <summary>
     /// 効果対象のカード

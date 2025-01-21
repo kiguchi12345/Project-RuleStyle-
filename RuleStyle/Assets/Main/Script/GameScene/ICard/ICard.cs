@@ -24,7 +24,7 @@ public interface ICard
     void CardNum();
 
     /// <summary>
-    /// 
+    /// カードの所持プレイヤ―の変更
     /// </summary>
     public void Card_PlayerChange(PlayerSessionData player)
     {
@@ -39,6 +39,7 @@ public enum Card_Pattern
 {
     Blue,
     Orange,
+    Yellow,
     Green,
     Red
 }
