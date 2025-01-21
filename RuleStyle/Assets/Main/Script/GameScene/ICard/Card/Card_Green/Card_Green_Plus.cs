@@ -8,7 +8,7 @@ public class Card_Green_Plus : ICard
 
     Card_Pattern ICard.card_pattern => Card_Pattern.Orange;
 
-    string ICard.CardName => "得点カード";
+    string ICard.CardName => "＋";
 
     /// <summary>
     /// PlayerData

@@ -9,7 +9,7 @@ public class Card_Yellow_Point : ICard
 {
     public PlayerSessionData PlayerData { get; set; } = null;
 
-    Card_Pattern ICard.card_pattern => Card_Pattern.Orange;
+    Card_Pattern ICard.card_pattern => Card_Pattern.Yellow;
 
     string ICard.CardName => "得点カード";
 

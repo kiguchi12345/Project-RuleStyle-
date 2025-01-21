@@ -2,17 +2,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Card_Green_Minus : MonoBehaviour
+public class Card_Green_Minus : ICard
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public PlayerSessionData PlayerData { get; set; } = null;
 
-    // Update is called once per frame
-    void Update()
+    Card_Pattern ICard.card_pattern => Card_Pattern.Yellow;
+
+    /// <summary>
+    /// ÉJÅ[Éhñº
+    /// </summary>
+    string ICard.CardName => "-";
+
+
+
+    /// <summary>
+    /// 
+    /// </summary>
+    void ICard.CardNum()
     {
-        
+
     }
 }
