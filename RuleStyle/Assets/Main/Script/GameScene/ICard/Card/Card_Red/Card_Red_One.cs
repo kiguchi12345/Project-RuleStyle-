@@ -2,10 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class Card_Red_One : ICard
 {
     public PlayerSessionData PlayerData { get; set; } = null;
 
+    /// <summary>
+    /// Šî€ƒJ[ƒh‚Ìˆ×Null
+    /// </summary>
+    public int? ProbabilityNum => null;
     Card_Pattern ICard.card_pattern => Card_Pattern.Orange;
 
     /// <summary>
@@ -20,7 +25,7 @@ public class Card_Red_One : ICard
     {
         if (PlayerData != null)
         {
-            //PlayerData.
+            PlayerData.RuleSuccessNum = 1;
         }
     }
 }

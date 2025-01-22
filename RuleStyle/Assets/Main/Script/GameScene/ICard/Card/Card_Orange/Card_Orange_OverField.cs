@@ -12,6 +12,8 @@ public class Card_Orange_OverField : ICard
 
     public PlayerSessionData PlayerData { get; set; } = null;
 
+    public int? ProbabilityNum => 45;
+
     Card_Pattern ICard.card_pattern => Card_Pattern.Orange;
 
     /// <summary>
@@ -30,15 +32,17 @@ public class Card_Orange_OverField : ICard
             PlayerData.OrangeTrigger?.Dispose();
 
             //ショットイベント登録
-            PlayerData.OrangeTrigger = PlayerData.Player_GamePiece
-                .OnDestroyAsObservable()
-                .Subscribe(x => 
-                { 
-                    Debug.Log("場外判定"); 
-                    //OnDestroyだとゴールとかの判定とか今後に響きそう。。。
-                }
-                )
-                .AddTo(PlayerData.Player_GamePiece);
+            PlayerData.OrangeTrigger=PlayerData.Player_GamePiece.OnTriggerEnterAsObservable()
+                .Take(1)//一回で自然にDisposeするようにする。
+                .Subscribe(collider =>
+                {
+                    if (collider.gameObject.GetComponent<OutPosition>() != null)
+                    {
+                        Debug.Log("場外です");
+                        PlayerData.Success();
+                    }
+                }).AddTo(PlayerData.Player_GamePiece);
         }
+
     }
 }

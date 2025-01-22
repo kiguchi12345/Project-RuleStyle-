@@ -6,6 +6,7 @@ public class Card_Blue_EffectThree : ICard
 {
     public PlayerSessionData PlayerData { get; set; } = null;
 
+    public int? ProbabilityNum => 50;
     Card_Pattern ICard.card_pattern => Card_Pattern.Blue;
 
     /// <summary>

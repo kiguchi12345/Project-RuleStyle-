@@ -12,6 +12,7 @@ public class Card_Orange_Goal : ICard
 {
     public PlayerSessionData PlayerData { get; set; } = null;
 
+    public int? ProbabilityNum => null;
     Card_Pattern ICard.card_pattern => Card_Pattern.Orange;
 
     /// <summary>
@@ -26,12 +27,18 @@ public class Card_Orange_Goal : ICard
     {
         if(PlayerData != null)
         {
-            PlayerData.Player_GamePiece.OnTriggerEnterAsObservable()
+            //ショットイベントの念のための初期化
+            PlayerData.OrangeTrigger?.Dispose();
+
+            //ショットイベント登録
+            PlayerData.OrangeTrigger = PlayerData.Player_GamePiece.OnTriggerEnterAsObservable()
+                .Take(1)//一回で自然にDisposeするようにする。
                 .Subscribe(collider =>
             { 
                 if (collider.gameObject.GetComponent<GoalObject>() != null)
                 {
                     Debug.Log("ゴール");
+                    PlayerData.Success();
                 }
             }).AddTo(PlayerData.Player_GamePiece);
         }

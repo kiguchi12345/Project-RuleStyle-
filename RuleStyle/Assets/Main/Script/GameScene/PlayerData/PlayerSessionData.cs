@@ -60,7 +60,6 @@ public class PlayerSessionData:IDisposable
         //判定を作った後の受け皿。
         //これらのDisposeはオブジェクトが破壊されたとしても発生させないようにする。
         ShotEvent?.Dispose();
-        PointEvent?.Dispose();
 
         //ReactivePropety
         Card_Blue?.Dispose();
@@ -104,6 +103,7 @@ public class PlayerSessionData:IDisposable
         Card_Red.Subscribe(_ =>
         {
             _.Card_PlayerChange(this);
+            _.CardNum();
             Debug.Log("赤（数値）カード変更");
         });
     }
@@ -159,13 +159,10 @@ public class PlayerSessionData:IDisposable
     /// </summary>
     public IDisposable ShotEvent = null;
     /// <summary>
-    /// Orangeのカードが発生させる判定イベント
+    /// Orangeのカードが発生させるショット時判定イベント
     /// </summary>
     public IDisposable OrangeTrigger = null;
-    /// <summary>
-    /// 得点のイベント
-    /// </summary>
-    public IDisposable PointEvent = null;
+    
 
     /// <summary>
     /// 誰に効果を発生させるかの参照リスト
@@ -178,6 +175,15 @@ public class PlayerSessionData:IDisposable
     /// </summary>
     public List<ICard> HandCards = new List<ICard>();
 
+    //個人ルール成功時の数字。（赤カードで変更される）
+    public int RuleSuccessNum = 0;
+
+    /// <summary>
+    /// プレイヤーの点数
+    /// </summary>
+    public int Point=0;
+
+    #region カードの変数
     /// <summary>
     /// 効果対象のカード
     /// </summary>
@@ -204,14 +210,32 @@ public class PlayerSessionData:IDisposable
     /// </summary>
     public ReactiveProperty<ICard> Card_Red = new ReactiveProperty<ICard>();
 
+    #endregion
+
+
     /// <summary>
     /// プレイヤーの駒(駒を作成時にアタッチする）
     /// </summary>
     public GameObject Player_GamePiece;
     //場外判定
     public bool Death=false;
-    
 
+    /// <summary>
+    /// 個人ルール判定成功すればTrue
+    /// </summary>
+    public bool SuccessPoint=false;
+
+    /// <summary>
+    /// 個人ルール成功時の関数
+    /// </summary>
+    public void Success()
+    {
+        SuccessPoint = true;
+    }
+
+    /// <summary>
+    /// ショット時に判定を作る時。
+    /// </summary>
     public void ShotPoint()
     {
         //判定作成
@@ -220,22 +244,44 @@ public class PlayerSessionData:IDisposable
         //終了時判定を行う
         Player_GamePiece.transform.ObserveEveryValueChanged(x => x.position)
             .Throttle(TimeSpan.FromSeconds(1))
+            .Take(1)//一回で自然にDisposeするようにする。
             .Subscribe(x =>
             { 
                 Debug.Log("ショット終了");
-                
-                PointEvent.Dispose();
+
+                if (SuccessPoint)
+                {
+                    RuleSucces();
+                    SuccessPoint = false;
+                }
             }) .AddTo(Player_GamePiece);
     }
-    
-    public void Point()
+
+
+    /// <summary>
+    /// ターン終了時のあれこれ。
+    /// </summary>
+    public void TurnEnd()
     {
 
     }
 
     /// <summary>
-    /// 
+    /// 個人ルール成功時のポイント。
     /// </summary>
+    public void RuleSucces()
+    {
+        //個人ルール達成時のリワード
+        Card_Yellow.Value.CardNum();
+    }
+    /// <summary>
+    /// ゴール成功時のリワード
+    /// </summary>
+    public void GoalReward()
+    {
+
+    }
+    
     public void PlayerPieceCreate(GameObject MyPiece)
     {
 

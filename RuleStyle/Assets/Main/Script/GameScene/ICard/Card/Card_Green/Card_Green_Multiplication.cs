@@ -2,10 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// ŒvŽZ•û–@:Š|‚¯ŽZ
+/// </summary>
 public class Card_Green_Multiplication : ICard
 {
     public PlayerSessionData PlayerData { get; set; } = null;
 
+    public int? ProbabilityNum => 3;
     Card_Pattern ICard.card_pattern => Card_Pattern.Yellow;
 
     /// <summary>

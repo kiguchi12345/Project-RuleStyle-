@@ -9,6 +9,7 @@ public class Card_Yellow_CardDraw : ICard
 {
     public PlayerSessionData PlayerData { get; set; } = null;
 
+    public int? ProbabilityNum => 25;
     Card_Pattern ICard.card_pattern => Card_Pattern.Yellow;
 
     /// <summary>

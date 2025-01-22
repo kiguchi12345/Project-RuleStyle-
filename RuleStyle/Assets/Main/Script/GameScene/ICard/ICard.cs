@@ -9,9 +9,15 @@ public interface ICard
 {
     public Card_Pattern card_pattern { get; }
 
+    /// <summary>
+    /// カードの持ち主
+    /// </summary>
     public PlayerSessionData PlayerData { get; set; }
 
-    
+    /// <summary>
+    /// カードが出現する確率
+    /// </summary>
+    public int? ProbabilityNum { get; }
 
     /// <summary>
     /// カードの文章

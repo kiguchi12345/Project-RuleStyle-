@@ -3,7 +3,7 @@ using System;
 using UniRx.Triggers;
 public class Player_Attach : MonoBehaviour
 {
-    PlayerSessionData _playerData=null;
+    public PlayerSessionData _playerData=null;
 
     /// <summary>
     /// íœ‚³‚ê‚½

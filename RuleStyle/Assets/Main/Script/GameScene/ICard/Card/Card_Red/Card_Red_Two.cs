@@ -2,29 +2,27 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-/// <summary>
-/// 計算方法：足し算
-/// </summary>
-public class Card_Green_Plus : ICard
+public class Card_Red_Two : ICard
 {
     public PlayerSessionData PlayerData { get; set; } = null;
 
     /// <summary>
     /// 基準カードの為Null
     /// </summary>
-    public int? ProbabilityNum => null;
+    public int? ProbabilityNum => 40;
     Card_Pattern ICard.card_pattern => Card_Pattern.Orange;
 
-    string ICard.CardName => "＋";
-
     /// <summary>
-    /// PlayerData
+    /// カード名
     /// </summary>
+    string ICard.CardName => "2";
+
+    
     void ICard.CardNum()
     {
         if (PlayerData != null)
         {
-
+            PlayerData.RuleSuccessNum = 2;
         }
     }
 }

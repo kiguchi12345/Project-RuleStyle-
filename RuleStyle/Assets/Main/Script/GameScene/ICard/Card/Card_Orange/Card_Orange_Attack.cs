@@ -11,6 +11,8 @@ public class Card_Orange_Attack : ICard
 {
     public PlayerSessionData PlayerData { get; set; } = null;
 
+    public int? ProbabilityNum => 35;
+
     Card_Pattern ICard.card_pattern => Card_Pattern.Orange;
 
     /// <summary>
@@ -30,9 +32,14 @@ public class Card_Orange_Attack : ICard
             //ショットイベント登録
             PlayerData.OrangeTrigger=PlayerData.Player_GamePiece
                 .OnTriggerEnterAsObservable()
+                .Take(1)//一回で自然にDisposeするようにする。
                 .Subscribe(x => 
                 {
-                    Debug.Log("アタック判定");
+                    if (x.gameObject.GetComponent<Player_Attach>() != null)
+                    {
+                        Debug.Log("アタック判定");
+                        PlayerData.Success();
+                    }
                 }).AddTo(PlayerData.Player_GamePiece);
         }
     }

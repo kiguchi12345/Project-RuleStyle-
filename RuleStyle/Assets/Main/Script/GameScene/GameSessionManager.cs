@@ -36,6 +36,7 @@ public class GameSessionManager : MonoBehaviour
 
     public GameSceneContext sceneContext = new GameSceneContext();
 
+    #region プレイヤーの駒の変数。
     [SerializeField]
     private GameObject PlayerGameObject_One;
 
@@ -47,6 +48,8 @@ public class GameSessionManager : MonoBehaviour
 
     [SerializeField] 
     private GameObject PlayerGameObject_Four;
+    #endregion
+
 
     /// <summary>
     /// 順番
@@ -59,7 +62,7 @@ public class GameSessionManager : MonoBehaviour
 
         //もう既にアタッチされていることが想定されている為
         instance = this;
-
+        //
         gameManager = GameManager.Instance();
         
         sceneContext.Mode_Change(new GameMode_Init(this));
@@ -103,8 +106,36 @@ public class GameSessionManager : MonoBehaviour
                 }
         TurnList = Shuffle(TurnList);
 
-        Destroy(this);
     }
+    /// <summary>
+    /// カードをドローする。
+    /// </summary>
+    public void DeckDraw(PlayerSessionData player,int num)
+    {
+        //とりあえず全カード（ちょっとよくわかんない…
+        List<ICard> cards = new List<ICard> 
+        { 
+            new Card_Blue_EffectOne(),
+            new Card_Blue_EffectTwo(),
+            new Card_Blue_EffectThree(),
+            new Card_Blue_EffectFour(),
+            new Card_Blue_Other_than(),
+            new Card_Blue_MySelf(),
+            new Card_Green_Minus(),
+            new Card_Green_Plus(),
+            new Card_Green_Multiplication(),
+            new Card_Orange_Attack(),
+            new Card_Orange_OverField(),
+            new Card_Orange_Goal(),
+            new Card_Red_One(),
+            new Card_Red_Two(),
+            new Card_Red_Three(),
+            new Card_Yellow_CardDraw(),
+            new Card_Yellow_Point()
+        };
+    }
+
+
 
     /// <summary>
     /// GameManagerからGameSessionManagerにデータを代入させていく。
