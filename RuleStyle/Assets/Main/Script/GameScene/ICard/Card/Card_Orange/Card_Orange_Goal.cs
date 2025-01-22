@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UniRx;
+using UniRx.Triggers;
 using UnityEngine;
+using System;
 
 /// <summary>
 /// ゴール行ったときの判定カード
@@ -24,7 +26,14 @@ public class Card_Orange_Goal : ICard
     {
         if(PlayerData != null)
         {
-            //PlayerData.
+            PlayerData.Player_GamePiece.OnTriggerEnterAsObservable()
+                .Subscribe(collider =>
+            { 
+                if (collider.gameObject.GetComponent<GoalObject>() != null)
+                {
+                    Debug.Log("ゴール");
+                }
+            }).AddTo(PlayerData.Player_GamePiece);
         }
     }
 

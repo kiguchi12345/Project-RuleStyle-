@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using UniRx;
+using UniRx.Triggers;
 using UnityEngine;
 
 /// <summary>
@@ -21,6 +23,17 @@ public class Card_Orange_Attack : ICard
     /// </summary>
     void ICard.CardNum()
     {
+        if(PlayerData != null){
+            //ショットイベントの念のための初期化
+            PlayerData.OrangeTrigger?.Dispose();
 
+            //ショットイベント登録
+            PlayerData.OrangeTrigger=PlayerData.Player_GamePiece
+                .OnTriggerEnterAsObservable()
+                .Subscribe(x => 
+                {
+                    Debug.Log("アタック判定");
+                }).AddTo(PlayerData.Player_GamePiece);
+        }
     }
 }

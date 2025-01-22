@@ -159,6 +159,10 @@ public class PlayerSessionData:IDisposable
     /// </summary>
     public IDisposable ShotEvent = null;
     /// <summary>
+    /// Orangeのカードが発生させる判定イベント
+    /// </summary>
+    public IDisposable OrangeTrigger = null;
+    /// <summary>
     /// 得点のイベント
     /// </summary>
     public IDisposable PointEvent = null;
@@ -203,9 +207,10 @@ public class PlayerSessionData:IDisposable
     /// <summary>
     /// プレイヤーの駒(駒を作成時にアタッチする）
     /// </summary>
-    private GameObject Player_GamePiece;
+    public GameObject Player_GamePiece;
     //場外判定
-    public bool Death=false; 
+    public bool Death=false;
+    
 
     public void ShotPoint()
     {

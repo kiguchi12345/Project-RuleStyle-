@@ -11,7 +11,7 @@ public class Card_Yellow_Point : ICard
 
     Card_Pattern ICard.card_pattern => Card_Pattern.Yellow;
 
-    string ICard.CardName => "得点カード";
+    string ICard.CardName => "得点";
 
     /// <summary>
     /// PlayerData
