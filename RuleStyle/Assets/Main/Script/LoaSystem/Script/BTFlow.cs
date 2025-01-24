@@ -42,8 +42,7 @@ public enum Call
     Loadscene = 9,
 
     GameUIPlayer,
-    GameUIdrawCard,
-    GameUIchangeCard,
+    GameUIchangeCard
 }
 
 /// <summary>

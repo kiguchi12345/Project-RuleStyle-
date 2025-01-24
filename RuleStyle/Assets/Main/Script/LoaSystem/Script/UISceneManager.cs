@@ -17,7 +17,7 @@ public class UISceneManager : SingletonMonoBehaviourBase<UISceneManager>
     BitArray nowUIAdvents = new BitArray(32,false);
 
     // UIメニュー一覧(手書き)
-    private Call[] uinames = new Call[] { Call.Menu , Call.VolumeSetting };
+    private Call[] uinames = new Call[] { Call.Menu , Call.VolumeSetting , Call.GameUIchangeCard };
 
     // 出現しているUIメニューの一覧
     List<Call> lastUImenuScene = new List<Call>();

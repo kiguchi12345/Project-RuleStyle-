@@ -31,22 +31,26 @@ public class BTNextSystemOn : MonoBehaviour
         myCanvas = GetComponent<GameObject>();
         if (first)
         {
+            Debug.Log("first Set");
             SystemOn();
         }
     }
 
     public void SystemOn()
     {
+        Debug.Log("myBT Set");
         myBT.onClick.AddListener(OnNextSystem);
 
         if (returnBT)
         {
+            Debug.Log("returnBT Set");
             returnBT.onClick.AddListener(ReturnSystem);
         }
     }
 
     void OnNextSystem()
     {
+        Debug.Log("OnNextSystem");
         StartCoroutine(StartSEWait());
         StartCoroutine(WaitNExt());
 
@@ -78,6 +82,7 @@ public class BTNextSystemOn : MonoBehaviour
 
     void ReturnSystem()
     {
+        Debug.Log("ReturnSystem");
         AudioManager audioManager = AudioManager.Instance();
 
         audioManager.Play(AudioType.NextSE);
