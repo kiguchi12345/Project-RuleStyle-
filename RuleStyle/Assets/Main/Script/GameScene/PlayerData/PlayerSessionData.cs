@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UniRx;
@@ -9,7 +8,6 @@ using UniRx.Triggers;
 /// セッションプレイヤーデータ
 /// MonoBehaviorは使わず、Playerの駒にアタッチするスクリプトは別枠で作成する
 /// </summary>
-[Serializable]
 public class PlayerSessionData:IDisposable
 {
     /// <summary>
@@ -143,14 +141,9 @@ public class PlayerSessionData:IDisposable
     /// ルール全文
     /// </summary>
     public string Rule { get; }
-    /// <summary>
-    /// ID
-    /// </summary>
+    
     public int PlayerId;
 
-    /// <summary>
-    /// プレイヤーネーム
-    /// </summary>
     public string PlayerName=null;
     
 
@@ -181,7 +174,7 @@ public class PlayerSessionData:IDisposable
     /// <summary>
     /// プレイヤーの点数
     /// </summary>
-    public int Point=0;
+    public int PlayerPoint=0;
 
     #region カードの変数
     /// <summary>
@@ -282,8 +275,27 @@ public class PlayerSessionData:IDisposable
 
     }
     
-    public void PlayerPieceCreate(GameObject MyPiece)
+    /// <summary>
+    /// 駒が盤面上に存在しない場合のスクリプト
+    /// </summary>
+    /// <param name="MyPiece"></param>
+    public void PlayerPieceCreate()
     {
-
+        switch (PlayerId) 
+        {
+        case 1:
+                Player_GamePiece=UnityEngine.Object.Instantiate(gameSessionManager.PlayerGameObject_One,gameSessionManager.PieceStartPoint,Quaternion.identity);
+                break;
+        case 2:
+                Player_GamePiece = UnityEngine.Object.Instantiate(gameSessionManager.PlayerGameObject_Two, gameSessionManager.PieceStartPoint, Quaternion.identity);
+                break;
+        case 3:
+                Player_GamePiece = UnityEngine.Object.Instantiate(gameSessionManager.PlayerGameObject_Three, gameSessionManager.PieceStartPoint, Quaternion.identity);
+                break;
+        case 4:
+                Player_GamePiece = UnityEngine.Object.Instantiate(gameSessionManager.PlayerGameObject_Four, gameSessionManager.PieceStartPoint, Quaternion.identity);
+                break;
+        }
+        Death = false;
     }
 }

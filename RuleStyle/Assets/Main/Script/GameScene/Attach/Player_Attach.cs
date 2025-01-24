@@ -1,6 +1,5 @@
 using UnityEngine;
-using System;
-using UniRx.Triggers;
+
 public class Player_Attach : MonoBehaviour
 {
     public PlayerSessionData _playerData=null;

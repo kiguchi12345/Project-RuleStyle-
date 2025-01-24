@@ -26,7 +26,6 @@ public class GameSessionManager : MonoBehaviour
         return instance;
     }
     #endregion
-
     /// <summary>
     /// 現在の操作
     /// </summary>
@@ -37,17 +36,13 @@ public class GameSessionManager : MonoBehaviour
     public GameSceneContext sceneContext = new GameSceneContext();
 
     #region プレイヤーの駒の変数。
-    [SerializeField]
-    private GameObject PlayerGameObject_One;
+    public GameObject PlayerGameObject_One;
 
-    [SerializeField]
-    private GameObject PlayerGameObject_Two;
+    public GameObject PlayerGameObject_Two;
 
-    [SerializeField] 
-    private GameObject PlayerGameObject_Three;
+    public GameObject PlayerGameObject_Three;
 
-    [SerializeField] 
-    private GameObject PlayerGameObject_Four;
+    public GameObject PlayerGameObject_Four;
     #endregion
 
     /// <summary>
@@ -59,7 +54,14 @@ public class GameSessionManager : MonoBehaviour
     /// 順番
     /// </summary>
     public List<int> TurnList = new List<int>();
+    
+    //現在のプレイヤーの順番
+    public int CurrentTurnNum = 0;
 
+    /// <summary>
+    /// 駒の生成場所
+    /// </summary>
+    public Vector3 PieceStartPoint=new Vector3(0,10,0);
     void Start()
     {
         TurnList.Clear();
@@ -69,8 +71,6 @@ public class GameSessionManager : MonoBehaviour
         //
         gameManager = GameManager.Instance();
         
-        sceneContext.Mode_Change(new GameMode_Init(this));
-
         //新しく人数を参照して新しくデータを作成する
         switch (gameManager.PlayerNum)
         {
@@ -108,9 +108,17 @@ public class GameSessionManager : MonoBehaviour
                 };
                 break;
                 }
-        TurnList = Shuffle(TurnList);
 
+        TurnList = Shuffle(TurnList);
+        //Initいる？
+        sceneContext.Mode_Change(new GameMode_Init(this));
     }
+
+    //今のプレイヤーのデータ
+    public PlayerSessionData NowPlayer (){
+        return Session_Data[TurnList[CurrentTurnNum]];
+    }
+
     /// <summary>
     /// カードをドローする。
     /// </summary>
@@ -175,10 +183,10 @@ public class GameSessionManager : MonoBehaviour
                 player.HandCards.Add(cards[cards.Count]);
             }
         }
+
+        //Draw画面に移行する。
+
     }
-
-
-
     /// <summary>
     /// GameManagerからGameSessionManagerにデータを代入させていく。
     /// </summary>
@@ -190,10 +198,6 @@ public class GameSessionManager : MonoBehaviour
             i.Value.PlayerName = GameManager.Variable_Data[i.Key].PlayerName;
         }
     }
-    private void Update() => sceneContext._currentgameMode?.Update();
-
-    private void FixedUpdate() => sceneContext._currentgameMode?.FixUpdate();
-
     /// <summary>
     /// 順番シャッフル
     /// </summary>
@@ -213,7 +217,6 @@ public class GameSessionManager : MonoBehaviour
 
         return array;
     }
-
     private void OnDestroy()
     {
         Debug.Log("破壊");
@@ -222,4 +225,8 @@ public class GameSessionManager : MonoBehaviour
             t.Value.Dispose();
         }
     }
+
+    private void Update() => sceneContext._currentgameMode?.Update();
+
+    private void FixedUpdate() => sceneContext._currentgameMode?.FixUpdate();
 }

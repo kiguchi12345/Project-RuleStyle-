@@ -5,10 +5,13 @@ using UnityEngine;
 public class GameMode_MainMode : IGameMode
 {
     GameSessionManager GameSceneManager;
+
+    PlayerSessionData player;
     public GameMode_MainMode(GameSessionManager gameSceneManager)
     {
         GameSceneManager = gameSceneManager;
     }
+
 
 
     /// <summary>
@@ -16,7 +19,15 @@ public class GameMode_MainMode : IGameMode
     /// </summary>
     void IGameMode.Init()
     {
-        
+        player=GameSceneManager.NowPlayer();
+
+        //î’ñ è„Ç…ë∂ç›ÇµÇ»Ç¢èÍçáÅB
+        if (player.Player_GamePiece==null)
+        {
+            player.PlayerPieceCreate();
+        }
+
+
     }
 
     /// <summary>
