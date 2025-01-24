@@ -12,7 +12,7 @@ public class Card_Orange_OverField : ICard
 
     public PlayerSessionData PlayerData { get; set; } = null;
 
-    public int? ProbabilityNum => 45;
+    public float? ProbabilityNum => 45;
 
     Card_Pattern ICard.card_pattern => Card_Pattern.Orange;
 

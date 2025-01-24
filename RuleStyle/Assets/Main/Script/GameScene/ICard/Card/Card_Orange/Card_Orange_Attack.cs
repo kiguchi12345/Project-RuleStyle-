@@ -11,7 +11,7 @@ public class Card_Orange_Attack : ICard
 {
     public PlayerSessionData PlayerData { get; set; } = null;
 
-    public int? ProbabilityNum => 35;
+    public float? ProbabilityNum => 35;
 
     Card_Pattern ICard.card_pattern => Card_Pattern.Orange;
 

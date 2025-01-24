@@ -17,7 +17,7 @@ public interface ICard
     /// <summary>
     /// カードが出現する確率
     /// </summary>
-    public int? ProbabilityNum { get; }
+    public float? ProbabilityNum { get; }
 
     /// <summary>
     /// カードの文章

@@ -9,7 +9,7 @@ public class Card_Green_Minus : ICard
 {
     public PlayerSessionData PlayerData { get; set; } = null;
 
-    public int? ProbabilityNum => 40;
+    public float? ProbabilityNum => 40;
     Card_Pattern ICard.card_pattern => Card_Pattern.Yellow;
 
     /// <summary>

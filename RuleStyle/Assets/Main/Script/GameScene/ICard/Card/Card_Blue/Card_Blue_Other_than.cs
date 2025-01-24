@@ -9,7 +9,7 @@ public class Card_Blue_Other_than : ICard
 {
     public PlayerSessionData PlayerData { get; set; } = null;
 
-    public int? ProbabilityNum => 30;
+    public float? ProbabilityNum => 30;
     Card_Pattern ICard.card_pattern => Card_Pattern.Blue;
     
     /// <summary>

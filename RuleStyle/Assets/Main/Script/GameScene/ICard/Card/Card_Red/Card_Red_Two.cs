@@ -9,7 +9,7 @@ public class Card_Red_Two : ICard
     /// <summary>
     /// Šî€ƒJ[ƒh‚Ìˆ×Null
     /// </summary>
-    public int? ProbabilityNum => 40;
+    public float? ProbabilityNum => 40;
     Card_Pattern ICard.card_pattern => Card_Pattern.Orange;
 
     /// <summary>

@@ -50,6 +50,10 @@ public class GameSessionManager : MonoBehaviour
     private GameObject PlayerGameObject_Four;
     #endregion
 
+    /// <summary>
+    /// MainのUI
+    /// </summary>
+    public Main_UI_Component UI;
 
     /// <summary>
     /// 順番
@@ -112,27 +116,65 @@ public class GameSessionManager : MonoBehaviour
     /// </summary>
     public void DeckDraw(PlayerSessionData player,int num)
     {
-        //とりあえず全カード（ちょっとよくわかんない…
-        List<ICard> cards = new List<ICard> 
-        { 
-            new Card_Blue_EffectOne(),
-            new Card_Blue_EffectTwo(),
-            new Card_Blue_EffectThree(),
-            new Card_Blue_EffectFour(),
-            new Card_Blue_Other_than(),
-            new Card_Blue_MySelf(),
-            new Card_Green_Minus(),
-            new Card_Green_Plus(),
-            new Card_Green_Multiplication(),
-            new Card_Orange_Attack(),
-            new Card_Orange_OverField(),
-            new Card_Orange_Goal(),
-            new Card_Red_One(),
-            new Card_Red_Two(),
-            new Card_Red_Three(),
-            new Card_Yellow_CardDraw(),
-            new Card_Yellow_Point()
-        };
+        //全カード
+        List<ICard> cards = new List<ICard>
+                {
+                    new Card_Blue_EffectOne(),
+                    new Card_Blue_EffectTwo(),
+                    new Card_Blue_EffectThree(),
+                    new Card_Blue_EffectFour(),
+                    new Card_Blue_Other_than(),
+                    new Card_Blue_MySelf(),
+                    new Card_Green_Minus(),
+                    new Card_Green_Plus(),
+                    new Card_Green_Multiplication(),
+                    new Card_Orange_Attack(),
+                    new Card_Orange_OverField(),
+                    new Card_Orange_Goal(),
+                    new Card_Red_One(),
+                    new Card_Red_Two(),
+                    new Card_Red_Three(),
+                    new Card_Yellow_CardDraw(),
+                    new Card_Yellow_Point()
+                };
+        //複数回ドローも可能
+        for (var i = 0; i < num; i++)
+        {
+            float Max = 0;
+            float Current = 0;
+
+            //確率総和
+            foreach (var x in cards)
+            {
+                if (x.ProbabilityNum != null)
+                {
+                    Max += (float)x.ProbabilityNum;
+                }
+            }
+
+            var random = UnityEngine.Random.Range(0, Max);
+
+            bool DrawSuccess = false;
+            foreach (var x in cards)
+            {
+                if (x.ProbabilityNum != null)
+                {
+                    Current += (float)x.ProbabilityNum;
+
+                    if (Max<Current)
+                    {
+                        player.HandCards.Add(x);
+                        DrawSuccess = true;
+                        break;
+                    }
+                }
+            }
+            //乱数が総和以上の時末尾要素に
+            if (DrawSuccess == false)
+            {
+                player.HandCards.Add(cards[cards.Count]);
+            }
+        }
     }
 
 

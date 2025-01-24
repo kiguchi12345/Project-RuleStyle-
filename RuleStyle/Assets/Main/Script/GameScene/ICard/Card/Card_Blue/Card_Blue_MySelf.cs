@@ -12,7 +12,7 @@ public class Card_Blue_MySelf : ICard
     /// <summary>
     /// 基準カードの影響の為プレイヤーはこのカードを引くことはない（故にNULL）
     /// </summary>
-    public int? ProbabilityNum => null;
+    public float? ProbabilityNum => null;
     Card_Pattern ICard.card_pattern => Card_Pattern.Blue;
 
     /// <summary>

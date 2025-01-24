@@ -12,7 +12,7 @@ public class Card_Orange_Goal : ICard
 {
     public PlayerSessionData PlayerData { get; set; } = null;
 
-    public int? ProbabilityNum => null;
+    public float? ProbabilityNum => null;
     Card_Pattern ICard.card_pattern => Card_Pattern.Orange;
 
     /// <summary>
