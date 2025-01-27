@@ -120,7 +120,7 @@ public class GameSessionManager : MonoBehaviour
     }
 
     /// <summary>
-    /// カードをドローする。
+    /// カードをドローする。引数は対象と枚数
     /// </summary>
     public void DeckDraw(PlayerSessionData player,int num)
     {
@@ -183,10 +183,11 @@ public class GameSessionManager : MonoBehaviour
                 player.HandCards.Add(cards[cards.Count]);
             }
         }
-
         //Draw画面に移行する。
-
     }
+
+    
+
     /// <summary>
     /// GameManagerからGameSessionManagerにデータを代入させていく。
     /// </summary>
@@ -198,6 +199,7 @@ public class GameSessionManager : MonoBehaviour
             i.Value.PlayerName = GameManager.Variable_Data[i.Key].PlayerName;
         }
     }
+
     /// <summary>
     /// 順番シャッフル
     /// </summary>
@@ -217,6 +219,7 @@ public class GameSessionManager : MonoBehaviour
 
         return array;
     }
+
     private void OnDestroy()
     {
         Debug.Log("破壊");

@@ -21,11 +21,46 @@ public class PlayerSessionData:IDisposable
         Reset_All();
     }
 
+    #region カードの変数
+    /// <summary>
+    /// どの駒に効果が適応されるかどうか。
+    /// </summary>
+    public ReactiveProperty<ICard> Card_Blue_EffectPiece = new ReactiveProperty<ICard>();
+
+    /// <summary>
+    /// 報酬効果対象のカード
+    /// </summary>
+    public ReactiveProperty<ICard> Card_Blue_EffectAward = new ReactiveProperty<ICard>();
+
+    /// <summary>
+    /// 得点の条件(発生は変更時ではないので効果を
+    /// Reactiveで発生するものでは無い。
+    /// </summary>
+    public ReactiveProperty<ICard> Card_Orange = new ReactiveProperty<ICard>();
+
+    /// <summary>
+    /// 得点で何を得るのかどうか（カードか得点か）
+    /// </summary>
+    public ReactiveProperty<ICard> Card_Yellow = new ReactiveProperty<ICard>();
+
+    /// <summary>
+    /// 得点の計算方法
+    /// </summary>
+    public ReactiveProperty<ICard> Card_Green = new ReactiveProperty<ICard>();
+
+    /// <summary>
+    ///　カードの参照する数を変更する
+    /// </summary>
+    public ReactiveProperty<ICard> Card_Red = new ReactiveProperty<ICard>();
+    #endregion
+
+
     /// <summary>
     /// キャラクターのカードの情報をリセットする
     /// </summary>
     public void Reset_All()
     {
+        Remove_Blue_EffectPiece();
         Remove_Blue_EffectAward();
         Remove_Orange();
         Remove_Yellow();
@@ -35,7 +70,7 @@ public class PlayerSessionData:IDisposable
     //Remove-色ーー特定色カードを基準カードに初期化
     #region Remove関数
 
-    private void Remove_Blue_EffectPrise()
+    private void Remove_Blue_EffectPiece()
     {
         Card_Blue_EffectPiece.Value = new Card_Blue_MySelf();
     }
@@ -68,6 +103,7 @@ public class PlayerSessionData:IDisposable
         ShotEvent?.Dispose();
 
         //ReactivePropety
+        Card_Blue_EffectPiece?.Dispose();
         Card_Blue_EffectAward?.Dispose();
         Card_Green?.Dispose();
         Card_Yellow?.Dispose();
@@ -80,23 +116,15 @@ public class PlayerSessionData:IDisposable
     /// </summary>
     public void SubScribe()
     {
-        Card_Blue_EffectPiece
-            .Subscribe(_ =>
-            {
-                _.Card_PlayerChange(this);
-                _.CardNum();
-            });
-
-
         Card_Blue_EffectPiece.Subscribe(_ => { 
-            EffectPrisePlayer_Id.Clear();
+            EffectPiecePlayer_Id.Clear();
             _.Card_PlayerChange(this);
             _.CardNum();
             //-------------------------------------------
             //IBlueCardに一度キャストして変換する。
             ICard_Blue blue = (ICard_Blue)_;
             //ここやり方が不安なんだけど問題ないのだろうか
-            EffectPrisePlayer_Id = blue.EffectMember;
+            EffectPiecePlayer_Id = blue.EffectMember;
             //-----------------------------------------------
 
             Debug.Log("青(適用対象)カード変更");
@@ -181,8 +209,23 @@ public class PlayerSessionData:IDisposable
     /// <summary>
     /// マネージャー（UI変更等の時の処理
     /// </summary>
-    private GameSessionManager gameSessionManager=null;
+    public GameSessionManager gameSessionManager=null;
 
+    /// <summary>
+    /// ルールのテキスト変更
+    /// </summary>
+    public void RuleText_Exchange()
+    {
+        string text = Card_Blue_EffectPiece.Value.CardName
+            + Card_Orange.Value.CardName
+            + Card_Blue_EffectAward.Value.CardName
+            + Card_Yellow.Value.CardName
+            + Card_Green.Value.CardName
+            + Card_Red.Value.CardName;
+
+        //テキスト変更
+        Debug.Log(text);
+    }
 
     /// <summary>
     /// ルール全文
@@ -205,7 +248,7 @@ public class PlayerSessionData:IDisposable
     /// <summary>
     /// 効果適用対象
     /// </summary>
-    public List<int> EffectPrisePlayer_Id = new List<int>();
+    public List<int> EffectPiecePlayer_Id = new List<int>();
 
     /// <summary>
     /// 報酬対象 
@@ -217,7 +260,7 @@ public class PlayerSessionData:IDisposable
     /// </summary>
     public List<ICard> HandCards = new List<ICard>();
 
-    //個人ルール成功時の数字。（赤カードで変更される）
+    //個人ルール成功時の報酬量（赤カードで変更される）
     public int RuleSuccessNum = 0;
 
     /// <summary>
@@ -225,40 +268,7 @@ public class PlayerSessionData:IDisposable
     /// </summary>
     public int PlayerPoint=0;
 
-    #region カードの変数
-
-    /// <summary>
-    /// どの駒に効果が適応されるかどうか。
-    /// </summary>
-    public ReactiveProperty<ICard> Card_Blue_EffectPiece = new ReactiveProperty<ICard>();
-
-    /// <summary>
-    /// 報酬効果対象のカード
-    /// </summary>
-    public ReactiveProperty<ICard> Card_Blue_EffectAward = new ReactiveProperty<ICard>();
-
-    /// <summary>
-    /// 得点の条件(発生は変更時ではないので効果を
-    /// Reactiveで発生するものでは無い。
-    /// </summary>
-    public ReactiveProperty<ICard> Card_Orange=new ReactiveProperty<ICard>();
-
-    /// <summary>
-    /// 得点で何を得るのかどうか（カードか得点か）
-    /// </summary>
-    public ReactiveProperty<ICard> Card_Yellow=new ReactiveProperty<ICard>();
-
-    /// <summary>
-    /// 得点の計算方法
-    /// </summary>
-    public ReactiveProperty<ICard> Card_Green = new ReactiveProperty<ICard>();
-
-    /// <summary>
-    ///　カードの参照する数を変更する
-    /// </summary>
-    public ReactiveProperty<ICard> Card_Red = new ReactiveProperty<ICard>();
-
-    #endregion
+    
 
 
     /// <summary>
@@ -287,9 +297,13 @@ public class PlayerSessionData:IDisposable
     public void ShotPoint()
     {
         //判定作成
-        Card_Orange.Value.CardNum();
+        foreach(var x in gameSessionManager.Session_Data)
+        {
+            x.Value.Card_Orange.Value.CardNum();
+        }
 
-        //終了時判定を行う
+
+        //終了時判定を行う(動かなければ起動判定
         Player_GamePiece.transform.ObserveEveryValueChanged(x => x.position)
             .Throttle(TimeSpan.FromSeconds(1))
             .Take(1)//一回で自然にDisposeするようにする。
@@ -315,19 +329,22 @@ public class PlayerSessionData:IDisposable
     }
 
     /// <summary>
-    /// 個人ルール成功時のポイント。
+    /// 個人ルール成功時のリワード。
     /// </summary>
     public void RuleSucces()
     {
         //個人ルール達成時のリワード
         Card_Yellow.Value.CardNum();
     }
+
     /// <summary>
     /// ゴール成功時のリワード
     /// </summary>
     public void GoalReward()
     {
+        gameSessionManager.DeckDraw(this, 2);
 
+        //改変モードに移行する。
     }
     
     /// <summary>
@@ -352,5 +369,11 @@ public class PlayerSessionData:IDisposable
                 break;
         }
         Death = false;
+        //生成時、全体ルールを適応した場合。
+        Player_GamePiece.transform.UpdateAsObservable()
+            .Subscribe(x =>
+            {
+
+            }).AddTo(Player_GamePiece);
     }
 }

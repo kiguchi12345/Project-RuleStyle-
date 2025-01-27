@@ -14,13 +14,13 @@ public class Card_Yellow_CardDraw : ICard
     /// </summary>
     string ICard.CardName => "ƒJ[ƒh‚ğˆø‚­";
 
-    
-
-    /// <summary>
-    /// 
-    /// </summary>
     void ICard.CardNum()
     {
-
+        foreach(var data in PlayerData.EffectAwardPlayer_Id)
+        {
+            PlayerData
+                .gameSessionManager
+                .DeckDraw(PlayerData, PlayerData.RuleSuccessNum);
+        }
     }
 }

@@ -24,6 +24,5 @@ public class Card_Blue_EffectFour : ICard,ICard_Blue
 
     void ICard.CardNum()
     {
-        //PlayerData.EffectPlayer_Id.Add(4);
     }
 }
