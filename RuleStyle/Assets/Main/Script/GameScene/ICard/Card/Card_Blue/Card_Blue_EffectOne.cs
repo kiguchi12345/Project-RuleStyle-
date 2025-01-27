@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Card_Blue_EffectOne : ICard
+public class Card_Blue_EffectOne : ICard, ICard_Blue
 {
     public PlayerSessionData PlayerData { get; set; } = null;
 
@@ -12,13 +12,15 @@ public class Card_Blue_EffectOne : ICard
     /// <summary>
     /// カード名
     /// </summary>
-    string ICard.CardName => "P1";
+    string ICard.CardName => "P1の";
 
     /// <summary>
-    /// 
+    /// カードBlueの時のみの実装となる。
     /// </summary>
+    public List<int> EffectMember => new List<int> {1};
+
     void ICard.CardNum()
     {
-        PlayerData.EffectPlayer_Id.Add(1);
+        //PlayerData.EffectPlayer_Id.Add(1);
     }
 }

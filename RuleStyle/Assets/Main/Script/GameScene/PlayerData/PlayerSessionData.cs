@@ -21,9 +21,12 @@ public class PlayerSessionData:IDisposable
         Reset_All();
     }
 
+    /// <summary>
+    /// キャラクターのカードの情報をリセットする
+    /// </summary>
     public void Reset_All()
     {
-        Remove_Blue();
+        Remove_Blue_EffectAward();
         Remove_Orange();
         Remove_Yellow();
         Remove_Green();
@@ -31,7 +34,12 @@ public class PlayerSessionData:IDisposable
     }
     //Remove-色ーー特定色カードを基準カードに初期化
     #region Remove関数
-    public void Remove_Blue()
+
+    private void Remove_Blue_EffectPrise()
+    {
+        Card_Blue_EffectPiece.Value = new Card_Blue_MySelf();
+    }
+    public void Remove_Blue_EffectAward()
     {
         Card_Blue_EffectAward.Value = new Card_Blue_MySelf();
     }
@@ -79,10 +87,24 @@ public class PlayerSessionData:IDisposable
                 _.CardNum();
             });
 
-        //対象なので行う。
+
+        Card_Blue_EffectPiece.Subscribe(_ => { 
+            EffectPrisePlayer_Id.Clear();
+            _.Card_PlayerChange(this);
+            _.CardNum();
+            //-------------------------------------------
+            //IBlueCardに一度キャストして変換する。
+            ICard_Blue blue = (ICard_Blue)_;
+            //ここやり方が不安なんだけど問題ないのだろうか
+            EffectPrisePlayer_Id = blue.EffectMember;
+            //-----------------------------------------------
+
+            Debug.Log("青(適用対象)カード変更");
+        });
+
         Card_Blue_EffectAward
             .Subscribe(_ => {
-                EffectPlayer_Id.Clear();
+                EffectAwardPlayer_Id.Clear();
                 _.Card_PlayerChange(this);
                 _.CardNum();
 
@@ -90,12 +112,11 @@ public class PlayerSessionData:IDisposable
                 //IBlueCardに一度キャストして変換する。
                 ICard_Blue blue=(ICard_Blue)_;
                 //ここやり方が不安なんだけど問題ないのだろうか
-                EffectPlayer_Id = blue.EffectMember;
+                EffectAwardPlayer_Id = blue.EffectMember;
                 //-----------------------------------------------
 
-                Debug.Log("青(対象)カード変更");
+                Debug.Log("青(報酬対象)カード変更");
             });
-
 
         //判定カード変更なのでCardNumは行わない。UI変更のみ
         Card_Orange.Subscribe(_ => 
@@ -124,14 +145,15 @@ public class PlayerSessionData:IDisposable
     }
 
     /// <summary>
-    /// カードを誰かに変更する時の処理。
+    /// カードを誰かに変更する時の処理。「これじゃダメだった。ブルーが厳しくなる」
     /// </summary>
-    void GiveCard(ICard card,PlayerSessionData player)
+    public void GiveCard(ICard card,PlayerSessionData player)
     {
         switch (card.card_pattern)
         {
             case Card_Pattern.Blue:
-                player.Card_Blue_EffectAward.Value = card;
+                //player.Card_Blue_EffectAward.Value = card;
+                BlueGiveCard();
                 break;
             case Card_Pattern.Orange: 
                 player.Card_Orange.Value = card;
@@ -147,6 +169,14 @@ public class PlayerSessionData:IDisposable
                 break;
         }
     }
+    /// <summary>
+    /// 青のカードを誰かに付与する時の特殊関数。（UIに関わってきます。）
+    /// </summary>
+    public void BlueGiveCard()
+    {
+
+    }
+
 
     /// <summary>
     /// マネージャー（UI変更等の時の処理
@@ -162,7 +192,6 @@ public class PlayerSessionData:IDisposable
     public int PlayerId;
 
     public string PlayerName=null;
-    
 
     /// <summary>
     /// ショット時の判定イベント
@@ -172,13 +201,16 @@ public class PlayerSessionData:IDisposable
     /// Orangeのカードが発生させるショット時判定イベント
     /// </summary>
     public IDisposable OrangeTrigger = null;
-    
 
     /// <summary>
-    /// 誰に効果を発生させるかの参照リスト
-    /// プレイヤー番号で管理する
+    /// 効果適用対象
     /// </summary>
-    public List<int> EffectPlayer_Id=new List<int>();
+    public List<int> EffectPrisePlayer_Id = new List<int>();
+
+    /// <summary>
+    /// 報酬対象 
+    /// </summary>
+    public List<int> EffectAwardPlayer_Id = new List<int>();
 
     /// <summary>
     /// 手札のカードリスト

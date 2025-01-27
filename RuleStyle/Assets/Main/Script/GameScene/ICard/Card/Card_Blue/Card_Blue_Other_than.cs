@@ -5,7 +5,7 @@ using UnityEngine;
 /// <summary>
 /// 自分以外
 /// </summary>
-public class Card_Blue_Other_than : ICard
+public class Card_Blue_Other_than : ICard, ICard_Blue
 {
     public PlayerSessionData PlayerData { get; set; } = null;
 
@@ -15,7 +15,12 @@ public class Card_Blue_Other_than : ICard
     /// <summary>
     /// カード名
     /// </summary>
-    string ICard.CardName => "自分以外";
+    string ICard.CardName => "自分以外の";
+
+    /// <summary>
+    /// カードBlueの時のみの実装となる。
+    /// </summary>
+    public List<int> EffectMember => new List<int> {};
 
     /// <summary>
     /// 青は全て返り値で効果を行う
@@ -28,7 +33,8 @@ public class Card_Blue_Other_than : ICard
         {
             if (i.Key!=PlayerData.PlayerId)
             {
-                PlayerData.EffectPlayer_Id.Add(i.Key);
+                //
+                EffectMember.Add(i.Key);
             }
         }
     }

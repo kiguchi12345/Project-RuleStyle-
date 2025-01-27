@@ -18,7 +18,7 @@ public class Card_Blue_MySelf : ICard,ICard_Blue
     /// <summary>
     /// カード名
     /// </summary>
-    string ICard.CardName => "自分自身";
+    string ICard.CardName => "自分自身の";
 
     /// <summary>
     /// カードBlueの時のみの実装となる。
@@ -32,7 +32,7 @@ public class Card_Blue_MySelf : ICard,ICard_Blue
         //カードプレイヤー自身にデータを帰属させる（要検討
         //PlayerData.EffectPlayer_Id.Add(PlayerData.PlayerId);
 
-        //
+        //カードプレイヤーを対象にする。
         EffectMember.Add(PlayerData.PlayerId);
     }
 }

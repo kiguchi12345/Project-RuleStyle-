@@ -15,17 +15,15 @@ public class Card_Blue_EffectFour : ICard,ICard_Blue
     /// <summary>
     /// カード名
     /// </summary>
-    string ICard.CardName => "P4";
+    string ICard.CardName => "P4の";
 
     /// <summary>
     /// カードBlueの時のみの実装となる。
     /// </summary>
-    public List<int> EffectMember => new List<int> { 4};
-    /// <summary>
-    /// 
-    /// </summary>
+    public List<int> EffectMember => new List<int>{4};
+
     void ICard.CardNum()
     {
-        PlayerData.EffectPlayer_Id.Add(4);
+        //PlayerData.EffectPlayer_Id.Add(4);
     }
 }
