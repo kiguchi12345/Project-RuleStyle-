@@ -15,7 +15,7 @@ public class Card_Blue_Other_than : ICard
     /// <summary>
     /// カード名
     /// </summary>
-    string ICard.CardName => "自分以外の";
+    string ICard.CardName => "自分以外";
 
     /// <summary>
     /// 青は全て返り値で効果を行う

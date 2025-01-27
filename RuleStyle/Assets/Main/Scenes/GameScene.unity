@@ -1227,7 +1227,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: a4c25594cb614774db4bed63c8a26d13, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.505
+      value: 0.81
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: a4c25594cb614774db4bed63c8a26d13, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1811,10 +1811,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameManager: {fileID: 0}
-  PlayerGameObject_One: {fileID: 0}
-  PlayerGameObject_Two: {fileID: 0}
-  PlayerGameObject_Three: {fileID: 0}
-  PlayerGameObject_Four: {fileID: 0}
+  PlayerGameObject_One: {fileID: 919132149155446097, guid: a4c25594cb614774db4bed63c8a26d13, type: 3}
+  PlayerGameObject_Two: {fileID: 919132149155446097, guid: 108609e73952c3143a85d417fc127818, type: 3}
+  PlayerGameObject_Three: {fileID: 919132149155446097, guid: 7565252e46784fa40a024a250e4552af, type: 3}
+  PlayerGameObject_Four: {fileID: 919132149155446097, guid: 5b1b4ac7168657a44af70beb801d7fcb, type: 3}
   UI:
     MainUI: {fileID: 0}
     CurrentPlayerImage: {fileID: 0}
@@ -2519,8 +2519,8 @@ SceneRoots:
   - {fileID: 127724589}
   - {fileID: 398500646}
   - {fileID: 861018717}
-  - {fileID: 1210517013}
   - {fileID: 791429056}
   - {fileID: 1461675832}
   - {fileID: 496637449}
   - {fileID: 280590727}
+  - {fileID: 1210517013}

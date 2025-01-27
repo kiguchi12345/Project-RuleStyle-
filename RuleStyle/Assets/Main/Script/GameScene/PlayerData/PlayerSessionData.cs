@@ -33,11 +33,11 @@ public class PlayerSessionData:IDisposable
     #region Remove関数
     public void Remove_Blue()
     {
-        Card_Blue.Value = new Card_Blue_MySelf();
+        Card_Blue_EffectAward.Value = new Card_Blue_MySelf();
     }
     public void Remove_Orange()
     {
-        Card_Blue.Value= new Card_Orange_Goal();
+        Card_Blue_EffectAward.Value= new Card_Orange_Goal();
     }
     public void Remove_Yellow()
     {
@@ -60,7 +60,7 @@ public class PlayerSessionData:IDisposable
         ShotEvent?.Dispose();
 
         //ReactivePropety
-        Card_Blue?.Dispose();
+        Card_Blue_EffectAward?.Dispose();
         Card_Green?.Dispose();
         Card_Yellow?.Dispose();
         Card_Green?.Dispose();
@@ -72,14 +72,31 @@ public class PlayerSessionData:IDisposable
     /// </summary>
     public void SubScribe()
     {
+        Card_Blue_EffectPiece
+            .Subscribe(_ =>
+            {
+                _.Card_PlayerChange(this);
+                _.CardNum();
+            });
+
         //対象なので行う。
-        Card_Blue
+        Card_Blue_EffectAward
             .Subscribe(_ => {
                 EffectPlayer_Id.Clear();
                 _.Card_PlayerChange(this);
                 _.CardNum();
+
+                //-------------------------------------------
+                //IBlueCardに一度キャストして変換する。
+                ICard_Blue blue=(ICard_Blue)_;
+                //ここやり方が不安なんだけど問題ないのだろうか
+                EffectPlayer_Id = blue.EffectMember;
+                //-----------------------------------------------
+
                 Debug.Log("青(対象)カード変更");
             });
+
+
         //判定カード変更なのでCardNumは行わない。UI変更のみ
         Card_Orange.Subscribe(_ => 
         {
@@ -114,7 +131,7 @@ public class PlayerSessionData:IDisposable
         switch (card.card_pattern)
         {
             case Card_Pattern.Blue:
-                player.Card_Blue.Value = card;
+                player.Card_Blue_EffectAward.Value = card;
                 break;
             case Card_Pattern.Orange: 
                 player.Card_Orange.Value = card;
@@ -177,10 +194,16 @@ public class PlayerSessionData:IDisposable
     public int PlayerPoint=0;
 
     #region カードの変数
+
     /// <summary>
-    /// 効果対象のカード
+    /// どの駒に効果が適応されるかどうか。
     /// </summary>
-    public ReactiveProperty<ICard> Card_Blue = new ReactiveProperty<ICard>();
+    public ReactiveProperty<ICard> Card_Blue_EffectPiece = new ReactiveProperty<ICard>();
+
+    /// <summary>
+    /// 報酬効果対象のカード
+    /// </summary>
+    public ReactiveProperty<ICard> Card_Blue_EffectAward = new ReactiveProperty<ICard>();
 
     /// <summary>
     /// 得点の条件(発生は変更時ではないので効果を

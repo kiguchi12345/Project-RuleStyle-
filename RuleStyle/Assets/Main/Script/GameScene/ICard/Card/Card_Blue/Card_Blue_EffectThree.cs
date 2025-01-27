@@ -12,7 +12,7 @@ public class Card_Blue_EffectThree : ICard
     /// <summary>
     /// ÉJÅ[Éhñº
     /// </summary>
-    string ICard.CardName => "P3ÇÃ";
+    string ICard.CardName => "P3";
 
     /// <summary>
     /// 

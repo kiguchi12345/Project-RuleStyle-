@@ -24,6 +24,8 @@ public interface ICard
     /// </summary>
     string CardName { get;}
 
+    //public List<int> BlueEffect { get; set; }
+
     /// <summary>
     /// ƒJ[ƒhŒø‰Ê
     /// </summary>
