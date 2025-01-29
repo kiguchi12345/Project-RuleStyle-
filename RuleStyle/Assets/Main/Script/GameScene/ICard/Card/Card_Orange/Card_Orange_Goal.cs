@@ -43,5 +43,4 @@ public class Card_Orange_Goal : ICard
             }).AddTo(PlayerData.Player_GamePiece);
         }
     }
-
 }

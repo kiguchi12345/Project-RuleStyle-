@@ -302,7 +302,6 @@ public class PlayerSessionData:IDisposable
             x.Value.Card_Orange.Value.CardNum();
         }
 
-
         //終了時判定を行う(動かなければ起動判定
         Player_GamePiece.transform.ObserveEveryValueChanged(x => x.position)
             .Throttle(TimeSpan.FromSeconds(1))
@@ -311,12 +310,16 @@ public class PlayerSessionData:IDisposable
             { 
                 Debug.Log("ショット終了");
 
-                if (SuccessPoint)
-                {
-                    RuleSucces();
-                    SuccessPoint = false;
+                //全員終了時の判定を確認、その後ルール成功時にルール適用する
+                foreach(var y in gameSessionManager.Session_Data) {
+                    if (y.Value.SuccessPoint)
+                    {
+                        y.Value.RuleSucces();
+                        y.Value.SuccessPoint = false;
+                    }
                 }
-            }) .AddTo(Player_GamePiece);
+            })
+            .AddTo(Player_GamePiece);
     }
 
 
