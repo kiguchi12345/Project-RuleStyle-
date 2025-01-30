@@ -356,27 +356,49 @@ public class PlayerSessionData:IDisposable
     /// <param name="MyPiece"></param>
     public void PlayerPieceCreate()
     {
+        gameSessionManager = GameSessionManager.Instance();
+
+        Debug.Log(PlayerId.ToString());
+        Debug.Log(gameSessionManager.PlayerGameObject_One);
         switch (PlayerId) 
         {
         case 1:
-                Player_GamePiece=UnityEngine.Object.Instantiate(gameSessionManager.PlayerGameObject_One,gameSessionManager.PieceStartPoint,Quaternion.identity);
+                Debug.Log("a");
+                
+                Player_GamePiece =UnityEngine.Object.Instantiate(gameSessionManager.PlayerGameObject_One,gameSessionManager.PieceStartPoint,Quaternion.identity);
                 break;
         case 2:
+                Debug.Log("a");
                 Player_GamePiece = UnityEngine.Object.Instantiate(gameSessionManager.PlayerGameObject_Two, gameSessionManager.PieceStartPoint, Quaternion.identity);
                 break;
         case 3:
+                Debug.Log("a");
                 Player_GamePiece = UnityEngine.Object.Instantiate(gameSessionManager.PlayerGameObject_Three, gameSessionManager.PieceStartPoint, Quaternion.identity);
                 break;
         case 4:
+                Debug.Log("a");
                 Player_GamePiece = UnityEngine.Object.Instantiate(gameSessionManager.PlayerGameObject_Four, gameSessionManager.PieceStartPoint, Quaternion.identity);
                 break;
         }
         Death = false;
+
+        /*
         //生成時、全体ルールを適応した場合。
         Player_GamePiece.transform.UpdateAsObservable()
             .Subscribe(x =>
             {
 
-            }).AddTo(Player_GamePiece);
+            }).AddTo(Player_GamePiece);*/
+    }
+
+    /// <summary>
+    /// IdとNameの
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="name"></param>
+    public void Set_Id_Name(int id,string name)
+    {
+        PlayerId = id;
+        PlayerName = name;
     }
 }

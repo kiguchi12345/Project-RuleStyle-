@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// ターンが変更する時の処理。
+/// </summary>
 public class GameMode_TurnChange : IGameMode
 {
      

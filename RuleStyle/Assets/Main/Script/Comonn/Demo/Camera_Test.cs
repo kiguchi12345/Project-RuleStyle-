@@ -13,7 +13,7 @@ public class Camera_Test : MonoBehaviour
     /// <summary>
     /// •ÏX‚·‚é”’l
     /// </summary>
-    public int ChangeMeter=0;
+    public int ChangeMeter = 0;
 
     public int Dist=10;
 

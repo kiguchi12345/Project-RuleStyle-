@@ -31,7 +31,7 @@ public class GameSessionManager : MonoBehaviour
     /// </summary>
     public IGameMode gamemode;
 
-    public Dictionary<int, PlayerSessionData> Session_Data = null;
+    public Dictionary<int, PlayerSessionData> Session_Data = new Dictionary<int, PlayerSessionData>();
 
     public GameSceneContext sceneContext = new GameSceneContext();
 
@@ -58,64 +58,31 @@ public class GameSessionManager : MonoBehaviour
     //現在のプレイヤーの順番
     public int CurrentTurnNum = 0;
 
+    [Header("駒の生成場所")]
     /// <summary>
     /// 駒の生成場所
     /// </summary>
     public Vector3 PieceStartPoint=new Vector3(0,10,0);
+
+    [Header("カメラ")]
+    public Transform CameraPosition;
+
+    public List<ICard> cards =new List<ICard>();
     void Start()
     {
-        TurnList.Clear();
 
         //もう既にアタッチされていることが想定されている為
         instance = this;
         //
         gameManager = GameManager.Instance();
         
-        //新しく人数を参照して新しくデータを作成する
-        switch (gameManager.PlayerNum)
-        {
-            case 2:
-                Session_Data = new Dictionary<int, PlayerSessionData>
-                {
-                    {1,new PlayerSessionData() },
-                    {2,new PlayerSessionData() }
-                };
-                TurnList = new List<int> {
-                    1,2
-                };
-                break;
-            case 3:
-                Session_Data = new Dictionary<int, PlayerSessionData>
-                {
-                    {1,new PlayerSessionData() },
-                    {2,new PlayerSessionData() },
-                    {3,new PlayerSessionData() }
-                };
-                TurnList = new List<int> {
-                    1,2,3
-                };
-                break;
-            case 4:
-                Session_Data = new Dictionary<int, PlayerSessionData>
-                {
-                    {1,new PlayerSessionData() }, 
-                    {2,new PlayerSessionData() },
-                    {3,new PlayerSessionData() },
-                    {4,new PlayerSessionData() }
-                };
-                TurnList = new List<int> {
-                    1,2,3,4
-                };
-                break;
-                }
-
-        TurnList = Shuffle(TurnList);
         //Initいる？
         sceneContext.Mode_Change(new GameMode_Init(this));
     }
 
     //今のプレイヤーのデータ
     public PlayerSessionData NowPlayer (){
+        Debug.Log(Session_Data[TurnList[CurrentTurnNum]].PlayerId);
         return Session_Data[TurnList[CurrentTurnNum]];
     }
 
@@ -124,27 +91,6 @@ public class GameSessionManager : MonoBehaviour
     /// </summary>
     public void DeckDraw(PlayerSessionData player,int num)
     {
-        //全カード
-        List<ICard> cards = new List<ICard>
-                {
-                    new Card_Blue_EffectOne(),
-                    new Card_Blue_EffectTwo(),
-                    new Card_Blue_EffectThree(),
-                    new Card_Blue_EffectFour(),
-                    new Card_Blue_Other_than(),
-                    new Card_Blue_MySelf(),
-                    new Card_Green_Minus(),
-                    new Card_Green_Plus(),
-                    new Card_Green_Multiplication(),
-                    new Card_Orange_Attack(),
-                    new Card_Orange_OverField(),
-                    new Card_Orange_Goal(),
-                    new Card_Red_One(),
-                    new Card_Red_Two(),
-                    new Card_Red_Three(),
-                    new Card_Yellow_CardDraw(),
-                    new Card_Yellow_Point()
-                };
         //複数回ドローも可能
         for (var i = 0; i < num; i++)
         {
