@@ -122,6 +122,7 @@ public class GameMode_MainMode : IGameMode
 
     public void Line()
     {
+        Vector3 cameraoffset = player.Player_GamePiece.transform.position - GameSceneManager.CameraPosition.transform.position;
         if (Input.GetMouseButton(0))
         {
             dragged.Value = true;
@@ -140,6 +141,7 @@ public class GameMode_MainMode : IGameMode
             //ƒxƒNƒgƒ‹ì¬
             dragOffset = new Vector3(x, 0, z);
 
+            
             //’·‚³‚ª10ˆÈ~‚¾‚Á‚½ê‡
             if (direction.magnitude > 10)
             {
@@ -157,7 +159,8 @@ public class GameMode_MainMode : IGameMode
         {
             dragged.Value = false;
 
-            rb.AddForce(dragOffset * 30, ForceMode.Impulse);
+            
+            rb.AddForce(dragOffset * 27, ForceMode.Impulse);
         }
     }
 
