@@ -25,6 +25,7 @@ public class LoadScene : MonoBehaviour
     float time = 0;
     private void Awake()
     {
+        
         canvasGroup = canvas.GetComponent<CanvasGroup>();
         canvas.SetActive(false);
 

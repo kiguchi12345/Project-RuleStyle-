@@ -25,7 +25,8 @@ public class UISceneManager : SingletonMonoBehaviourBase<UISceneManager>
     List<Call> UIScenes = new List<Call>();
 
     // 一番最後のMaine(タイトルやゲームscene)scene
-    public Call lastMainScene = Call.TitleTest;
+    public Call lastMainScene = Call.None;
+    public Call SetlastMainScene { set { lastMainScene = value; } }
 
     void Advent(Call call)
     {

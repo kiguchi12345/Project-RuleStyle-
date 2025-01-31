@@ -482,7 +482,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   callType: 4
-  call: 5
+  call: 4
   extra: 
 --- !u!1 &265390423
 GameObject:
@@ -1736,7 +1736,7 @@ GameObject:
   - component: {fileID: 1562742629}
   - component: {fileID: 1562742628}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: playerNum
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

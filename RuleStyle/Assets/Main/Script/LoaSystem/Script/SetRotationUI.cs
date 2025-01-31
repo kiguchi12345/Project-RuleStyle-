@@ -16,9 +16,12 @@ public class SetRotationUI : MonoBehaviour
     {
 
         RectTransform rectTransform = this.GetComponent<RectTransform>();
+
+        GameManager gameManager = GameManager.Instance();
+
         // ‚±‚±‚Ål”‚ðŽæ“¾‚µ‚Ä‚¨‚­
         yield return new WaitUntil(() => true);
-        if (mynumber <= 4 /* ‚±‚±‚Él”‚ðÝ’è*/)
+        if (mynumber <= gameManager.PlayerNum)
         {
             Transform parentTransform = transform.parent;
             RotationUI rotationUI = parentTransform.GetComponent<RotationUI>();

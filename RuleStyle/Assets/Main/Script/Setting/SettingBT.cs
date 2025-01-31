@@ -83,11 +83,9 @@ public class SettingBT : MonoBehaviour
                 else { button.onClick.AddListener(OnApplyBT); }
 
                 if (settingType == SettingType.Apply) { button.interactable = false; StartCoroutine(ApplySetWait()); }
-
-                //if(settingType == SettingType.PlayerNumPlus && gameManager.playerNum >= 4 || settingType == SettingType.PlayerNumMinus && gameManager.playerNum <= 1)
-                //{ button.interactable = false; }
-                //else
-                //{ button.interactable = true; }
+                GameManager gameManager = GameManager.Instance();
+                if (visualPercentText != null) { visualPercentText.text = gameManager.PlayerNum.ToString("F0") + "P"; }
+                StartCoroutine(NumChangeBT());
 
                 break;
         }
@@ -114,14 +112,26 @@ public class SettingBT : MonoBehaviour
     IEnumerator PlayerNumChange(int num)
     {
         yield return 0;
-        //GameManager gameManager = GameManager.Instance();
-        //yield return new WaitUntil(() => (gameManager != null) ? true : false);
-        //gameManager.PlayerNumChange(num);
-        //if (visualPercentText != null) { visualPercentText.text = gameManager.playerNum.ToString("F0") + "P"; }
-        //if(settingType == SettingType.PlayerNumPlus && gameManager.playerNum >= 4 || settingType == SettingType.PlayerNumMinus && gameManager.playerNum <= 1)
-        //{ button.interactable = false; }
-        //else
-        //{ button.interactable = true; }
+        GameManager gameManager = GameManager.Instance();
+
+        yield return new WaitUntil(() => (gameManager != null) ? true : false);
+
+        gameManager.PlayerNumChange(gameManager.PlayerNum+num);
+        if (visualPercentText != null) { visualPercentText.text = gameManager.PlayerNum.ToString("F0") + "P"; }
+        StartCoroutine(NumChangeBT());
+    }
+
+    IEnumerator NumChangeBT()
+    {
+        GameManager gameManager = GameManager.Instance();
+        if (settingType == SettingType.PlayerNumPlus && gameManager.PlayerNum >= 4 || settingType == SettingType.PlayerNumMinus && gameManager.PlayerNum <= 2)
+        {
+            button.interactable = false;
+            yield return new WaitForSeconds(1 / 30);
+            StartCoroutine(NumChangeBT());
+        }
+        else
+        { button.interactable = true; }
     }
 
     void Start()

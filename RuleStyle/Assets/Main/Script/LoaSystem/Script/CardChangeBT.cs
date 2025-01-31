@@ -16,8 +16,9 @@ public class CardChangeBT : MonoBehaviour
     private void Awake()
     {
         //playl”‚ğİ’è‚·‚é
-        int num = 4;
-        for (int i = num; i < 4; i++)
+
+        GameManager gameManager = GameManager.Instance();
+        for (int i = gameManager.PlayerNum; i < 4; i++)
         {
             RectTransform rect = buttons[i].transform.gameObject.GetComponent<RectTransform>();
             rect.position = new Vector2(Screen.width, Screen.height) * 2;

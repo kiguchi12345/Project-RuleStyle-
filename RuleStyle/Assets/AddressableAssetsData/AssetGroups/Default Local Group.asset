@@ -15,100 +15,30 @@ MonoBehaviour:
   m_GroupName: Default Local Group
   m_Data:
     m_SerializedData: []
-  m_GUID: e453a7d3896f72d438500d46372a9834
+  m_GUID: 21e73c3ac8c510c43a1587a746375ab7
   m_SerializeEntries:
-  - m_GUID: 100e4ba156b311948a545f902e4f7dfc
-    m_Address: "P1\u306E"
+  - m_GUID: a9b8c379a4855e14e8915e79fd5c7a3f
+    m_Address: firstBGM
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: f0f133c240e36754b8f68a30be259b07
-    m_Address: UI_Simple2Pcard
+  - m_GUID: fb23cd59b0255654f9e53e08ecfafef8
+    m_Address: nextBGM
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 0b6d96b8b2aed2441b33abf1deba6018
-    m_Address: UI_Simple3Pcard
+  - m_GUID: fd9b504328c59494a8f564baf19fb470
+    m_Address: firstSE
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 13c42cdd485e3874d859404fbc63be46
-    m_Address: "P4\u306E"
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 944165c80f96c0747a7e4373dbe48391
-    m_Address: UI_SimpleEnemycard
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: a92f683d61776204196fa5cf4363adbb
-    m_Address: UI_SimpleIMyselfcard
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 33be4f76f8a511744a636751356dd27f
-    m_Address: UI_SimpleCrashcard
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: ae248f3af88757744a77aac290a2d8a9
-    m_Address: UI_SimpleGOALcard
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: f4e82cad4bcf0c14db7296d245fe87f9
-    m_Address: UI_SimpleMisscard
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 132cdfa5c62685642b6c0ac483864f75
-    m_Address: UI_SimpleOutsidecard
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 5d5ed65567e4b45448ac2a8c8dcd0a90
-    m_Address: UI_SimpleOnecard
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: bfb8b735ed3715f41855304015bbf64a
-    m_Address: UI_SimpleThreecard
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: c41177bdfa91ea940aab4ee7e264e330
-    m_Address: UI_SimpleTwocard
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: cbc87a715c590154bb0af4982018786b
-    m_Address: UI_SimpleCrosscard
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: ad2e4de7cfb22aa4192e662254ea4a73
-    m_Address: UI_SimpleMinuscard
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 43409a0aeab9cbe47a00ef916eda89df
-    m_Address: UI_SimplePluscard
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: e321a741722dc85408054d4f199dd045
-    m_Address: UI_Simpleckaihencardcard_01
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: b163715ebb6c6174e9cc3f1b5aae4ab8
-    m_Address: UI_SimplePointcard_01
+  - m_GUID: fed13a19ff5e181449885f402580e1e6
+    m_Address: nextSE
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
-  m_Settings: {fileID: 11400000, guid: 7a5857308362f214d9421cbcbad4d466, type: 2}
+  m_Settings: {fileID: 11400000, guid: 2b80c95bdf8001f478f16e0009e349a7, type: 2}
   m_SchemaSet:
     m_Schemas:
     - {fileID: 11400000, guid: 4edb900c00a8ea14caa5e5fc6750442a, type: 2}

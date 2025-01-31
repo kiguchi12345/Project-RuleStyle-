@@ -22,6 +22,13 @@ public class LoadOut : MonoBehaviour
 
         uISceneManager.LoadOut();
 
+        if(uISceneManager.lastMainScene == Call.None)   
+        {
+            string sceneName = SceneManager.GetActiveScene().name;
+            Call sceneEnum = (Call)System.Enum.Parse(typeof(Call), sceneName);
+
+            uISceneManager.SetlastMainScene = sceneEnum;
+        }
         StartCoroutine(StartBGMWait());
     }
 

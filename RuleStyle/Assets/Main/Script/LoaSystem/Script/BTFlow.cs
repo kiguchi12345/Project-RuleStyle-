@@ -30,7 +30,7 @@ public enum Call
     //scene
     Title = 2,
     TitleTest = 3,
-    Game = 4,
+    GameScene = 4,
     GameTest = 5,
     Result = 6,
 

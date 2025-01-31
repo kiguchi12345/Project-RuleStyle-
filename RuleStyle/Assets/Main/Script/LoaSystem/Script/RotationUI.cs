@@ -16,8 +16,8 @@ public class RotationUI : MonoBehaviour
 
     Vector2 dspsize = new Vector2(Screen.width, Screen.height);
 
-    [SerializeField, Header("画面比率")]
-    float percent = 0.8f;
+    //[SerializeField, Header("画面比率")]
+    Vector2 percent = new Vector2(0.8f,0.7f);
 
     [SerializeField, Header("完了までの時間")]
     float timeToComplete = 2;
@@ -73,9 +73,10 @@ public class RotationUI : MonoBehaviour
     /// <returns></returns>
     IEnumerator SetDirections()
     {
+        GameManager gameManager = GameManager.Instance();
         // ここで人数を取得しておく
-        yield return new WaitUntil(() => true);
-        rotationUI = new List<RectTransform>(new RectTransform[4]);
+        yield return new WaitUntil(() => gameManager);
+        rotationUI = new List<RectTransform>(new RectTransform[gameManager.PlayerNum]);
         bit[0] = true;
         Debug.Log("RotationUI 人数設定完了 /num:" + rotationUI.Count);
 
@@ -159,9 +160,18 @@ public class RotationUI : MonoBehaviour
         Debug.Log("RotationSet スタート");
         for (int i = 0; i < rotationUI.Count; i++)
         {
-            Vector2 vec = new Vector2(Mathf.Sin((DirectionsData[i] * Mathf.Deg2Rad) + dis), Mathf.Cos((DirectionsData[i] * Mathf.Deg2Rad) + dis)) * ((dspsize/2) * percent);
+            float xdis = dis;
+            switch (rotationUI.Count)
+            {
+                case 3:
+                    xdis *= (i == 2) ? 2 : 1;
+                    break;
+                case 2:
+                    xdis *= 2;
+                    break;
+            }
+            Vector2 vec = new Vector2(0,Screen.height*0.08f) + (new Vector2(Mathf.Sin((DirectionsData[i] * Mathf.Deg2Rad) + xdis), Mathf.Cos((DirectionsData[i] * Mathf.Deg2Rad) + xdis)) * ((dspsize/2) * percent));
             vec += dspsize / 2;
-            //Debug.Log("RotationSet/x:"+vec.x+"/y:"+vec.y);
             rotationUI[i].position = vec;
         }
     }
