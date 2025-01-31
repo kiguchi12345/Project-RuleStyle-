@@ -65,7 +65,7 @@ public class LoadScene : MonoBehaviour
 
         yield return new WaitUntil(() => (audioManager != null) ? true : false);
 
-        audioManager.AudioFade(fade, fadeTime);
+        audioManager.AudioFade(fadeTime, (fade) ? FadeSpecified._0to1 :FadeSpecified._1to0);
     }
 
     IEnumerator Load()

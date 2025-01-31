@@ -4,14 +4,18 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
+
+/// <summary>
+/// 変更を行う対象を指定するclass
+/// </summary>
 public class CardChangeBT : MonoBehaviour
 {
-    [SerializeField]
+    [SerializeField,Header("変更を行う対象プレイヤー")]
     Button[] buttons = new Button[0];
 
     private void Awake()
     {
-        //play人数
+        //play人数を設定する
         int num = 4;
         for (int i = num; i < 4; i++)
         {

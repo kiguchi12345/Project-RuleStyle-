@@ -69,45 +69,19 @@ public class AudioManager : SingletonMonoBehaviourBase<AudioManager>
 
     float time = 0;
 
-    public void AudioFade(bool fade, float alltime)
-    {
-        time = 0;
-        StartCoroutine(Fade(alltime * ((fade) ? 1:-1)));
-    }
-
-    public void AudioFadeOut(float alltime)
-    {
-        time = 0;
-        StartCoroutine(Fade(alltime));
-    }
-
-    public void AudioFadeIn(float alltime)
-    {
-        time = 0;
-        StartCoroutine(Fade(alltime * -1));
-    }
-
-
-
-    IEnumerator Fade(float alltime)
-    {
-        yield return new WaitForSeconds(1/30);
-        time += Time.deltaTime;
-
-        // 最大値を超えないようにしつつカウント
-        time = (time + Time.deltaTime < alltime) ? time + Time.deltaTime : alltime;
-
-        // フェードイン/アウト比率設定
-        float fadePerc = Mathf.Abs((time / MathF.Abs(alltime)) - ((alltime >= 0) ? 0 : 1));
-
-        BGMSource.volume = (volumes.BGMmute) ? volumes.BGMVolume * fadePerc : 0;
-        //SESource.volume = (volumes.SEmute) ? volumes.SEVolume * fadePerc : 0;
-
-
-        if (time != alltime)
-        { StartCoroutine(Fade(alltime)); }
         
+    public void AudioFadeOut(float maxTime) { AudioFade(maxTime, FadeSpecified._1to0); }
+    public void AudioFadeIn(float maxTime) { AudioFade(maxTime, FadeSpecified._0to1); }
 
+    public void AudioFade(float maxTime, FadeSpecified fade)
+    {
+        Time_TimerManager time_TimerManager = Time_TimerManager.Instance();
+        time_TimerManager.Fade(FadeVolumeWait, maxTime, fade);
+    }
+
+    void FadeVolumeWait(float fade)
+    {
+        BGMSource.volume = (volumes.BGMmute) ? volumes.BGMVolume * fade : 0;
     }
 
 

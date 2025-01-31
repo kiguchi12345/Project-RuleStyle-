@@ -5,7 +5,9 @@ using UnityEngine;
 
 public enum RotationDis
 {
-    right,left
+    right = 1,
+    left = -1,
+    none = 0
 }
 
 public class RotationUI : MonoBehaviour
@@ -159,7 +161,7 @@ public class RotationUI : MonoBehaviour
         {
             Vector2 vec = new Vector2(Mathf.Sin((DirectionsData[i] * Mathf.Deg2Rad) + dis), Mathf.Cos((DirectionsData[i] * Mathf.Deg2Rad) + dis)) * ((dspsize/2) * percent);
             vec += dspsize / 2;
-            Debug.Log("RotationSet/x:"+vec.x+"/y:"+vec.y);
+            //Debug.Log("RotationSet/x:"+vec.x+"/y:"+vec.y);
             rotationUI[i].position = vec;
         }
     }
