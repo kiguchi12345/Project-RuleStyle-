@@ -17,13 +17,8 @@ MonoBehaviour:
     m_SerializedData: []
   m_GUID: f2e94a2aba45d0040bb19816df7f3f4a
   m_SerializeEntries:
-  - m_GUID: a9b8c379a4855e14e8915e79fd5c7a3f
-    m_Address: firstBGM
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: fb23cd59b0255654f9e53e08ecfafef8
-    m_Address: "Test_BGM_\u30DD\u30F3\u30B3\u30C4\u3060\u3063\u3066\u3044\u3044\u3058\u3083\u306A\u3044\uFF01"
+  - m_GUID: fed13a19ff5e181449885f402580e1e6
+    m_Address: nextSE
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -32,8 +27,13 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: fed13a19ff5e181449885f402580e1e6
-    m_Address: nextSE
+  - m_GUID: fb23cd59b0255654f9e53e08ecfafef8
+    m_Address: nextBGM
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a9b8c379a4855e14e8915e79fd5c7a3f
+    m_Address: firstBGM
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
