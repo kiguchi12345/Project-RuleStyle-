@@ -119,7 +119,7 @@ public class GameMode_MainMode : IGameMode
         // Y軸とZ軸の回転を維持しつつ、X軸だけ更新
         GameSceneManager.CameraPosition.transform.rotation = Quaternion.Euler(fixedRotation);
     }
-
+    /*
     public void Line()
     {
         Vector3 cameraoffset = player.Player_GamePiece.transform.position - GameSceneManager.CameraPosition.transform.position;
@@ -159,8 +159,58 @@ public class GameMode_MainMode : IGameMode
         {
             dragged.Value = false;
 
-            
             rb.AddForce(dragOffset * 27, ForceMode.Impulse);
+        }
+    }*/
+    public void Line()
+    {
+        Vector3 cameraOffset = player.Player_GamePiece.transform.position - GameSceneManager.CameraPosition.transform.position;
+
+        if (Input.GetMouseButton(0))
+        {
+            dragged.Value = true;
+
+            // ドラッグ開始からの差分のベクトル
+            Vector3 direction = Input.mousePosition - position;
+
+            // ラジアン角度を計算
+            var rad = Mathf.Atan2(direction.y, direction.x);
+            Debug.Log(rad);
+
+            // カメラの方向を基準にしたベクトルを作成
+            // カメラの前方向と右方向を取得
+            Vector3 cameraForward = GameSceneManager.CameraPosition.transform.forward;
+            cameraForward.y = 0; // 垂直方向は無視
+            cameraForward.Normalize(); // 正規化
+
+            Vector3 cameraRight = GameSceneManager.CameraPosition.transform.right;
+            cameraRight.y = 0; // 垂直方向は無視
+            cameraRight.Normalize(); // 正規化
+
+            // カメラの前方と右方向を基にドラッグ方向を設定
+            Vector3 dragDirection = cameraForward * Mathf.Sin(rad) + cameraRight * Mathf.Cos(rad);
+
+            // ベクトル作成
+            dragOffset = dragDirection;
+
+            // 長さが10以降だった場合
+            if (direction.magnitude > 10)
+            {
+                Debug.DrawLine(player.Player_GamePiece.transform.position, new Vector3(dragOffset.x * 10, 1, dragOffset.z * 10), Color.black);
+            }
+            // 長さが10以前だった場合
+            else
+            {
+                Debug.DrawLine(player.Player_GamePiece.transform.position, new Vector3(dragOffset.x * direction.magnitude, 1, dragOffset.z * direction.magnitude), Color.black);
+            }
+        }
+        // 離した時
+        else if (dragged.Value == true)
+        {
+            dragged.Value = false;
+
+            // 移動量を加える
+            rb.AddForce(-dragOffset * 27, ForceMode.Impulse);
         }
     }
 
