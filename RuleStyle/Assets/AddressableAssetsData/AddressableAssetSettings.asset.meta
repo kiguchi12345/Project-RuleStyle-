@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<< HEAD
 guid: 2b80c95bdf8001f478f16e0009e349a7
+=======
+guid: 7a5857308362f214d9421cbcbad4d466
+>>>>>>> future/Manager_ver1.1
 NativeFormatImporter:
   externalObjects: {}
   mainObjectFileID: 11400000
