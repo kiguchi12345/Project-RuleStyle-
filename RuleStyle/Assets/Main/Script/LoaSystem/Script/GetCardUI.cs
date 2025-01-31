@@ -136,26 +136,19 @@ public class GetCardUI : MonoBehaviour
 
     public void StartFade()
     {
-        StartCoroutine(OnFade());
+        Time_TimerManager time_TimerManager = Time_TimerManager.Instance();
+        time_TimerManager.Fade(OnFade, maxTime, FadeSpecified._1to0);
     }
 
-    IEnumerator OnFade()
+    void OnFade(float fadePerc)
     {
-        yield return new WaitForSeconds(1 / 30);
-        fadetimer = (fadetimer + Time.deltaTime > timeToComplete) ? timeToComplete : fadetimer + Time.deltaTime;
-        bit[2] = (fadetimer == timeToComplete) ? false : true;
-        // フェードイン/アウト比率設定
-        float fadePerc = Mathf.Abs((fadetimer / timeToComplete) - 1);
-
         float dis = ((dspsize.y + 300f) * fadePerc) - 300f;
 
         mask.padding = new Vector4(0, dis, right, -300);
 
-        if (bit[2])
-        {
-            StartCoroutine(OnFade());
-        }
-        else
+        bit[2] = (fadePerc == 1) ? true : false;
+
+        if (!bit[2])
         {
             cardGetEventEndBT.transform.gameObject.SetActive(true);
             cardGetEventEndBT.onClick.AddListener(CardChangeSystemAdd);
