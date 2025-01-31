@@ -63,6 +63,8 @@ public class GetCardUI : MonoBehaviour
     BitArray bit = new BitArray(4,false);
     private void Awake()
     {
+        Right.onClick.AddListener(() => CardSlide(RotationDis.right));
+        Left.onClick.AddListener(() => CardSlide(RotationDis.left));
         cardGetEventEndBT.transform.gameObject.SetActive(false);
         MaskReset();
         startmaskbt.onClick.AddListener(GetCardEventResetStart);
@@ -189,12 +191,12 @@ public class GetCardUI : MonoBehaviour
     void CardSlideBTSet()
     {
         // 右ボタンのクリックリスナー設定
-        if (allmaxTime != Allcardslidenumber) { Right.onClick.AddListener(() => CardSlide(RotationDis.right)); }
-        else { Right.onClick.RemoveAllListeners(); }
+        if (allmaxTime != Allcardslidenumber) { Right.interactable = true; }
+        else { Right.interactable = false; }
 
         // 左ボタンのクリックリスナー設定
-        if (allmaxTime != 0) { Left.onClick.AddListener(() => CardSlide(RotationDis.left)); }
-        else { Left.onClick.RemoveAllListeners(); }
+        if (allmaxTime != 0) { Left.interactable = true; }
+        else { Left.interactable = false; }
     }
 
     /// <summary>
