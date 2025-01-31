@@ -1491,7 +1491,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   callType: 4
-  call: 5
+  call: 4
   extra: 
 --- !u!1 &1406701738
 GameObject:
