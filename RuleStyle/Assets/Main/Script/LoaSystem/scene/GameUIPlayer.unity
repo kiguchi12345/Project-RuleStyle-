@@ -1560,7 +1560,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b95dbf86a35b1b44493f88b1d8d9cff1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  callType: 4
+  callType: 1
   call: 6
   extra: 
 --- !u!114 &1067205685
