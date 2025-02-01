@@ -9,7 +9,7 @@ public class InTurnFade : MonoBehaviour
     RectMask2D[] rctMasks; // 複数のRectMask2Dコンポーネントを保持する配列
 
     Vector2 dspsize = new Vector2(Screen.width, Screen.height); // 画面サイズ
-    float maxTime = 0.05f; // フェードの最大時間
+    float maxTime = 1f; // フェードの最大時間
     float waitTime = 0.01f; // フェード事の待機時間
 
     int num = 3; // フェードするMaskのインデックス
@@ -19,7 +19,12 @@ public class InTurnFade : MonoBehaviour
     {
         MaskReset(); // Maskを初期化
         GameManager gameManager = GameManager.Instance(); // ゲームマネージャのインスタンスを取得
-        StartCoroutine(FadeNumWait(gameManager.PlayerNum - 1)); // プレイヤーの数に応じたフェード開始
+        //StartCoroutine(FadeNumWait(gameManager.PlayerNum - 1)); // プレイヤーの数に応じたフェード開始
+
+        Time_TimerManager time_TimerManager = Time_TimerManager.Instance(); // 時間管理マネージャを取得
+
+        // フェード処理を呼び出し、完了を待機
+        time_TimerManager.Fade(FadeWait, maxTime, FadeSpecified._1to0);
     }
 
     /// <summary>
@@ -38,22 +43,22 @@ public class InTurnFade : MonoBehaviour
     /// フェードを順番に待機して処理するコルーチン
     /// </summary>
     /// <param name="i">現在のプレイヤーインデックス</param>
-    IEnumerator FadeNumWait(int i)
-    {
-        yield return new WaitForSeconds(0.5f); // 少し待機（0.5秒）
-        num = i; // プレイヤー数に基づいてインデックスを設定
-        conp = false; // フェード完了フラグをリセット
-        Time_TimerManager time_TimerManager = Time_TimerManager.Instance(); // 時間管理マネージャを取得
+    //IEnumerator FadeNumWait(int i)
+    //{
+    //    yield return new WaitForSeconds(0.5f); // 少し待機（0.5秒）
+    //    num = i; // プレイヤー数に基づいてインデックスを設定
+    //    conp = false; // フェード完了フラグをリセット
+    //    Time_TimerManager time_TimerManager = Time_TimerManager.Instance(); // 時間管理マネージャを取得
 
-        // フェード処理を呼び出し、完了を待機
-        time_TimerManager.Fade(FadeWait, maxTime, FadeSpecified._1to0);
+    //    // フェード処理を呼び出し、完了を待機
+    //    time_TimerManager.Fade(FadeWait, maxTime, FadeSpecified._1to0);
 
-        // フェードが完了するまで待機
-        yield return new WaitUntil(() => conp);
+    //    // フェードが完了するまで待機
+    //    yield return new WaitUntil(() => conp);
 
-        // プレイヤー数が1より大きければ、次のインデックスで再度フェードを実行
-        if (i > 0) { StartCoroutine(FadeNumWait((i - 1))); }
-    }
+    //    // プレイヤー数が1より大きければ、次のインデックスで再度フェードを実行
+    //    if (i > 0) { StartCoroutine(FadeNumWait((i - 1))); }
+    //}
 
     /// <summary>
     /// フェード時に呼び出されるコールバック関数
@@ -61,10 +66,14 @@ public class InTurnFade : MonoBehaviour
     /// <param name="perc">フェード進行状況（0～1）</param>
     void FadeWait(float perc)
     {
-        // RectMask2Dのpaddingを進行状況に応じて変更（フェードを表示）
-        rctMasks[num].padding = new Vector4(0, (dspsize.y + 300) * perc, 0, -300);
+        GameManager gameManager = GameManager.Instance();
 
+        for (int i = 0; i < gameManager.PlayerNum; i++)
+        {
+            // RectMask2Dのpaddingを進行状況に応じて変更（フェードを表示）
+            rctMasks[i].padding = new Vector4(0, (dspsize.y + 300) * perc, 0, -300);
+        }
         // フェードが終了した場合、完了フラグをtrueに設定
-        if (perc == 0) { conp = true; }
+        //if (perc == 0) { conp = true; }
     }
 }

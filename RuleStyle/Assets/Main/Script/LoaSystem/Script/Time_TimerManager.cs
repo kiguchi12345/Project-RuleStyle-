@@ -14,7 +14,7 @@ public enum FadeSpecified
 
 public class FrameRate
 {
-    float frameRate = 1 / 30;
+    float frameRate = 1 / 240;
     public float GetFrameRate {  get { return frameRate; } }
 }
 
