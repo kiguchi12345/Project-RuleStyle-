@@ -98,7 +98,8 @@ public class RotationUI : MonoBehaviour
         yield return new WaitUntil(() => (rotationUI.Count == playerNumber));
         Debug.Log("RotationUI RectTransform ó‚¯æ‚èŠ®—¹");
 
-        RotationSet(); // ‰ñ“]İ’è (Set up rotation)
+
+        RotationSet(0,0); // ‰ñ“]İ’è (Set up rotation)
         bit[1] = true; // UIİ’èŠ®—¹ (UI set)
     }
 
@@ -132,7 +133,7 @@ public class RotationUI : MonoBehaviour
         // ‰ñ“]Šp“x‚ğŒvZ (Calculate the rotation angle)
         float dis = ((Mathf.PI * 0.5f) * perc) * ((rotationDis == RotationDis.right) ? 1 : -1);
 
-        RotationSet(dis); // ‰ñ“]‚ğ”½‰f (Apply the rotation)
+        RotationSet(dis, perc); // ‰ñ“]‚ğ”½‰f (Apply the rotation)
         if (perc == 1)
         {
             bit[2] = false; // ‰ñ“]Š®—¹ƒtƒ‰ƒO (Set flag to indicate rotation is complete)
@@ -160,7 +161,7 @@ public class RotationUI : MonoBehaviour
     /// UI‚Ì‰ñ“]‚ğİ’è‚·‚é (Set the rotation for the UI elements)
     /// </summary>
     /// <param name="dis">‰ñ“]—Êiƒ‰ƒWƒAƒ“j (Rotation amount in radians)</param>
-    void RotationSet(float dis = 0)
+    void RotationSet(float dis, float perc)
     {
         Debug.Log("RotationSet ƒXƒ^[ƒg");
         for (int i = 0; i < rotationUI.Count; i++)
@@ -179,19 +180,21 @@ public class RotationUI : MonoBehaviour
             // ‰ñ“]Œã‚ÌˆÊ’u‚ğŒvZ (Calculate the new position after rotation)
             Vector2 vec = new Vector2(Mathf.Sin((DirectionsData[i] * Mathf.Deg2Rad) + xdis), Mathf.Cos((DirectionsData[i] * Mathf.Deg2Rad) + xdis));
 
-            if (i == 1)
+            if (i == 0)
             {
+                // ‰º‚©‚çˆÚ“®
                 // ‹——£’²®
-                vec *= (dspsize / 2) * new Vector2(percent.x*2f,1f);
+                vec *= (dspsize / 2) * new Vector2(percent.x * (Mathf.Abs(perc - 1) + 1f), 1 - (perc * Mathf.Abs(percent.y-1)));
                 // Šî“_’²®
-                vec += dspsize * new Vector2(0.05f, 0.58f);
+                vec += dspsize * new Vector2((Mathf.Abs(perc) * 0.45f) + 0.05f, 0.58f);
             }
-            else if(i == 0)
+            else if (i == 1)
             {
+                // ‰º‚ÉˆÚ“®‚·‚é
                 // ‹——£’²®
-                vec *= (dspsize / 2) * new Vector2(0, 1f);
+                vec *= (dspsize / 2) * new Vector2(percent.x * (Mathf.Abs(perc) + 1f), 1 - (Mathf.Abs(perc-1) * Mathf.Abs(percent.y - 1)));
                 // Šî“_’²®
-                vec += dspsize * new Vector2(0.05f, 0.58f);
+                vec += dspsize * new Vector2((Mathf.Abs(perc-1) * 0.45f) + 0.05f, 0.58f);
             }
             else
             {
