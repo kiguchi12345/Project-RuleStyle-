@@ -36,13 +36,13 @@ public class InTurnFade : MonoBehaviour
 
     IEnumerator FadeNumWait(int i)
     {
+        yield return new WaitForSeconds(0.5f);
         num = i;
         conp = false;
         Time_TimerManager time_TimerManager = Time_TimerManager.Instance();
         time_TimerManager.Fade(FadeWait, maxTime, FadeSpecified._1to0);
 
         yield return new WaitUntil(() => conp);
-        yield return new WaitForSeconds(0.5f);
         if (i > 0) { StartCoroutine(FadeNumWait((i-1))); }
     }
 
