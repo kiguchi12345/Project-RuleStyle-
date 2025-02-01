@@ -132,8 +132,6 @@ public class GameSessionManager : MonoBehaviour
         //Draw画面に移行する。
     }
 
-    
-
     /// <summary>
     /// GameManagerからGameSessionManagerにデータを代入させていく。
     /// </summary>

@@ -45,8 +45,8 @@ public interface ICard
 /// </summary>
 public enum Card_Pattern
 {
+    Purple,
     Blue,
-    Orange,
     Yellow,
     Green,
     Red

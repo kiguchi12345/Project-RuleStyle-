@@ -2,10 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-/// <summary>
-/// 計算方法：足し算
-/// </summary>
-public class Card_Green_Plus : ICard
+
+public class Card_Purple_One : ICard
 {
     public PlayerSessionData PlayerData { get; set; } = null;
 
@@ -15,16 +13,19 @@ public class Card_Green_Plus : ICard
     public float? ProbabilityNum => null;
     Card_Pattern ICard.card_pattern => Card_Pattern.Purple;
 
-    string ICard.CardName => "＋";
+    /// <summary>
+    /// カード名
+    /// </summary>
+    string ICard.CardName => "1";
 
     /// <summary>
-    /// PlayerData
+    /// 
     /// </summary>
     void ICard.CardNum()
     {
         if (PlayerData != null)
         {
-
+            PlayerData.RuleSuccessNum = 1;
         }
     }
 }
