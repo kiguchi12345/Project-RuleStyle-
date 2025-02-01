@@ -179,10 +179,10 @@ public class PlayerSessionData:IDisposable
     {
         switch (card.card_pattern)
         {
-            case Card_Pattern.Red:
-                //player.Card_Blue_EffectAward.Value = card;
-                BlueGiveCard();
-                break;
+            //case Card_Pattern.Red:
+            //    //player.Card_Blue_EffectAward.Value = card;
+            //    BlueGiveCard();
+            //    break;
             case Card_Pattern.Purple: 
                 player.Card_Blue.Value = card;
                 break;
