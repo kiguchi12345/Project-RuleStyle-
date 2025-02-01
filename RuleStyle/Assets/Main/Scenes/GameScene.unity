@@ -1788,7 +1788,7 @@ GameObject:
   - component: {fileID: 1294028815}
   - component: {fileID: 1294028816}
   m_Layer: 0
-  m_Name: cursorchangeTest
+  m_Name: cursorchange
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
