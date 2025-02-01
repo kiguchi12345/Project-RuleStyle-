@@ -27,12 +27,16 @@ public class GameSessionManager : MonoBehaviour
     }
     #endregion
     /// <summary>
-    /// 現在の操作
+    /// 現在のモード
     /// </summary>
     public IGameMode gamemode;
 
     public Dictionary<int, PlayerSessionData> Session_Data = new Dictionary<int, PlayerSessionData>();
 
+
+    /// <summary>
+    /// モード変更自に呼ぶ
+    /// </summary>
     public GameSceneContext sceneContext = new GameSceneContext();
 
     #region プレイヤーの駒の変数。
@@ -68,6 +72,17 @@ public class GameSessionManager : MonoBehaviour
     public Transform CameraPosition;
 
     public List<ICard> cards =new List<ICard>();
+
+    /// <summary>
+    /// 改変カード待ち
+    /// </summary>
+    public LinkedList<int> ExchangeMember = new LinkedList<int>();
+
+
+    /// <summary>
+    /// 基本的にこのラインレンダラーしか使用しない。
+    /// </summary>
+    public LineRenderer Arrowline;
     void Start()
     {
 
@@ -76,7 +91,6 @@ public class GameSessionManager : MonoBehaviour
         //
         gameManager = GameManager.Instance();
         
-        //Initいる？
         sceneContext.Mode_Change(new GameMode_Init(this));
     }
 

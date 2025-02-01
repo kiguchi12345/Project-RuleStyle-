@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UniRx;
 using UniRx.Triggers;
 using UnityEngine;
+using UnityEngine.UI;
 
 /// <summary>
 /// 駒同士がぶつかった時に発動する
@@ -19,28 +20,33 @@ public class Card_Blue_Attack : ICard
     /// カード名
     /// </summary>
     string ICard.CardName => "駒が相手の駒に当たることで";
-
+    Image ICard.cardUI { get; set; }
     /// <summary>
     /// 
     /// </summary>
     void ICard.CardNum()
     {
-        if(PlayerData != null){
+        Debug.Log("cccccccccccc");
+        if (PlayerData != null)
+        {
             //ショットイベントの念のための初期化
-            PlayerData.OrangeTrigger?.Dispose();
+            PlayerData.BlueTrigger?.Dispose();
 
             //ショットイベント登録
-            PlayerData.OrangeTrigger=PlayerData.Player_GamePiece
+            if (PlayerData.Player_GamePiece != null) 
+            { 
+                PlayerData.BlueTrigger = PlayerData?.Player_GamePiece
                 .OnTriggerEnterAsObservable()
                 .Take(1)//一回で自然にDisposeするようにする。
-                .Subscribe(x => 
+                .Subscribe(x =>
                 {
-                    if (x.gameObject.GetComponent<Player_Attach>() != null)
+                    if (x.gameObject != null)
                     {
                         Debug.Log("アタック判定");
                         PlayerData.Success();
                     }
                 }).AddTo(PlayerData.Player_GamePiece);
+            }
         }
     }
 }

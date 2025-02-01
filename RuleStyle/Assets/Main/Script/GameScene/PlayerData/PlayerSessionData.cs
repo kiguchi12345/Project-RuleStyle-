@@ -116,60 +116,81 @@ public class PlayerSessionData:IDisposable
     /// </summary>
     public void SubScribe()
     {
-        Card_Red_EffectPiece.Subscribe(_ => { 
+       
+        Card_Red_EffectPiece.Subscribe(_ => {
             EffectPiecePlayer_Id.Clear();
-            _.Card_PlayerChange(this);
-            _.CardNum();
-            //-------------------------------------------
-            //IBlueCardに一度キャストして変換する。
-            ICard_Red Red = (ICard_Red)_;
-            //ここやり方が不安なんだけど問題ないのだろうか
-            EffectPiecePlayer_Id = Red.EffectMember;
-            //-----------------------------------------------
-
-            Debug.Log("青(適用対象)カード変更");
-        });
-
-        Card_Red_EffectAward
-            .Subscribe(_ => {
-                EffectAwardPlayer_Id.Clear();
+            if (_ != null)
+            {
                 _.Card_PlayerChange(this);
                 _.CardNum();
 
                 //-------------------------------------------
                 //IBlueCardに一度キャストして変換する。
-                ICard_Red red=(ICard_Red)_;
+                ICard_Red Red = (ICard_Red)_;
                 //ここやり方が不安なんだけど問題ないのだろうか
-                EffectAwardPlayer_Id = red.EffectMember;
+                EffectPiecePlayer_Id = Red.EffectMember;
                 //-----------------------------------------------
+            }
+            Debug.Log("青(適用対象)カード変更");
+        });
 
-                Debug.Log("(報酬対象)カード変更");
+        
+        Card_Red_EffectAward
+            .Subscribe(_ => {
+                if (_ != null)
+                {
+                    EffectAwardPlayer_Id.Clear();
+                    _.Card_PlayerChange(this);
+                    _.CardNum();
+
+                    //-------------------------------------------
+                    //IBlueCardに一度キャストして変換する。
+                    ICard_Red red = (ICard_Red)_;
+                    //ここやり方が不安なんだけど問題ないのだろうか
+                    EffectAwardPlayer_Id = red.EffectMember;
+                    //-----------------------------------------------
+
+                    Debug.Log("(報酬対象)カード変更");
+                }
             });
-
+        
         //判定カード変更なのでCardNumは行わない。UI変更のみ
         Card_Blue.Subscribe(_ => 
         {
-            _.Card_PlayerChange(this);
-            Debug.Log("(ルール・判定)カード変更");
+            if (_ != null)
+            {
+                _.Card_PlayerChange(this);
+                Debug.Log("(ルール・判定)カード変更");
+            }
         });
         //計算方法なのでCardNumは行わない。UI変更のみ
         Card_Green.Subscribe(_ =>
         {
-            _.Card_PlayerChange(this);
-            Debug.Log("(計算方法の変更)カード変更");
+            if (_ != null)
+            {
+                _.Card_PlayerChange(this);
+                Debug.Log("(計算方法の変更)カード変更");
+            }
         });
         //CardNumは行わない。UI変更のみ
         Card_Yellow.Subscribe(_ => 
         {
-            _.Card_PlayerChange(this);
-            Debug.Log("（得点）カード変更");
+            if (_ != null)
+            {
+                _.Card_PlayerChange(this);
+                Debug.Log("（得点）カード変更");
+            }
         });
         Card_Purple.Subscribe(_ =>
         {
-            _.Card_PlayerChange(this);
-            _.CardNum();
-            Debug.Log("数値）カード変更");
+            if (_ != null)
+            {
+                _.Card_PlayerChange(this);
+                _.CardNum();
+                Debug.Log("数値）カード変更");
+            }
         });
+
     }
 
     /// <summary>
@@ -183,7 +204,7 @@ public class PlayerSessionData:IDisposable
                 //player.Card_Blue_EffectAward.Value = card;
                 BlueGiveCard();
                 break;
-            case Card_Pattern.Purple: 
+            case Card_Pattern.Blue: 
                 player.Card_Blue.Value = card;
                 break;
             case Card_Pattern.Yellow: 
@@ -192,7 +213,7 @@ public class PlayerSessionData:IDisposable
             case Card_Pattern.Green:
                 player.Card_Green.Value = card;
                 break;
-            case Card_Pattern.Red:
+            case Card_Pattern.Purple:
                 player.Card_Purple.Value = card;
                 break;
         }
@@ -241,9 +262,9 @@ public class PlayerSessionData:IDisposable
     /// </summary>
     public IDisposable ShotEvent = null;
     /// <summary>
-    /// Orangeのカードが発生させるショット時判定イベント
+    /// 青のカードが発生させるショット時判定イベント
     /// </summary>
-    public IDisposable OrangeTrigger = null;
+    public IDisposable BlueTrigger = null;
 
     /// <summary>
     /// 効果適用対象
@@ -297,9 +318,10 @@ public class PlayerSessionData:IDisposable
     public void ShotPoint()
     {
         //判定作成
-        foreach(var x in gameSessionManager.Session_Data)
+        foreach (var x in gameSessionManager.Session_Data)
         {
             x.Value.Card_Blue.Value.CardNum();
+            
         }
 
         //終了時判定を行う(動かなければ起動判定
@@ -318,6 +340,9 @@ public class PlayerSessionData:IDisposable
                         y.Value.SuccessPoint = false;
                     }
                 }
+                RuleText_Exchange();
+
+                TurnEnd();
             })
             .AddTo(Player_GamePiece);
     }
@@ -328,7 +353,7 @@ public class PlayerSessionData:IDisposable
     /// </summary>
     public void TurnEnd()
     {
-
+        
     }
 
     /// <summary>
@@ -364,7 +389,6 @@ public class PlayerSessionData:IDisposable
         {
         case 1:
                 Debug.Log("a");
-                
                 Player_GamePiece =UnityEngine.Object.Instantiate(gameSessionManager.PlayerGameObject_One,gameSessionManager.PieceStartPoint,Quaternion.identity);
                 break;
         case 2:
@@ -389,16 +413,5 @@ public class PlayerSessionData:IDisposable
             {
 
             }).AddTo(Player_GamePiece);*/
-    }
-
-    /// <summary>
-    /// IdとNameの
-    /// </summary>
-    /// <param name="id"></param>
-    /// <param name="name"></param>
-    public void Set_Id_Name(int id,string name)
-    {
-        PlayerId = id;
-        PlayerName = name;
     }
 }

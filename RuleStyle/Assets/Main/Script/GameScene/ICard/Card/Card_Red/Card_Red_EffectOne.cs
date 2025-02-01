@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
 public class Card_Red_EffectOne : ICard, ICard_Red
 {
     public PlayerSessionData PlayerData { get; set; } = null;
@@ -13,7 +13,7 @@ public class Card_Red_EffectOne : ICard, ICard_Red
     /// カード名
     /// </summary>
     string ICard.CardName => "P1の";
-
+    Image ICard.cardUI { get; set; }
     /// <summary>
     /// カードBlueの時のみの実装となる。
     /// </summary>

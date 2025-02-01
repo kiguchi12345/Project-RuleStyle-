@@ -7,13 +7,13 @@ using UnityEngine.UI;
 public class UI_RuleChange : MonoBehaviour
 {
     [SerializeField]
-    private UI_RuleComponent PlayerOne;
+    private Rule_UI_RuleComponent PlayerOne;
     [SerializeField]
-    private UI_RuleComponent PlayerTwo;
+    private Rule_UI_RuleComponent PlayerTwo;
     [SerializeField]
-    private UI_RuleComponent PlayerThree;
+    private Rule_UI_RuleComponent PlayerThree;
     [SerializeField]
-    private UI_RuleComponent PlayerFour;
+    private Rule_UI_RuleComponent PlayerFour;
 
 
     public void UIChange()
@@ -37,7 +37,11 @@ public class UI_RuleChange : MonoBehaviour
             }
         }
     }
-    void LoadUI ()
+    /// <summary>
+    /// UIïœçX
+    /// </summary>
+    /// <param name="UICompo"></param>
+    void LoadUI (Rule_UI_RuleComponent UICompo)
     {
        
     }
@@ -50,20 +54,3 @@ public class UI_RuleChange : MonoBehaviour
     }
 }
 
-/// <summary>
-/// RuleïœçXâÊñ ÇÃUI
-/// </summary>
-[Serializable]
-public class UI_RuleComponent
-{
-    public Button PlayerImage;
-    public Button Red_Card_EffectPiece;
-    public Button Blue_Card;
-    public Button Red_Card_EffectAward;
-    public Button Yellow_Card;
-    public Button Green_Card;
-    public Button Purple_Card;
-
-
-    public TMPro.TextMeshPro RuleText;
-}

@@ -1,8 +1,6 @@
-using NUnit.Framework;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UniRx;
+using System;
 
 public class GameMode_MainMode : IGameMode
 {
@@ -24,6 +22,8 @@ public class GameMode_MainMode : IGameMode
     private Rigidbody rb;
     private Vector3 dragOffset;
 
+    private Vector3 direct;
+
     public GameMode_MainMode(GameSessionManager gameSceneManager)
     {
         GameSceneManager = gameSceneManager;
@@ -33,7 +33,10 @@ public class GameMode_MainMode : IGameMode
     /// 変更する数値
     /// </summary>
     public float ChangeMeter = 0;
+    IDisposable dis_dragg;
 
+    private bool ShotAfter=false;
+    
     /// <summary>
     /// ここで次のプレイヤーの情報を入れる
     /// </summary>
@@ -47,13 +50,14 @@ public class GameMode_MainMode : IGameMode
             player.PlayerPieceCreate();
         }
 
-        //現在のキャラクターの地点
+        //現在のキャラクターの地点を取得する
         Cont = player.Player_GamePiece.transform.position;
         Cont.y = 0;
 
-
         rb=player.Player_GamePiece.GetComponent<Rigidbody>();
-        dragged.Where(_ => _ == true).Subscribe(_ => {
+
+        //ドラッグする為の宣言
+        dis_dragg=dragged.Where(_ => _ == true).Subscribe(_ => {
             position = Input.mousePosition;
         }).AddTo(player.Player_GamePiece);
     }
@@ -63,9 +67,14 @@ public class GameMode_MainMode : IGameMode
     /// </summary>
     void IGameMode.Update()
     {
+        //カメラの宣言
         CameraRole();
 
-        Line();
+        if (ShotAfter==false)
+        {
+            //線引きとショットの関数
+            Line();
+        }
     }
 
     void CameraRole()
@@ -119,63 +128,24 @@ public class GameMode_MainMode : IGameMode
         // Y軸とZ軸の回転を維持しつつ、X軸だけ更新
         GameSceneManager.CameraPosition.transform.rotation = Quaternion.Euler(fixedRotation);
     }
-    /*
-    public void Line()
-    {
-        Vector3 cameraoffset = player.Player_GamePiece.transform.position - GameSceneManager.CameraPosition.transform.position;
-        if (Input.GetMouseButton(0))
-        {
-            dragged.Value = true;
 
-            //ドラッグ開始からの差値のベクトル
-            Vector3 direction = Input.mousePosition - position;
-            
-
-            //ラジアン角度抽出
-            var rad = Mathf.Atan2(direction.y, direction.x);
-            Debug.Log(rad);
-
-            float x = Mathf.Cos(rad);
-            float z = Mathf.Sin(rad);
-
-            //ベクトル作成
-            dragOffset = new Vector3(x, 0, z);
-
-            
-            //長さが10以降だった場合
-            if (direction.magnitude > 10)
-            {
-                Debug.DrawLine(player.Player_GamePiece.transform.position, new Vector3(dragOffset.x * 10, 1, dragOffset.z * 10), Color.black);
-            }
-            //長さが10以前だった場合
-            else
-            {
-                Debug.DrawLine(player.Player_GamePiece.transform.position, new Vector3(dragOffset.x * direction.magnitude, 1, dragOffset.z * direction.magnitude), Color.black);
-            }
-
-        }
-        //離した時
-        else if (dragged.Value == true)
-        {
-            dragged.Value = false;
-
-            rb.AddForce(dragOffset * 27, ForceMode.Impulse);
-        }
-    }*/
     public void Line()
     {
         Vector3 cameraOffset = player.Player_GamePiece.transform.position - GameSceneManager.CameraPosition.transform.position;
 
         if (Input.GetMouseButton(0))
         {
+            GameSessionManager.Instance().Arrowline.positionCount = 2;
+            GameSessionManager.Instance().Arrowline.SetPosition(0, player.Player_GamePiece.transform.position);
+
             dragged.Value = true;
 
             // ドラッグ開始からの差分のベクトル
             Vector3 direction = Input.mousePosition - position;
+            direct = direction;
 
             // ラジアン角度を計算
             var rad = Mathf.Atan2(direction.y, direction.x);
-            Debug.Log(rad);
 
             // カメラの方向を基準にしたベクトルを作成
             // カメラの前方向と右方向を取得
@@ -193,26 +163,47 @@ public class GameMode_MainMode : IGameMode
             // ベクトル作成
             dragOffset = dragDirection;
 
-            // 長さが10以降だった場合
-            if (direction.magnitude > 10)
+            if (direction.magnitude > 5)
             {
-                Debug.DrawLine(player.Player_GamePiece.transform.position, new Vector3(dragOffset.x * 10, 1, dragOffset.z * 10), Color.black);
+                // dragOffsetを反転させて反対方向に延ばす
+                GameSessionManager.Instance().Arrowline.SetPosition(1, new Vector3(
+                    player.Player_GamePiece.transform.position.x - (dragOffset.x * 5), 
+                    1,
+                    player.Player_GamePiece.transform.position.z - (dragOffset.z * 5)  
+                ));
             }
-            // 長さが10以前だった場合
+            // 長さが5以下だった場合
             else
             {
-                Debug.DrawLine(player.Player_GamePiece.transform.position, new Vector3(dragOffset.x * direction.magnitude, 1, dragOffset.z * direction.magnitude), Color.black);
+                // dragOffsetを反転させて反対方向に延ばす
+                GameSessionManager.Instance().Arrowline.SetPosition(1, new Vector3(
+                    player.Player_GamePiece.transform.position.x - (dragOffset.x * direction.magnitude), 
+                    1,
+                    player.Player_GamePiece.transform.position.z - (dragOffset.z * direction.magnitude) 
+                ));
             }
+
+
         }
         // 離した時
         else if (dragged.Value == true)
         {
             dragged.Value = false;
+            GameSessionManager.Instance().Arrowline.positionCount = 0;
 
-            // 移動量を加える
-            rb.AddForce(-dragOffset * 27, ForceMode.Impulse);
+            if (direct.magnitude !=0) {
+                //ショットはイベントを加える。
+                ShotAfter = true;
+                // 移動量を加える
+                rb.AddForce(-dragOffset * 27, ForceMode.Impulse);
+
+                //ショット完全終了判定を作る
+                player.ShotPoint();
+            }
         }
     }
+
+
 
     void IGameMode.FixUpdate()
     {

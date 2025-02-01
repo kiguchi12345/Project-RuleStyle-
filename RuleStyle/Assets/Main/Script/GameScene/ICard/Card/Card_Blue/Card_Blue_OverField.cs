@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UniRx.Triggers;
 using UnityEngine;
 using UniRx;
-
+using UnityEngine.UI;
 /// <summary>
 /// 駒がステージ外に出たときに発動する
 /// </summary>
@@ -21,18 +21,17 @@ public class Card_Blue_OverField : ICard
     /// </summary>
     string ICard.CardName => "場外で";
 
-    /// <summary>
-    /// 
-    /// </summary>
+    Image ICard.cardUI { get; set; }
+
     void ICard.CardNum()
     {
         if (PlayerData != null)
         {
             //ショットイベントの念のための初期化
-            PlayerData.OrangeTrigger?.Dispose();
+            PlayerData.BlueTrigger?.Dispose();
 
             //ショットイベント登録
-            PlayerData.OrangeTrigger=PlayerData.Player_GamePiece.OnTriggerEnterAsObservable()
+            PlayerData.BlueTrigger=PlayerData.Player_GamePiece.OnTriggerEnterAsObservable()
                 .Take(1)//一回で自然にDisposeするようにする。
                 .Subscribe(collider =>
                 {

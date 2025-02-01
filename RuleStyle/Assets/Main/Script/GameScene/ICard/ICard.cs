@@ -1,7 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
+using UnityEngine.AddressableAssets;
 /// <summary>
 /// カード一つ目
 /// </summary>
@@ -24,7 +25,7 @@ public interface ICard
     /// </summary>
     string CardName { get;}
 
-    //public List<int> BlueEffect { get; set; }
+    Image cardUI { get; set; }
 
     /// <summary>
     /// カード効果
@@ -37,6 +38,16 @@ public interface ICard
     public void Card_PlayerChange(PlayerSessionData player)
     {
         PlayerData = player;
+    }
+
+    public void Card_LoadData()
+    {
+        Addressables.LoadAssetAsync<Image>(CardName).Completed += _ =>
+        {
+            if (_.Result == null) 
+            {return;};
+            cardUI =_.Result;
+        };
     }
 }
 

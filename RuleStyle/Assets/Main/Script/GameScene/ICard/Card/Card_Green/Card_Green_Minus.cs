@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
 /// <summary>
 /// ŒvZ•û–@Fˆø‚­
 /// </summary>
@@ -17,7 +17,7 @@ public class Card_Green_Minus : ICard
     /// </summary>
     string ICard.CardName => "-";
 
-
+    Image ICard.cardUI { get; set; }
 
     /// <summary>
     /// 
