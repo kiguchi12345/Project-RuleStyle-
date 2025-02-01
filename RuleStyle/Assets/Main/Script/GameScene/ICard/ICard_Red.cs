@@ -5,7 +5,7 @@ using UnityEngine;
 /// <summary>
 /// 青カード時のみの実装になる。
 /// </summary>
-public interface ICard_Blue
+public interface ICard_Red
 {
     /// <summary>
     /// 

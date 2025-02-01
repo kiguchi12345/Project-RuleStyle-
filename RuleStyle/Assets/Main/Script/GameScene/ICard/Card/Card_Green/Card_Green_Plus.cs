@@ -13,7 +13,7 @@ public class Card_Green_Plus : ICard
     /// Šî€ƒJ[ƒh‚Ìˆ×Null
     /// </summary>
     public float? ProbabilityNum => null;
-    Card_Pattern ICard.card_pattern => Card_Pattern.Orange;
+    Card_Pattern ICard.card_pattern => Card_Pattern.Purple;
 
     string ICard.CardName => "{";
 

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class Card_Red_One : ICard
+public class Card_Purple_One : ICard
 {
     public PlayerSessionData PlayerData { get; set; } = null;
 
@@ -11,7 +11,7 @@ public class Card_Red_One : ICard
     /// 基準カードの為Null
     /// </summary>
     public float? ProbabilityNum => null;
-    Card_Pattern ICard.card_pattern => Card_Pattern.Orange;
+    Card_Pattern ICard.card_pattern => Card_Pattern.Purple;
 
     /// <summary>
     /// カード名

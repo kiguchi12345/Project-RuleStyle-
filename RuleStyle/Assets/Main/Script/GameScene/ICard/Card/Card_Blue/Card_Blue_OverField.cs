@@ -7,14 +7,14 @@ using UniRx;
 /// <summary>
 /// 駒がステージ外に出たときに発動する
 /// </summary>
-public class Card_Orange_OverField : ICard
+public class Card_Blue_OverField : ICard
 {
 
     public PlayerSessionData PlayerData { get; set; } = null;
 
     public float? ProbabilityNum => 45;
 
-    Card_Pattern ICard.card_pattern => Card_Pattern.Orange;
+    Card_Pattern ICard.card_pattern => Card_Pattern.Blue;
 
     /// <summary>
     /// カード名

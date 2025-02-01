@@ -25,18 +25,18 @@ public class PlayerSessionData:IDisposable
     /// <summary>
     /// どの駒に効果が適応されるかどうか。
     /// </summary>
-    public ReactiveProperty<ICard> Card_Blue_EffectPiece = new ReactiveProperty<ICard>();
+    public ReactiveProperty<ICard> Card_Red_EffectPiece = new ReactiveProperty<ICard>();
 
     /// <summary>
     /// 報酬効果対象のカード
     /// </summary>
-    public ReactiveProperty<ICard> Card_Blue_EffectAward = new ReactiveProperty<ICard>();
+    public ReactiveProperty<ICard> Card_Red_EffectAward = new ReactiveProperty<ICard>();
 
     /// <summary>
     /// 得点の条件(発生は変更時ではないので効果を
     /// Reactiveで発生するものでは無い。
     /// </summary>
-    public ReactiveProperty<ICard> Card_Orange = new ReactiveProperty<ICard>();
+    public ReactiveProperty<ICard> Card_Blue = new ReactiveProperty<ICard>();
 
     /// <summary>
     /// 得点で何を得るのかどうか（カードか得点か）
@@ -51,7 +51,7 @@ public class PlayerSessionData:IDisposable
     /// <summary>
     ///　カードの参照する数を変更する
     /// </summary>
-    public ReactiveProperty<ICard> Card_Red = new ReactiveProperty<ICard>();
+    public ReactiveProperty<ICard> Card_Purple = new ReactiveProperty<ICard>();
     #endregion
 
 
@@ -60,27 +60,27 @@ public class PlayerSessionData:IDisposable
     /// </summary>
     public void Reset_All()
     {
-        Remove_Blue_EffectPiece();
-        Remove_Blue_EffectAward();
-        Remove_Orange();
+        Remove_Red_EffectPiece();
+        Remove_Red_EffectAward();
+        Remove_Blue();
         Remove_Yellow();
         Remove_Green();
-        Remove_Red();
+        Remove_Purple();
     }
     //Remove-色ーー特定色カードを基準カードに初期化
     #region Remove関数
 
-    private void Remove_Blue_EffectPiece()
+    private void Remove_Red_EffectPiece()
     {
-        Card_Blue_EffectPiece.Value = new Card_Blue_MySelf();
+        Card_Red_EffectPiece.Value = new Card_Red_MySelf();
     }
-    public void Remove_Blue_EffectAward()
+    public void Remove_Red_EffectAward()
     {
-        Card_Blue_EffectAward.Value = new Card_Blue_MySelf();
+        Card_Red_EffectAward.Value = new Card_Red_MySelf();
     }
-    public void Remove_Orange()
+    public void Remove_Blue()
     {
-        Card_Blue_EffectAward.Value= new Card_Orange_Goal();
+        Card_Blue.Value= new Card_Blue_Goal();
     }
     public void Remove_Yellow()
     {
@@ -90,9 +90,9 @@ public class PlayerSessionData:IDisposable
     {
         Card_Green.Value = new Card_Green_Plus();  
     }
-    public void Remove_Red()
+    public void Remove_Purple()
     {
-        Card_Red.Value = new Card_Red_One();
+        Card_Purple.Value = new Card_Purple_One();
     }
     #endregion
 
@@ -103,12 +103,12 @@ public class PlayerSessionData:IDisposable
         ShotEvent?.Dispose();
 
         //ReactivePropety
-        Card_Blue_EffectPiece?.Dispose();
-        Card_Blue_EffectAward?.Dispose();
+        Card_Red_EffectPiece?.Dispose();
+        Card_Red_EffectAward?.Dispose();
         Card_Green?.Dispose();
         Card_Yellow?.Dispose();
         Card_Green?.Dispose();
-        Card_Red?.Dispose();
+        Card_Purple?.Dispose();
     }
 
     /// <summary>
@@ -116,21 +116,21 @@ public class PlayerSessionData:IDisposable
     /// </summary>
     public void SubScribe()
     {
-        Card_Blue_EffectPiece.Subscribe(_ => { 
+        Card_Red_EffectPiece.Subscribe(_ => { 
             EffectPiecePlayer_Id.Clear();
             _.Card_PlayerChange(this);
             _.CardNum();
             //-------------------------------------------
             //IBlueCardに一度キャストして変換する。
-            ICard_Blue blue = (ICard_Blue)_;
+            ICard_Red Red = (ICard_Red)_;
             //ここやり方が不安なんだけど問題ないのだろうか
-            EffectPiecePlayer_Id = blue.EffectMember;
+            EffectPiecePlayer_Id = Red.EffectMember;
             //-----------------------------------------------
 
             Debug.Log("青(適用対象)カード変更");
         });
 
-        Card_Blue_EffectAward
+        Card_Red_EffectAward
             .Subscribe(_ => {
                 EffectAwardPlayer_Id.Clear();
                 _.Card_PlayerChange(this);
@@ -138,37 +138,37 @@ public class PlayerSessionData:IDisposable
 
                 //-------------------------------------------
                 //IBlueCardに一度キャストして変換する。
-                ICard_Blue blue=(ICard_Blue)_;
+                ICard_Red red=(ICard_Red)_;
                 //ここやり方が不安なんだけど問題ないのだろうか
-                EffectAwardPlayer_Id = blue.EffectMember;
+                EffectAwardPlayer_Id = red.EffectMember;
                 //-----------------------------------------------
 
-                Debug.Log("青(報酬対象)カード変更");
+                Debug.Log("(報酬対象)カード変更");
             });
 
         //判定カード変更なのでCardNumは行わない。UI変更のみ
-        Card_Orange.Subscribe(_ => 
+        Card_Blue.Subscribe(_ => 
         {
             _.Card_PlayerChange(this);
-            Debug.Log("オレンジ(ルール・判定)カード変更");
+            Debug.Log("(ルール・判定)カード変更");
         });
         //計算方法なのでCardNumは行わない。UI変更のみ
         Card_Green.Subscribe(_ =>
         {
             _.Card_PlayerChange(this);
-            Debug.Log("緑(計算方法の変更)カード変更");
+            Debug.Log("(計算方法の変更)カード変更");
         });
         //CardNumは行わない。UI変更のみ
         Card_Yellow.Subscribe(_ => 
         {
             _.Card_PlayerChange(this);
-            Debug.Log("黄（得点）カード変更");
+            Debug.Log("（得点）カード変更");
         });
-        Card_Red.Subscribe(_ =>
+        Card_Purple.Subscribe(_ =>
         {
             _.Card_PlayerChange(this);
             _.CardNum();
-            Debug.Log("赤（数値）カード変更");
+            Debug.Log("数値）カード変更");
         });
     }
 
@@ -179,12 +179,12 @@ public class PlayerSessionData:IDisposable
     {
         switch (card.card_pattern)
         {
-            case Card_Pattern.Blue:
+            case Card_Pattern.Red:
                 //player.Card_Blue_EffectAward.Value = card;
                 BlueGiveCard();
                 break;
-            case Card_Pattern.Orange: 
-                player.Card_Orange.Value = card;
+            case Card_Pattern.Purple: 
+                player.Card_Blue.Value = card;
                 break;
             case Card_Pattern.Yellow: 
                  player.Card_Yellow.Value = card;
@@ -193,7 +193,7 @@ public class PlayerSessionData:IDisposable
                 player.Card_Green.Value = card;
                 break;
             case Card_Pattern.Red:
-                player.Card_Red.Value = card;
+                player.Card_Purple.Value = card;
                 break;
         }
     }
@@ -216,12 +216,12 @@ public class PlayerSessionData:IDisposable
     /// </summary>
     public void RuleText_Exchange()
     {
-        string text = Card_Blue_EffectPiece.Value.CardName
-            + Card_Orange.Value.CardName
-            + Card_Blue_EffectAward.Value.CardName
+        string text = Card_Red_EffectPiece.Value.CardName
+            + Card_Blue.Value.CardName
+            + Card_Red_EffectAward.Value.CardName
             + Card_Yellow.Value.CardName
             + Card_Green.Value.CardName
-            + Card_Red.Value.CardName;
+            + Card_Purple.Value.CardName;
 
         //テキスト変更
         Debug.Log(text);
@@ -299,7 +299,7 @@ public class PlayerSessionData:IDisposable
         //判定作成
         foreach(var x in gameSessionManager.Session_Data)
         {
-            x.Value.Card_Orange.Value.CardNum();
+            x.Value.Card_Blue.Value.CardNum();
         }
 
         //終了時判定を行う(動かなければ起動判定

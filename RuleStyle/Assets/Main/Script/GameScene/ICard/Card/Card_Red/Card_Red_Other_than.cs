@@ -5,12 +5,12 @@ using UnityEngine;
 /// <summary>
 /// 自分以外
 /// </summary>
-public class Card_Blue_Other_than : ICard, ICard_Blue
+public class Card_Red_Other_than : ICard, ICard_Red
 {
     public PlayerSessionData PlayerData { get; set; } = null;
 
     public float? ProbabilityNum => 30;
-    Card_Pattern ICard.card_pattern => Card_Pattern.Blue;
+    Card_Pattern ICard.card_pattern => Card_Pattern.Red;
     
     /// <summary>
     /// カード名

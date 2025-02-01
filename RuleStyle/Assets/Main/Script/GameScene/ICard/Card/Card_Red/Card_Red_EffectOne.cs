@@ -2,12 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Card_Blue_EffectOne : ICard, ICard_Blue
+public class Card_Red_EffectOne : ICard, ICard_Red
 {
     public PlayerSessionData PlayerData { get; set; } = null;
 
     public float? ProbabilityNum => 50;
-    Card_Pattern ICard.card_pattern => Card_Pattern.Blue;
+    Card_Pattern ICard.card_pattern => Card_Pattern.Red;
 
     /// <summary>
     /// ƒJ[ƒh–¼

@@ -5,7 +5,7 @@ using UnityEngine;
 /// <summary>
 /// 青カード。対象者はカードプレイヤー
 /// </summary>
-public class Card_Blue_MySelf : ICard,ICard_Blue
+public class Card_Red_MySelf : ICard,ICard_Red
 {
     public PlayerSessionData PlayerData { get; set; } = null;
 
@@ -13,7 +13,7 @@ public class Card_Blue_MySelf : ICard,ICard_Blue
     /// 基準カードの影響の為プレイヤーはこのカードを引くことはない（故にNULL）
     /// </summary>
     public float? ProbabilityNum => null;
-    Card_Pattern ICard.card_pattern => Card_Pattern.Blue;
+    Card_Pattern ICard.card_pattern => Card_Pattern.Red;
 
     /// <summary>
     /// カード名

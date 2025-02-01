@@ -10,8 +10,44 @@ public class UI_RuleChange : MonoBehaviour
     private UI_RuleComponent PlayerOne;
     [SerializeField]
     private UI_RuleComponent PlayerTwo;
+    [SerializeField]
     private UI_RuleComponent PlayerThree;
+    [SerializeField]
     private UI_RuleComponent PlayerFour;
+
+
+    public void UIChange()
+    {
+        GameSessionManager manager=GameSessionManager.Instance();
+
+        foreach(var userdata in manager.Session_Data)
+        {
+            switch (userdata.Key)
+            {
+                case 1:
+                    
+                    //PlayerOne.Red_Card_EffectAward=userdata.Value.Card_Blue_EffectAward;
+                    break;
+                case 2:
+                    break;
+                case 3:
+                    break;
+                case 4:
+                    break;
+            }
+        }
+    }
+    void LoadUI ()
+    {
+       
+    }
+    /// <summary>
+    /// プレイヤーデータを参照にUIにイベントを付けて行く作業
+    /// </summary>
+    public void AddOnClick(PlayerSessionData playerdata)
+    {
+
+    }
 }
 
 /// <summary>

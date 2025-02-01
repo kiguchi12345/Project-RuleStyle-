@@ -7,13 +7,13 @@ using UnityEngine;
 /// <summary>
 /// ‹î“¯m‚ª‚Ô‚Â‚©‚Á‚½‚É”­“®‚·‚é
 /// </summary>
-public class Card_Orange_Attack : ICard
+public class Card_Blue_Attack : ICard
 {
     public PlayerSessionData PlayerData { get; set; } = null;
 
     public float? ProbabilityNum => 35;
 
-    Card_Pattern ICard.card_pattern => Card_Pattern.Orange;
+    Card_Pattern ICard.card_pattern => Card_Pattern.Blue;
 
     /// <summary>
     /// ƒJ[ƒh–¼

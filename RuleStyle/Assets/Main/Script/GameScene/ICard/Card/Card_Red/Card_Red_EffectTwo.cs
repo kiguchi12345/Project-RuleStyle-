@@ -2,12 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Card_Blue_EffectTwo : ICard, ICard_Blue
+public class Card_Red_EffectTwo : ICard, ICard_Red
 {
     public PlayerSessionData PlayerData { get; set; } = null;
 
     public float? ProbabilityNum => 50;
-    Card_Pattern ICard.card_pattern => Card_Pattern.Blue;
+    Card_Pattern ICard.card_pattern => Card_Pattern.Red;
 
     /// <summary>
     /// カード名
@@ -15,7 +15,7 @@ public class Card_Blue_EffectTwo : ICard, ICard_Blue
     string ICard.CardName => "P2の";
 
     /// <summary>
-    /// カードBlueの時のみの実装となる。
+    /// カード赤の時のみの実装となる。
     /// </summary>
     public List<int> EffectMember => new List<int> { 2 };
 
