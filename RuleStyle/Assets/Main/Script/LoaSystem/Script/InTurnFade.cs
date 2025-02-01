@@ -6,49 +6,49 @@ using UnityEngine.UI;
 public class InTurnFade : MonoBehaviour
 {
     [SerializeField]
-    GameObject[] Images;
+    RectMask2D[] rctMasks;
 
-    List<RectTransform> rctTransfomes;
-    List<RectMask2D> rctMasks;
 
     Vector2 dspsize = new Vector2(Screen.width, Screen.height);
     float maxTime = 1;
 
+    int num = 3;
+
+    bool conp = false;
+
     private void Awake()
     {
-        foreach (var image in Images)
-        {
-            rctTransfomes.Add(image.GetComponent<RectTransform>());
-            rctMasks.Add(image.GetComponent<RectMask2D>());
-        }
-    }
-
-    IEnumerator FadeInWait(int i = 0)
-    {
-        yield return new WaitForSeconds(2);
+        MaskReset();
+        GameManager gameManager = GameManager.Instance();
+        StartCoroutine(FadeNumWait(gameManager.PlayerNum-1));
     }
 
     /// <summary>
-    /// mask‚ðoff‚É‚·‚é
+    /// mask‚ðreset‚·‚é
     /// </summary>
-    public void NoneMask()
+    public void MaskReset()
     {
-        foreach (var masks in rctMasks)
+        for (int i = 0; i < rctMasks.Length; i++)
         {
-            masks.padding = new Vector4(0, -300, 0, -300);
+            rctMasks[i].padding = new Vector4(0, (dspsize.y + 300), 0, -300);
         }
     }
 
-    public void StartFade()
+    IEnumerator FadeNumWait(int i)
     {
+        num = i;
+        conp = false;
         Time_TimerManager time_TimerManager = Time_TimerManager.Instance();
-        time_TimerManager.Fade(OnFade, maxTime, FadeSpecified._1to0);
+        time_TimerManager.Fade(FadeWait, maxTime, FadeSpecified._1to0);
+
+        yield return new WaitUntil(() => conp);
+        yield return new WaitForSeconds(0.5f);
+        if (i > 0) { StartCoroutine(FadeNumWait((i-1))); }
     }
 
-    void OnFade(float fadePerc)
+    void FadeWait(float perc)
     {
-        float dis = ((dspsize.y + 300f) * fadePerc) - 300f;
-
-        rctMasks[0].padding = new Vector4(0, dis, 0, -300);
+        rctMasks[num].padding = new Vector4(0, (dspsize.y + 300) * perc, 0, -300);
+        if (perc == 0) { conp = true; }
     }
 }
