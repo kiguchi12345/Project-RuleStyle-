@@ -12,6 +12,7 @@ class BTVertical
 
 public class BTArrowMove : MonoBehaviour
 {
+
     [SerializeField]
     BTVertical[] BT;
 
