@@ -16,7 +16,7 @@ public class Card_Purple_Three : ICard
     /// ÉJÅ[Éhñº
     /// </summary>
     string ICard.CardName => "3";
-    Image ICard.cardUI { get; set; }
+    Sprite ICard.cardUI { get; set; }
     /// <summary>
     /// 
     /// </summary>

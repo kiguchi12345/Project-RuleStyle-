@@ -44,6 +44,8 @@ public class GameMode_MainMode : IGameMode
     {
         player=GameSceneManager.NowPlayer();
 
+        _ = player.WaitForCardUI(player.UI_Set_Main);
+
         //î’ñ è„Ç…ë∂ç›ÇµÇ»Ç¢èÍçáÅB
         if (player.Player_GamePiece==null)
         {

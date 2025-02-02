@@ -13,7 +13,7 @@ public class Card_Yellow_Point : ICard
     Card_Pattern ICard.card_pattern => Card_Pattern.Yellow;
 
     string ICard.CardName => "“¾“_";
-    Image ICard.cardUI { get; set; }
+    Sprite ICard.cardUI { get; set; }
     /// <summary>
     /// PlayerData
     /// </summary>

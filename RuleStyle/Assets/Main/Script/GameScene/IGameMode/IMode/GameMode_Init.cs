@@ -19,6 +19,9 @@ public class GameMode_Init :IGameMode
         gameSessionManager.TurnList.Clear();
         gameSessionManager.Session_Data.Clear();
 
+        gameSessionManager.cards.Clear();
+        gameSessionManager.card_Access.Clear();
+
         //新しく人数を参照して新しくデータを作成する
         switch (gameSessionManager.gameManager.PlayerNum)
         {
@@ -115,11 +118,17 @@ public class GameMode_Init :IGameMode
                 break;
         }
 
+
         foreach (var card in gameSessionManager.cards)
         {
             //カードに今現在のUIデータを
             card.Card_LoadData();
         }
+        foreach(var card in gameSessionManager.cards)
+        {
+            gameSessionManager.card_Access.Add(card.CardName,card);
+        }
+
         gameSessionManager.TurnList = gameSessionManager.Shuffle(gameSessionManager.TurnList);
 
         foreach  (var x in gameSessionManager.Session_Data)

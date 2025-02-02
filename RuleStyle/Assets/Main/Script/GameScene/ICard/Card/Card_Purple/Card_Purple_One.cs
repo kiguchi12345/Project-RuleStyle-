@@ -17,7 +17,7 @@ public class Card_Purple_One : ICard
     /// ÉJÅ[Éhñº
     /// </summary>
     string ICard.CardName => "1";
-    Image ICard.cardUI { get; set; }
+    Sprite ICard.cardUI { get; set; }
     /// <summary>
     /// 
     /// </summary>

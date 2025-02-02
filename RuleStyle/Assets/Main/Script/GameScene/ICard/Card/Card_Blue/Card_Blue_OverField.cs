@@ -15,13 +15,13 @@ public class Card_Blue_OverField : ICard
     public float? ProbabilityNum => 45;
 
     Card_Pattern ICard.card_pattern => Card_Pattern.Blue;
-
+    
     /// <summary>
     /// カード名
     /// </summary>
     string ICard.CardName => "場外で";
 
-    Image ICard.cardUI { get; set; }
+    Sprite ICard.cardUI { get; set; }
 
     void ICard.CardNum()
     {

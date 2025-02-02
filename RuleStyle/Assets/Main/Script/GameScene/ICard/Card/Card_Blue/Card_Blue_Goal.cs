@@ -16,7 +16,7 @@ public class Card_Blue_Goal : ICard
     public float? ProbabilityNum => null;
     Card_Pattern ICard.card_pattern => Card_Pattern.Blue;
 
-    Image ICard.cardUI { get; set; }
+    Sprite ICard.cardUI { get; set; }
     /// <summary>
     /// ÉJÅ[Éhñº
     /// </summary>

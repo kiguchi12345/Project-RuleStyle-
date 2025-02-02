@@ -20,7 +20,7 @@ public class Card_Blue_Attack : ICard
     /// ƒJ[ƒh–¼
     /// </summary>
     string ICard.CardName => "‹î‚ª‘Šè‚Ì‹î‚É“–‚½‚é‚±‚Æ‚Å";
-    Image ICard.cardUI { get; set; }
+    Sprite ICard.cardUI { get; set; }
     /// <summary>
     /// 
     /// </summary>

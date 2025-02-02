@@ -37,13 +37,28 @@ public class UI_RuleChange : MonoBehaviour
             }
         }
     }
+
+
     /// <summary>
-    /// UI変更
+    /// プレイヤー単位の変更
     /// </summary>
     /// <param name="UICompo"></param>
-    void LoadUI (Rule_UI_RuleComponent UICompo)
+    void LoadUI (Rule_UI_RuleComponent UIComponent,PlayerSessionData playerdata)
     {
-       
+        GameSessionManager manager = GameSessionManager.Instance();
+        //プレイヤーUI変更（もうすでに変更したの用意した方がいいかもしれない
+        UIComponent.PlayerImage.sprite = manager.card_Access["P" + playerdata.PlayerId.ToString() + "の"].cardUI;
+
+        //カードのUI変更
+        UIComponent.Red_Card_EffectPiece.image.sprite = playerdata.Card_Red_EffectPiece.Value.cardUI;
+        UIComponent.Blue_Card.image.sprite = playerdata.Card_Blue.Value.cardUI;
+        UIComponent.Red_Card_EffectAward.image.sprite = playerdata.Card_Red_EffectAward.Value.cardUI;
+        UIComponent.Yellow_Card.image.sprite = playerdata.Card_Yellow.Value.cardUI;
+        UIComponent.Green_Card.image.sprite = playerdata.Card_Green.Value.cardUI;
+        UIComponent.Purple_Card.image.sprite = playerdata.Card_Purple.Value.cardUI;
+
+        //ルール文変更
+        UIComponent.RuleText.text = playerdata.Rule;
     }
     /// <summary>
     /// プレイヤーデータを参照にUIにイベントを付けて行く作業

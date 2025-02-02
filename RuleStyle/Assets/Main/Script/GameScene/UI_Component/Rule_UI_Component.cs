@@ -9,7 +9,7 @@ using UnityEngine.UI;
     [Serializable]
 public class Rule_UI_RuleComponent
 {
-    public Button PlayerImage;
+    public Image PlayerImage;
     public Button Red_Card_EffectPiece;
     public Button Blue_Card;
     public Button Red_Card_EffectAward;

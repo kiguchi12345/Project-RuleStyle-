@@ -16,7 +16,7 @@ public class Card_Red_EffectFour : ICard,ICard_Red
     /// カード名
     /// </summary>
     string ICard.CardName => "P4の";
-    Image ICard.cardUI { get; set; }
+    Sprite ICard.cardUI { get; set; }
     /// <summary>
     /// カードBlueの時のみの実装となる。
     /// </summary>

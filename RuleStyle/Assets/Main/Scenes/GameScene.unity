@@ -213,7 +213,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 100e4ba156b311948a545f902e4f7dfc, type: 3}
+  m_Sprite: {fileID: 0}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -265,8 +265,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -556.78217, y: 466.2}
-  m_SizeDelta: {x: 683.5119, y: 63.2}
+  m_AnchoredPosition: {x: -430.7744, y: 466.1997}
+  m_SizeDelta: {x: 935.5274, y: 63.201}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &125754273
 MonoBehaviour:
@@ -415,7 +415,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &160295436
 RectTransform:
   m_ObjectHideFlags: 0
@@ -835,8 +835,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -460.46423, y: 470.91455}
-  m_SizeDelta: {x: 876.1477, y: 53.7713}
+  m_AnchoredPosition: {x: -430.7124, y: 476.16486}
+  m_SizeDelta: {x: 935.6514, y: 64.2719}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &483197669
 MonoBehaviour:
@@ -885,8 +885,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 35.2
-  m_fontSizeBase: 35.2
+  m_fontSize: 50
+  m_fontSizeBase: 50
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -994,7 +994,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 100e4ba156b311948a545f902e4f7dfc, type: 3}
+  m_Sprite: {fileID: 0}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1483,16 +1483,16 @@ MonoBehaviour:
   PlayerGameObject_Two: {fileID: 8238143671221722675, guid: e95e55af4c4e711408a0cc4b7cbb11f1, type: 3}
   PlayerGameObject_Three: {fileID: 8238143671221722675, guid: e95e55af4c4e711408a0cc4b7cbb11f1, type: 3}
   PlayerGameObject_Four: {fileID: 127489915523840731, guid: 2e186f4fa41b05043a027c416930d88c, type: 3}
-  UI:
-    MainUI: {fileID: 0}
-    CurrentPlayerImage: {fileID: 0}
-    CurrentPlayerRule_Text: {fileID: 0}
-    OnePlayerImage: {fileID: 0}
-    OnePlayerRule_Text: {fileID: 0}
-    TwoPlayerImage: {fileID: 0}
-    TwoPlayerRule_Text: {fileID: 0}
-    ThreePlayerImage: {fileID: 0}
-    ThreePlayerRule_Text: {fileID: 0}
+  Main_UI_Component:
+    MainUI: {fileID: 1515608940}
+    CurrentPlayerImage: {fileID: 1669966579}
+    CurrentPlayerRule_Text: {fileID: 752190622}
+    OnePlayerImage: {fileID: 70950809}
+    OnePlayerRule_Text: {fileID: 483197669}
+    TwoPlayerImage: {fileID: 745724900}
+    TwoPlayerRule_Text: {fileID: 1724094033}
+    ThreePlayerImage: {fileID: 1474540306}
+    ThreePlayerRule_Text: {fileID: 125754273}
     Option: {fileID: 0}
   TurnList: 
   CurrentTurnNum: 0
@@ -1755,7 +1755,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 100e4ba156b311948a545f902e4f7dfc, type: 3}
+  m_Sprite: {fileID: 0}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1980,7 +1980,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 100e4ba156b311948a545f902e4f7dfc, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 812f534449cb8ff4f8a158e32ab228c6, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2032,8 +2032,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -556.78217, y: 466.2}
-  m_SizeDelta: {x: 683.5119, y: 63.2}
+  m_AnchoredPosition: {x: -429.8993, y: 466.1997}
+  m_SizeDelta: {x: 937.2776, y: 63.201}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1724094033
 MonoBehaviour:
@@ -2196,7 +2196,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2964465993426204961, guid: 5e57e5ee58c75bd4c9f3febbe7d1639d, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6116528124509785208, guid: 5e57e5ee58c75bd4c9f3febbe7d1639d, type: 3}
       propertyPath: m_UiScaleMode

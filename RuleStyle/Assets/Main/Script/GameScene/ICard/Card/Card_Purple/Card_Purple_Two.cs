@@ -17,7 +17,7 @@ public class Card_Purple_Two : ICard
     /// </summary>
     string ICard.CardName => "2";
 
-    Image ICard.cardUI { get; set; }
+    Sprite ICard.cardUI { get; set; }
     void ICard.CardNum()
     {
         if (PlayerData != null)

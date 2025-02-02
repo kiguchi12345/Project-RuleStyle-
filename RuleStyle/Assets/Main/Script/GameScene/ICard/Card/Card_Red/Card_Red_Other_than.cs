@@ -21,7 +21,7 @@ public class Card_Red_Other_than : ICard, ICard_Red
     /// カードBlueの時のみの実装となる。
     /// </summary>
     public List<int> EffectMember => new List<int> {};
-    Image ICard.cardUI { get; set; }
+    Sprite ICard.cardUI { get; set; }
     /// <summary>
     /// 青は全て返り値で効果を行う
     /// </summary>

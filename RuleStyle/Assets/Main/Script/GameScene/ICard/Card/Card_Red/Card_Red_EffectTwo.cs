@@ -18,7 +18,7 @@ public class Card_Red_EffectTwo : ICard, ICard_Red
     /// カード赤の時のみの実装となる。
     /// </summary>
     public List<int> EffectMember => new List<int> { 2 };
-    Image ICard.cardUI { get; set; }
+    Sprite ICard.cardUI { get; set; }
     void ICard.CardNum()
     {
         //PlayerData.EffectPlayer_Id.Add(2);

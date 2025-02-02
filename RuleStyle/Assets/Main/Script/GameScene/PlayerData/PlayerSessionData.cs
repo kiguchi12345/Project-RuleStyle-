@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UniRx;
 using UniRx.Triggers;
-
+using System.Threading.Tasks;
 /// <summary>
 /// セッションプレイヤーデータ
 /// MonoBehaviorは使わず、Playerの駒にアタッチするスクリプトは別枠で作成する
@@ -73,26 +73,32 @@ public class PlayerSessionData:IDisposable
     private void Remove_Red_EffectPiece()
     {
         Card_Red_EffectPiece.Value = new Card_Red_MySelf();
+        Card_Red_EffectPiece.Value.Card_LoadData();
     }
     public void Remove_Red_EffectAward()
     {
         Card_Red_EffectAward.Value = new Card_Red_MySelf();
+        Card_Red_EffectAward.Value.Card_LoadData();
     }
     public void Remove_Blue()
     {
         Card_Blue.Value= new Card_Blue_Goal();
+        Card_Blue.Value.Card_LoadData();
     }
     public void Remove_Yellow()
     {
         Card_Yellow.Value = new Card_Yellow_Point();
+        Card_Yellow.Value.Card_LoadData();
     }
     public void Remove_Green()
     {
         Card_Green.Value = new Card_Green_Plus();  
+        Card_Green.Value.Card_LoadData();
     }
     public void Remove_Purple()
     {
         Card_Purple.Value = new Card_Purple_One();
+        Card_Purple.Value.Card_LoadData();
     }
     #endregion
 
@@ -130,8 +136,9 @@ public class PlayerSessionData:IDisposable
                 //ここやり方が不安なんだけど問題ないのだろうか
                 EffectPiecePlayer_Id = Red.EffectMember;
                 //-----------------------------------------------
+                Debug.Log("青(適用対象)カード変更");
             }
-            Debug.Log("青(適用対象)カード変更");
+            
         });
 
         
@@ -192,6 +199,61 @@ public class PlayerSessionData:IDisposable
         });
 
     }
+    /// <summary>
+    /// 自分の番のMainUISet(ルール変更はExChangeシーンでしか怒らない為
+    /// メインシーンのターンプレイヤーが毎回一度呼ぶこととする
+    /// </summary>
+    public void UI_Set_Main()
+    {
+        //現在。
+        gameSessionManager.Main_UI_Component.CurrentPlayerRule_Text.text = RuleText_Exchange();
+        gameSessionManager.Main_UI_Component.CurrentPlayerImage.sprite = gameSessionManager.card_Access["P"+PlayerId.ToString()+"の"].cardUI;
+
+        int relativeNum = gameSessionManager.CurrentTurnNum;
+        
+        for (int i = 0;i< gameSessionManager.Session_Data.Count-1; i++)
+        {
+
+            relativeNum++;
+            //もし0だった場合
+            if (relativeNum >= gameSessionManager.TurnList.Count)
+            {
+                relativeNum = 0;
+            }
+            switch (i)
+            {
+                case 0:
+                    gameSessionManager.Main_UI_Component.OnePlayerRule_Text.text = gameSessionManager.Session_Data[gameSessionManager.TurnList[relativeNum]].RuleText_Exchange();
+                    gameSessionManager.Main_UI_Component.OnePlayerImage.sprite = gameSessionManager.card_Access["P" + gameSessionManager.Session_Data[gameSessionManager.TurnList[relativeNum]].PlayerId + "の"].cardUI;
+                    break;
+                case 1:
+                    gameSessionManager.Main_UI_Component.TwoPlayerRule_Text.text = gameSessionManager.Session_Data[gameSessionManager.TurnList[relativeNum]].RuleText_Exchange();
+                    gameSessionManager.Main_UI_Component.TwoPlayerImage.sprite = gameSessionManager.card_Access["P" + gameSessionManager.Session_Data[gameSessionManager.TurnList[relativeNum]].PlayerId + "の"].cardUI;
+                    break;
+                case 2:
+                    gameSessionManager.Main_UI_Component.ThreePlayerRule_Text.text = gameSessionManager.Session_Data[gameSessionManager.TurnList[relativeNum]].RuleText_Exchange();
+                    gameSessionManager.Main_UI_Component.ThreePlayerImage.sprite = gameSessionManager.card_Access["P" + gameSessionManager.Session_Data[gameSessionManager.TurnList[relativeNum]].PlayerId + "の"].cardUI;
+                    break;
+            }
+        }
+    }
+
+    /// <summary>
+    /// カードの非同期ロードの事故を防ぐ為の関数
+    /// メインシーンを呼ぶ時の待機処理等（普通はこちらで呼ぶ）
+    /// </summary>
+    /// <returns></returns>
+    public async Task WaitForCardUI(Action　action)
+    {
+        // cardUIが設定されるまで待機
+        while (gameSessionManager.card_Access["P" + PlayerId.ToString() + "の"].cardUI == null)
+        {
+            await Task.Yield(); // 次のフレームまで待機
+        }
+        action();
+    }
+
+
 
     /// <summary>
     /// カードを誰かに変更する時の処理。「これじゃダメだった。ブルーが厳しくなる」
@@ -235,7 +297,7 @@ public class PlayerSessionData:IDisposable
     /// <summary>
     /// ルールのテキスト変更
     /// </summary>
-    public void RuleText_Exchange()
+    public string RuleText_Exchange()
     {
         string text = Card_Red_EffectPiece.Value.CardName
             + Card_Blue.Value.CardName
@@ -244,8 +306,7 @@ public class PlayerSessionData:IDisposable
             + Card_Green.Value.CardName
             + Card_Purple.Value.CardName;
 
-        //テキスト変更
-        Debug.Log(text);
+        return text;
     }
 
     /// <summary>
@@ -288,22 +349,16 @@ public class PlayerSessionData:IDisposable
     /// プレイヤーの点数
     /// </summary>
     public int PlayerPoint=0;
-
-    
-
-
     /// <summary>
     /// プレイヤーの駒(駒を作成時にアタッチする）
     /// </summary>
     public GameObject Player_GamePiece;
     //場外判定
     public bool Death=false;
-
     /// <summary>
     /// 個人ルール判定成功すればTrue
     /// </summary>
     public bool SuccessPoint=false;
-
     /// <summary>
     /// 個人ルール成功時の関数
     /// </summary>
@@ -331,17 +386,24 @@ public class PlayerSessionData:IDisposable
             .Subscribe(x =>
             { 
                 Debug.Log("ショット終了");
-
+                /*
                 //全員終了時の判定を確認、その後ルール成功時にルール適用する
                 foreach(var y in gameSessionManager.Session_Data) {
                     if (y.Value.SuccessPoint)
                     {
                         y.Value.RuleSucces();
+
+                        //全体ルールを成功していない場合要素を追加
+                        if (gameSessionManager.ExchangeMember.Contains(y.Key)==false) 
+                        {
+                            gameSessionManager.ExchangeMember.AddLast(y.Key);
+                        }
+                        
                         y.Value.SuccessPoint = false;
                     }
                 }
                 RuleText_Exchange();
-
+                */
                 TurnEnd();
             })
             .AddTo(Player_GamePiece);
@@ -353,7 +415,22 @@ public class PlayerSessionData:IDisposable
     /// </summary>
     public void TurnEnd()
     {
-        
+        //全員終了時の判定を確認、その後ルール成功時にルール適用する
+        foreach (var y in gameSessionManager.Session_Data)
+        {
+            if (y.Value.SuccessPoint)
+            {
+                y.Value.RuleSucces();
+
+                //全体ルールを成功していない場合要素を追加
+                if (gameSessionManager.ExchangeMember.Contains(y.Key) == false)
+                {
+                    gameSessionManager.ExchangeMember.AddLast(y.Key);
+                }
+
+                y.Value.SuccessPoint = false;
+            }
+        }
     }
 
     /// <summary>
@@ -363,15 +440,26 @@ public class PlayerSessionData:IDisposable
     {
         //個人ルール達成時のリワード
         Card_Yellow.Value.CardNum();
+
+        
     }
 
     /// <summary>
     /// ゴール成功時のリワード
+    /// （ゴール側に「衝突した場合」のスクリプトを記載し
+    /// 直接ゴール時の処理が走ります
     /// </summary>
     public void GoalReward()
     {
         gameSessionManager.DeckDraw(this, 2);
 
+        if (gameSessionManager.ExchangeMember.Contains(this.PlayerId) == false)
+        {
+            gameSessionManager.ExchangeMember.AddLast(this.PlayerId);
+        }
+
+        //ターン終了
+        TurnEnd() ;
         //改変モードに移行する。
     }
     
@@ -383,24 +471,18 @@ public class PlayerSessionData:IDisposable
     {
         gameSessionManager = GameSessionManager.Instance();
 
-        Debug.Log(PlayerId.ToString());
-        Debug.Log(gameSessionManager.PlayerGameObject_One);
         switch (PlayerId) 
         {
         case 1:
-                Debug.Log("a");
                 Player_GamePiece =UnityEngine.Object.Instantiate(gameSessionManager.PlayerGameObject_One,gameSessionManager.PieceStartPoint,Quaternion.identity);
                 break;
         case 2:
-                Debug.Log("a");
                 Player_GamePiece = UnityEngine.Object.Instantiate(gameSessionManager.PlayerGameObject_Two, gameSessionManager.PieceStartPoint, Quaternion.identity);
                 break;
         case 3:
-                Debug.Log("a");
                 Player_GamePiece = UnityEngine.Object.Instantiate(gameSessionManager.PlayerGameObject_Three, gameSessionManager.PieceStartPoint, Quaternion.identity);
                 break;
         case 4:
-                Debug.Log("a");
                 Player_GamePiece = UnityEngine.Object.Instantiate(gameSessionManager.PlayerGameObject_Four, gameSessionManager.PieceStartPoint, Quaternion.identity);
                 break;
         }

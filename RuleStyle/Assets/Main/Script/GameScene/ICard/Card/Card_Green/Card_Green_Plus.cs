@@ -17,7 +17,7 @@ public class Card_Green_Plus : ICard
 
     string ICard.CardName => "Å{";
 
-    Image ICard.cardUI { get; set; }
+    Sprite ICard.cardUI { get; set; }
     /// <summary>
     /// PlayerData
     /// </summary>

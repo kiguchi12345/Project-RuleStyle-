@@ -19,7 +19,7 @@ public class Card_Red_MySelf : ICard,ICard_Red
     /// カード名
     /// </summary>
     string ICard.CardName => "自分自身の";
-    Image ICard.cardUI { get; set; }
+    Sprite ICard.cardUI { get; set; }
     /// <summary>
     /// カードBlueの時のみの実装となる。
     /// </summary>

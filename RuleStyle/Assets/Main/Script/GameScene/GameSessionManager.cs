@@ -52,7 +52,7 @@ public class GameSessionManager : MonoBehaviour
     /// <summary>
     /// MainのUI
     /// </summary>
-    public Main_UI_Component UI;
+    public Main_UI_Component Main_UI_Component;
 
     /// <summary>
     /// 順番
@@ -72,6 +72,8 @@ public class GameSessionManager : MonoBehaviour
     public Transform CameraPosition;
 
     public List<ICard> cards =new List<ICard>();
+
+    public Dictionary<string,ICard> card_Access = new Dictionary<string,ICard>();
 
     /// <summary>
     /// 改変カード待ち
@@ -94,9 +96,11 @@ public class GameSessionManager : MonoBehaviour
         sceneContext.Mode_Change(new GameMode_Init(this));
     }
 
-    //今のプレイヤーのデータ
+    /// <summary>
+    /// 今のプレイヤーのデータ
+    /// </summary>
+    /// <returns></returns>
     public PlayerSessionData NowPlayer (){
-        Debug.Log(Session_Data[TurnList[CurrentTurnNum]].PlayerId);
         return Session_Data[TurnList[CurrentTurnNum]];
     }
 
