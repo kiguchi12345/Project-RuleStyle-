@@ -4,7 +4,6 @@ using UniRx;
 using UniRx.Triggers;
 using UnityEngine;
 using System;
-using UnityEngine.UI;
 
 /// <summary>
 /// ゴール行ったときの判定カード
@@ -16,26 +15,29 @@ public class Card_Blue_Goal : ICard
     public float? ProbabilityNum => null;
     Card_Pattern ICard.card_pattern => Card_Pattern.Blue;
 
-    Sprite ICard.cardUI { get; set; }
     /// <summary>
     /// カード名
     /// </summary>
     string ICard.CardName => "ゴールで";
 
+    /// <summary>
+    /// 
+    /// </summary>
     void ICard.CardNum()
     {
         if(PlayerData != null)
         {
             //ショットイベントの念のための初期化
-            PlayerData.BlueTrigger?.Dispose();
+            PlayerData.OrangeTrigger?.Dispose();
 
             //ショットイベント登録
-            PlayerData.BlueTrigger = PlayerData.Player_GamePiece.OnTriggerEnterAsObservable()
+            PlayerData.OrangeTrigger = PlayerData.Player_GamePiece.OnTriggerEnterAsObservable()
                 .Take(1)//一回で自然にDisposeするようにする。
                 .Subscribe(collider =>
             { 
                 if (collider.gameObject.GetComponent<GoalObject>() != null)
                 {
+                    Debug.Log("ゴール");
                     PlayerData.Success();
                 }
             }).AddTo(PlayerData.Player_GamePiece);

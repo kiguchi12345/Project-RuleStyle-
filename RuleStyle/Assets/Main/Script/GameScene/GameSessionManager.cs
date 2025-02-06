@@ -27,16 +27,12 @@ public class GameSessionManager : MonoBehaviour
     }
     #endregion
     /// <summary>
-    /// 現在のモード
+    /// 現在の操作
     /// </summary>
     public IGameMode gamemode;
 
     public Dictionary<int, PlayerSessionData> Session_Data = new Dictionary<int, PlayerSessionData>();
 
-
-    /// <summary>
-    /// モード変更自に呼ぶ
-    /// </summary>
     public GameSceneContext sceneContext = new GameSceneContext();
 
     #region プレイヤーの駒の変数。
@@ -52,7 +48,7 @@ public class GameSessionManager : MonoBehaviour
     /// <summary>
     /// MainのUI
     /// </summary>
-    public Main_UI_Component Main_UI_Component;
+    public Main_UI_Component UI;
 
     /// <summary>
     /// 順番
@@ -72,19 +68,6 @@ public class GameSessionManager : MonoBehaviour
     public Transform CameraPosition;
 
     public List<ICard> cards =new List<ICard>();
-
-    public Dictionary<string,ICard> card_Access = new Dictionary<string,ICard>();
-
-    /// <summary>
-    /// 改変カード待ち
-    /// </summary>
-    public LinkedList<int> ExchangeMember = new LinkedList<int>();
-
-
-    /// <summary>
-    /// 基本的にこのラインレンダラーしか使用しない。
-    /// </summary>
-    public LineRenderer Arrowline;
     void Start()
     {
 
@@ -93,14 +76,13 @@ public class GameSessionManager : MonoBehaviour
         //
         gameManager = GameManager.Instance();
         
+        //Initいる？
         sceneContext.Mode_Change(new GameMode_Init(this));
     }
 
-    /// <summary>
-    /// 今のプレイヤーのデータ
-    /// </summary>
-    /// <returns></returns>
+    //今のプレイヤーのデータ
     public PlayerSessionData NowPlayer (){
+        Debug.Log(Session_Data[TurnList[CurrentTurnNum]].PlayerId);
         return Session_Data[TurnList[CurrentTurnNum]];
     }
 

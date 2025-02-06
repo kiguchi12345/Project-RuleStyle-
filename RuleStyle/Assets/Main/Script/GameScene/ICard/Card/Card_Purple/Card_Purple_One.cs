@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
+
 
 public class Card_Purple_One : ICard
 {
@@ -17,7 +17,7 @@ public class Card_Purple_One : ICard
     /// ÉJÅ[Éhñº
     /// </summary>
     string ICard.CardName => "1";
-    Sprite ICard.cardUI { get; set; }
+
     /// <summary>
     /// 
     /// </summary>

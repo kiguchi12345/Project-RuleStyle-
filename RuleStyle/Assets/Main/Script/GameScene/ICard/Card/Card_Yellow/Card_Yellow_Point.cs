@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
+
 /// <summary>
 /// “¾“_‚ğæ“¾‚·‚éB
 /// </summary>
@@ -13,7 +13,7 @@ public class Card_Yellow_Point : ICard
     Card_Pattern ICard.card_pattern => Card_Pattern.Yellow;
 
     string ICard.CardName => "“¾“_";
-    Sprite ICard.cardUI { get; set; }
+
     /// <summary>
     /// PlayerData
     /// </summary>

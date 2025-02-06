@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
+
 public class Card_Purple_Three : ICard
 {
     public PlayerSessionData PlayerData { get; set; } = null;
@@ -16,7 +16,7 @@ public class Card_Purple_Three : ICard
     /// ÉJÅ[Éhñº
     /// </summary>
     string ICard.CardName => "3";
-    Sprite ICard.cardUI { get; set; }
+
     /// <summary>
     /// 
     /// </summary>

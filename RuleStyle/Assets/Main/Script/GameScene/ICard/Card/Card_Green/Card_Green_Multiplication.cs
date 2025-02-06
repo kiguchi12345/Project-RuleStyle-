@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
+
 /// <summary>
 /// ŒvZ•û–@:Š|‚¯Z
 /// </summary>
@@ -17,7 +17,7 @@ public class Card_Green_Multiplication : ICard
     /// </summary>
     string ICard.CardName => "~";
 
-    Sprite ICard.cardUI { get; set; }
+
 
     /// <summary>
     /// 

@@ -8,33 +8,30 @@ using UnityEngine;
 
 public class GameMode_Init :IGameMode
 {
-    private GameSessionManager gameSessionManager;
+    GameSessionManager GameSceneManager;
     public GameMode_Init(GameSessionManager gameSceneManager)
     {
-        gameSessionManager = gameSceneManager;
+        GameSceneManager = gameSceneManager;
     }
 
     void IGameMode.Init()
     {
-        gameSessionManager.TurnList.Clear();
-        gameSessionManager.Session_Data.Clear();
-
-        gameSessionManager.cards.Clear();
-        gameSessionManager.card_Access.Clear();
+        GameSceneManager.TurnList.Clear();
+        GameSceneManager.Session_Data.Clear();
 
         //新しく人数を参照して新しくデータを作成する
-        switch (gameSessionManager.gameManager.PlayerNum)
+        switch (GameSceneManager.gameManager.PlayerNum)
         {
             case 2:
-                gameSessionManager.Session_Data = new Dictionary<int, PlayerSessionData>
+                GameSceneManager.Session_Data = new Dictionary<int, PlayerSessionData>
                 {
                     {1,new PlayerSessionData() },
                     {2,new PlayerSessionData() }
                 };
-                gameSessionManager.TurnList = new List<int> {
+                GameSceneManager.TurnList = new List<int> {
                     1,2
                 };
-                gameSessionManager.cards = new List<ICard>
+                GameSceneManager.cards = new List<ICard>
                 {
                     new Card_Red_EffectOne(),
                     new Card_Red_EffectTwo(),
@@ -42,6 +39,7 @@ public class GameMode_Init :IGameMode
                     new Card_Red_MySelf(),
                     new Card_Green_Minus(),
                     new Card_Green_Plus(),
+                    new Card_Green_Multiplication(),
                     new Card_Blue_Attack(),
                     new Card_Blue_OverField(),
                     new Card_Blue_Goal(),
@@ -53,17 +51,17 @@ public class GameMode_Init :IGameMode
                 };
                 break;
             case 3:
-                gameSessionManager.Session_Data = new Dictionary<int, PlayerSessionData>
+                GameSceneManager.Session_Data = new Dictionary<int, PlayerSessionData>
                 {
                     {1,new PlayerSessionData() },
                     {2,new PlayerSessionData() },
                     {3,new PlayerSessionData() }
                 };
-                gameSessionManager.TurnList = new List<int> {
+                GameSceneManager.TurnList = new List<int> {
                     1,2,3
                 };
 
-                gameSessionManager.cards = new List<ICard>
+                GameSceneManager.cards = new List<ICard>
                 {
                     new Card_Red_EffectOne(),
                     new Card_Red_EffectTwo(),
@@ -72,6 +70,7 @@ public class GameMode_Init :IGameMode
                     new Card_Red_MySelf(),
                     new Card_Green_Minus(),
                     new Card_Green_Plus(),
+                    new Card_Green_Multiplication(),
                     new Card_Blue_Attack(),
                     new Card_Blue_OverField(),
                     new Card_Blue_Goal(),
@@ -83,20 +82,20 @@ public class GameMode_Init :IGameMode
                 };
                 break;
             case 4:
-                gameSessionManager.Session_Data = new Dictionary<int, PlayerSessionData>
+                GameSceneManager.Session_Data = new Dictionary<int, PlayerSessionData>
                 {
                     {1,new PlayerSessionData() },
                     {2,new PlayerSessionData() },
                     {3,new PlayerSessionData() },
                     {4,new PlayerSessionData() }
                 };
-                gameSessionManager.TurnList = new List<int> {
+                GameSceneManager.TurnList = new List<int> {
                     1,2,3,4
                 };
 
-                gameSessionManager.OnLoadSessionData();
+                GameSceneManager.OnLoadSessionData();
 
-                gameSessionManager.cards = new List<ICard>
+                GameSceneManager.cards = new List<ICard>
                 {
                     new Card_Red_EffectOne(),
                     new Card_Red_EffectTwo(),
@@ -106,6 +105,7 @@ public class GameMode_Init :IGameMode
                     new Card_Red_MySelf(),
                     new Card_Green_Minus(),
                     new Card_Green_Plus(),
+                    new Card_Green_Multiplication(),
                     new Card_Blue_Attack(),
                     new Card_Blue_OverField(),
                     new Card_Blue_Goal(),
@@ -117,26 +117,11 @@ public class GameMode_Init :IGameMode
                 };
                 break;
         }
+        GameSceneManager.TurnList = GameSceneManager.Shuffle(GameSceneManager.TurnList);
 
-
-        foreach (var card in gameSessionManager.cards)
-        {
-            //カードに今現在のUIデータを
-            card.Card_LoadData();
-        }
-        foreach(var card in gameSessionManager.cards)
-        {
-            gameSessionManager.card_Access.Add(card.CardName,card);
-        }
-
-        gameSessionManager.TurnList = gameSessionManager.Shuffle(gameSessionManager.TurnList);
-
-        foreach  (var x in gameSessionManager.Session_Data)
-            {
-                x.Value.Init();
-            }
-
-        gameSessionManager.sceneContext.Mode_Change(new GameMode_MainMode(gameSessionManager));
+        
+        
+        GameSceneManager.sceneContext.Mode_Change(new GameMode_MainMode(GameSceneManager));
     }
 
     void IGameMode.Update()

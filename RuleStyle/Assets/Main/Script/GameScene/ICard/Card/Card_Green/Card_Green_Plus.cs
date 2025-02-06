@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
+
 /// <summary>
 /// ŒvZ•û–@F‘«‚µZ
 /// </summary>
@@ -17,7 +17,6 @@ public class Card_Green_Plus : ICard
 
     string ICard.CardName => "{";
 
-    Sprite ICard.cardUI { get; set; }
     /// <summary>
     /// PlayerData
     /// </summary>

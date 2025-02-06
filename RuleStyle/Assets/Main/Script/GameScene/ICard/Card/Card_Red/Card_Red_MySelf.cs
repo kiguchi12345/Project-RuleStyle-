@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
+
 /// <summary>
 /// 青カード。対象者はカードプレイヤー
 /// </summary>
@@ -19,7 +19,7 @@ public class Card_Red_MySelf : ICard,ICard_Red
     /// カード名
     /// </summary>
     string ICard.CardName => "自分自身の";
-    Sprite ICard.cardUI { get; set; }
+
     /// <summary>
     /// カードBlueの時のみの実装となる。
     /// </summary>

@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
 /// <summary>
 /// ゲームマネージャー
 /// </summary>
@@ -14,6 +15,7 @@ public class GameManager : SingletonMonoBehaviourBase<GameManager>
     /// </summary>
     public static Dictionary<int, variable_playerdata> Variable_Data { get; private set; }
 
+    public List<int> Number = null;
 
     /// <summary>
     /// クリアする為の点数
