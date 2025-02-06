@@ -1,4 +1,6 @@
+using UnityEngine.UI;
 
+using UnityEngine;
 /// <summary>
 /// 改変カードを参照する
 /// </summary>
@@ -13,7 +15,7 @@ public class Card_Yellow_CardDraw : ICard
     /// カード名
     /// </summary>
     string ICard.CardName => "カードを引く";
-
+    Sprite ICard.cardUI { get; set; }
     void ICard.CardNum()
     {
         foreach(var data in PlayerData.EffectAwardPlayer_Id)

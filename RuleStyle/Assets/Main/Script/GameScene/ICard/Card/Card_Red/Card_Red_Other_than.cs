@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
 /// <summary>
 /// 自分以外
 /// </summary>
@@ -21,7 +21,7 @@ public class Card_Red_Other_than : ICard, ICard_Red
     /// カードBlueの時のみの実装となる。
     /// </summary>
     public List<int> EffectMember => new List<int> {};
-
+    Sprite ICard.cardUI { get; set; }
     /// <summary>
     /// 青は全て返り値で効果を行う
     /// </summary>

@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
 public class Card_Purple_Two : ICard
 {
     public PlayerSessionData PlayerData { get; set; } = null;
@@ -17,7 +17,7 @@ public class Card_Purple_Two : ICard
     /// </summary>
     string ICard.CardName => "2";
 
-    
+    Sprite ICard.cardUI { get; set; }
     void ICard.CardNum()
     {
         if (PlayerData != null)
