@@ -120,9 +120,9 @@ public class GetCardUI : MonoBehaviour
     /// </summary>
     public void MaskReset()
     {
+        cardGetEventEndBT.transform.gameObject.SetActive(false);
         mask.padding = new Vector4(0, dspsize.y, right, -300);
         cardSlide.position = new Vector3(Screen.width/2, Screen.height/2, 0);
-        cardGetEventEndBT.transform.gameObject.SetActive(false);
     }
     
     /// <summary>
